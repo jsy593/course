@@ -31,8 +31,14 @@ function login(){
 		}else if(result =="roleError"){
 			layer.alert('您的账号和身份不符合!', {icon: 5});
 		}else if(result == "success"){
-			layer.alert('恭喜你，登录成功!',{icon:6});
-			window.location.href= "personalCenter/myself.do";
+			
+			layer.msg('恭喜你，登录成功!', {
+			    icon: 6,
+			    time: 2000,
+			    title:'提示'//2秒关闭（如果不配置，默认是3秒）
+			}, function(){
+				window.location.href= "personalCenter/myself.do";
+			}); 
 		}else{
 			layer.alert("账号不存在!",{icon:5});
 		}

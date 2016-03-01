@@ -31,16 +31,10 @@
 								<li>
 									<a href="#">
 										<i class="icon-cog"></i>
-										设置
+										个人中心
 									</a>
 								</li>
 
-								<li>
-									<a href="#">
-										<i class="icon-user"></i>
-										简介
-									</a>
-								</li>
 
 								<li class="divider"></li>
 

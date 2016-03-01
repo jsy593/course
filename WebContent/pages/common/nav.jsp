@@ -13,8 +13,8 @@
 			<div class="sidebar" id="sidebar">
 				<script type="text/javascript">
 					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
-				</script>
 
+				</script>
 				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
 						<button class="btn btn-success">
@@ -47,8 +47,7 @@
 
 
 <!--                             判断用户的角色，进入不同的页面                                                                             -->
-
-<c:if test="${sessionScope.user.identity} == 0">
+<c:if test="${sessionScope.user.identity  ==  0}">
 				<ul class="nav nav-list">
 					<li class="active">
 						<a href="myself.do">
@@ -83,7 +82,7 @@
 					
 
 					<li>
-						<a href="#" class="dropdown-toggle">
+						<a href="personalCenter/myself.do" class="dropdown-toggle">
 							<i class="icon-desktop"></i>
 							<span class="menu-text">个人中心 </span>
 
@@ -91,6 +90,14 @@
 						</a>
 
 						<ul class="submenu">
+							
+							<li>
+								<a href="buttons.html">
+									<i class="icon-double-angle-right"></i>
+									个人信息
+								</a>
+							</li>
+						
 							<li>
 								<a href="elements.html">
 									<i class="icon-double-angle-right"></i>
@@ -98,12 +105,6 @@
 								</a>
 							</li>
 
-							<li>
-								<a href="buttons.html">
-									<i class="icon-double-angle-right"></i>
-									个人信息
-								</a>
-							</li>
 
 							<li>
 								<a href="treeview.html">
@@ -116,7 +117,7 @@
 					</ul>
 </c:if>
 
-<c:if test="${sessionScope.user.identity} == 1">
+<c:if test="${sessionScope.user.identity  == 1}">
 		<ul class="nav nav-list">
 					<li>
 						<a href="typography.html">
@@ -142,10 +143,44 @@
 							</li>
 						</ul>
 					</li>
+					
+					<li>
+						<a href="#" class="dropdown-toggle">
+							<i class="icon-desktop"></i>
+							<span class="menu-text">个人中心 </span>
+
+							<b class="arrow icon-angle-down"></b>
+						</a>
+
+						<ul class="submenu">
+						
+							<li>
+								<a href="buttons.html">
+									<i class="icon-double-angle-right"></i>
+									个人信息
+								</a>
+							</li>
+						
+							<li>
+								<a href="elements.html">
+									<i class="icon-double-angle-right"></i>
+									修改密码
+								</a>
+							</li>
+
+
+							<li>
+								<a href="treeview.html">
+									<i class="icon-double-angle-right"></i>
+									修改头像
+								</a>
+							</li>
+						</ul>
+					</li>
 					</ul>
 </c:if>
 
-<c:if test="${sessionScope.user.identity} == 2}"></c:if>
+<c:if test="${sessionScope.user.identity  == 2}">
 				<ul class="nav nav-list">
 					<li>
 						<a href="typography.html">
@@ -164,13 +199,38 @@
 					
 					
 					<li>
-						<a href="typography.html">
-							<i class="icon-text-width"></i>
-							<span class="menu-text">成绩查询</span>
+						<a href="#" class="dropdown-toggle">
+							<i class="icon-desktop"></i>
+							<span class="menu-text">个人中心 </span>
+
+							<b class="arrow icon-angle-down"></b>
 						</a>
+
+						<ul class="submenu">
+							<li>
+								<a href="buttons.html">
+									<i class="icon-double-angle-right"></i>
+									个人信息
+								</a>
+							</li>
+						
+							<li>
+								<a href="elements.html">
+									<i class="icon-double-angle-right"></i>
+									修改密码
+								</a>
+							</li>
+
+							<li>
+								<a href="treeview.html">
+									<i class="icon-double-angle-right"></i>
+									修改头像
+								</a>
+							</li>
+						</ul>
 					</li>
 					</ul>
-					
+	</c:if>			
 				<div class="sidebar-collapse" id="sidebar-collapse">
 					<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
 				</div>
@@ -180,7 +240,7 @@
 				</script>
 			</div>
 
-			<div class="main-content">
+			<!-- <div class="main-content">
 				<div class="breadcrumbs" id="breadcrumbs">
 					<script type="text/javascript">
 						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
@@ -196,31 +256,31 @@
 							<a href="#">Other Pages</a>
 						</li>
 						<li class="active">Blank Page</li>
-					</ul><!-- .breadcrumb -->
+					</ul>.breadcrumb
 
 
 
 					<div style="width:700px;height:400px;border:2px solid red;"></div>
-					<!-- <div class="nav-search" id="nav-search">
+					<div class="nav-search" id="nav-search">
 						<form class="form-search">
 							<span class="input-icon">
 								<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
 								<i class="icon-search nav-search-icon"></i>
 							</span>
 						</form>
-					</div> --><!-- #nav-search -->
+					</div> --><!-- #nav-search
 				</div>
 
 				<div class="page-content">
 					<div class="row">
 						<div class="col-xs-12">
-							<!-- PAGE CONTENT BEGINS -->
+							PAGE CONTENT BEGINS
 
-							<!-- PAGE CONTENT ENDS -->
-						</div><!-- /.col -->
-					</div><!-- /.row -->
-				</div><!-- /.page-content -->
-			</div><!-- /.main-content -->
+							PAGE CONTENT ENDS
+						</div>/.col
+					</div>/.row
+				</div>/.page-content
+			</div>/.main-content -->
 
 		<!-- 设置开始 -->
 				<div class="ace-settings-container" id="ace-settings-container">
@@ -287,3 +347,4 @@
 	<script type="text/javascript">
 		if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 	</script>
+	
