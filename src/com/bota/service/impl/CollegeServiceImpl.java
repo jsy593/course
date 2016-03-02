@@ -39,6 +39,14 @@ public class CollegeServiceImpl implements CollegeService{
 	}
 	
 	/**
+	 * 查询学院的数量
+	 * @return 
+	 */
+	public Map<String, Object> selectCollegeNumber(){
+		return collegeDaoImpl.selectCollegeNumber();
+	}
+	
+	/**
 	 * 根据id查询学院
 	 * @param id
 	 * @return
@@ -75,4 +83,5 @@ public class CollegeServiceImpl implements CollegeService{
 	public boolean deleteByIds(String ids){
 		return collegeDao.deleteByPrimaryKeys(ids);
 	}
+	
 }

@@ -50,7 +50,7 @@
 <c:if test="${sessionScope.user.identity  ==  0}">
 				<ul class="nav nav-list">
 					<li class="active">
-						<a href="collegePage.do">
+						<a href="collegeListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-dashboard"></i>
 							<span class="menu-text">学院管理 </span>
 						</a>

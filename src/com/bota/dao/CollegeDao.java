@@ -36,4 +36,10 @@ public interface CollegeDao {
 	 * @return
 	 */
 	boolean deleteByPrimaryKeys(String ids);
+
+	/**
+	 * 查询学院的数量
+	 * @return 
+	 */
+	Map<String, Object> selectCollegeNumber();
 }

@@ -41,9 +41,23 @@ public class CollegeController {
 	 */
 	
 	@RequestMapping("collegeListByPage")
-	@ResponseBody
-	public void selectAllCollege(int pageNum,int pageSize,HttpServletRequest request){
+	public String selectAllCollege(int pageNum,int pageSize,HttpServletRequest request){
 		request.setAttribute("colleges", collegeService.selectAllCollege(pageNum,pageSize));
+		Map<String, Object> numberMap = collegeService.selectCollegeNumber();
+		if(numberMap != null && numberMap.size() > 0){
+			int count = Integer.parseInt(numberMap.get("count").toString());
+			int totalPage  = 0;
+			if(count % 5 != 0 ){
+				totalPage =count/5 + 1; 
+			}else{
+				totalPage =count/5;
+			}
+			request.setAttribute("count",numberMap.get("count"));
+			request.setAttribute("totalPage",totalPage);
+		}
+		request.setAttribute("pageNum", pageNum);
+		
+		return "college/college";
 	}
 	
 	/**
@@ -88,5 +102,8 @@ public class CollegeController {
 		return collegeService.deleteByIds(ids);
 	}
 	
+	public static void main(String[] args) {
+		System.out.println(1/5 +1);
+	}
 	
 }

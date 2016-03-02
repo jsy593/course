@@ -19,6 +19,12 @@ public interface CollegeService {
 	public List<Map<String, Object>> selectAllCollege(int pageNum,int pageSize);
 	
 	/**
+	 * 查询学院的数量
+	 * @return 
+	 */
+	Map<String, Object> selectCollegeNumber();
+	
+	/**
 	 * 根据id查询学院
 	 * @param id
 	 * @return
