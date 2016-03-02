@@ -2,15 +2,10 @@ package com.bota.controller;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bota.bean.User;
@@ -46,8 +41,15 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("personalCenter/myself")
-	public String myselfPage(){
+	
+	@RequestMapping("exit")
+	public String exit(HttpSession session){		
+		session.removeAttribute("user");
+		return "redirect:login.html";
+	}
+	
+	@RequestMapping("myselfPage")
+	public String myselfPage(){ 
 		return "personalCenter/myself";
 	}
 	@RequestMapping("studentsCourseSelection.do")

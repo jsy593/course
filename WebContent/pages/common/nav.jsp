@@ -50,7 +50,7 @@
 <c:if test="${sessionScope.user.identity  ==  0}">
 				<ul class="nav nav-list">
 					<li class="active">
-						<a href="myself.do">
+						<a href="collegePage.do">
 							<i class="icon-dashboard"></i>
 							<span class="menu-text">学院管理 </span>
 						</a>
@@ -82,7 +82,7 @@
 					
 
 					<li>
-						<a href="personalCenter/myself.do" class="dropdown-toggle">
+						<a href="myselfPage.do" class="dropdown-toggle">
 							<i class="icon-desktop"></i>
 							<span class="menu-text">个人中心 </span>
 
@@ -92,14 +92,14 @@
 						<ul class="submenu">
 							
 							<li>
-								<a href="buttons.html">
+								<a href="myselfPage.do">
 									<i class="icon-double-angle-right"></i>
 									个人信息
 								</a>
 							</li>
 						
 							<li>
-								<a href="elements.html">
+								<a href="myselfPage.do">
 									<i class="icon-double-angle-right"></i>
 									修改密码
 								</a>
@@ -107,7 +107,7 @@
 
 
 							<li>
-								<a href="treeview.html">
+								<a href="myselfPage.do">
 									<i class="icon-double-angle-right"></i>
 									修改头像
 								</a>
@@ -120,23 +120,23 @@
 <c:if test="${sessionScope.user.identity  == 1}">
 		<ul class="nav nav-list">
 					<li>
-						<a href="typography.html">
+						<a href="collegePage.do">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">课程管理</span>
 						</a>
 					</li>
 
 					<li>
-						<a href="#" class="dropdown-toggle">
+						<a href="teacher/student.do" class="dropdown-toggle">
 							<i class="icon-list"></i>
 							<span class="menu-text">学生管理 </span>
 
 							<b class="arrow icon-angle-down"></b>
 						</a>
 
-						<ul class="submenu">
+						<ul class="stat">
 							<li>
-								<a href="tables.html">
+								<a href="addStudentsGrade.do">
 									<i class="icon-double-angle-right"></i>
 									成绩录入
 								</a>
@@ -145,7 +145,7 @@
 					</li>
 					
 					<li>
-						<a href="#" class="dropdown-toggle">
+						<a href="myselfPage.do" class="dropdown-toggle">
 							<i class="icon-desktop"></i>
 							<span class="menu-text">个人中心 </span>
 
@@ -155,14 +155,14 @@
 						<ul class="submenu">
 						
 							<li>
-								<a href="buttons.html">
+								<a href="myselfPage.do">
 									<i class="icon-double-angle-right"></i>
 									个人信息
 								</a>
 							</li>
 						
 							<li>
-								<a href="elements.html">
+								<a href="updatePasswordPage.do">
 									<i class="icon-double-angle-right"></i>
 									修改密码
 								</a>
@@ -170,7 +170,7 @@
 
 
 							<li>
-								<a href="treeview.html">
+								<a href="updateHeadImagePage.do">
 									<i class="icon-double-angle-right"></i>
 									修改头像
 								</a>
@@ -199,7 +199,7 @@
 					
 					
 					<li>
-						<a href="#" class="dropdown-toggle">
+						<a href="myselfPage.do" class="dropdown-toggle">
 							<i class="icon-desktop"></i>
 							<span class="menu-text">个人中心 </span>
 
@@ -208,21 +208,21 @@
 
 						<ul class="submenu">
 							<li>
-								<a href="buttons.html">
+								<a href="myselfPage.do">
 									<i class="icon-double-angle-right"></i>
 									个人信息
 								</a>
 							</li>
 						
 							<li>
-								<a href="elements.html">
+								<a href="myselfPage.do">
 									<i class="icon-double-angle-right"></i>
 									修改密码
 								</a>
 							</li>
 
 							<li>
-								<a href="treeview.html">
+								<a href="myselfPage.do">
 									<i class="icon-double-angle-right"></i>
 									修改头像
 								</a>

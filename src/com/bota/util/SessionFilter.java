@@ -12,7 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 /**
  * 登录过滤
  * 
- * @author 周化益
+ * @author bota
  */
 public class SessionFilter extends OncePerRequestFilter {
 	@Override
@@ -21,7 +21,7 @@ public class SessionFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		// 不过滤的uri
 		String[] notFilter = new String[] { "login.html", "index.html",
-				"denglu.html", "login.jsp", "index.jsp","/news/" };
+				"denglu.html", "login.jsp", "index.jsp" };
 
 		// 请求的url
 		String url = request.getRequestURI();
@@ -41,14 +41,14 @@ public class SessionFilter extends OncePerRequestFilter {
 			// 从session中获取登录者实体
 			Object obj = request.getSession().getAttribute("user");
 			if (null == obj) {
-				request.getRequestDispatcher("/denglu.html").forward(
+				request.getRequestDispatcher("/login.html").forward(
 						request, response);
 			} else {
 				// 如果session中存在登录者实体，则继续
 				//filterChain.doFilter(request, response);
 				String urlName = urlObje[urlObje.length-1];
-				if(urlName.equalsIgnoreCase("liveRoom2")) {
-					urlName = "/denglu.html";
+				if(urlName.equalsIgnoreCase("course")) {
+					urlName = "/login.html";
 				}
 				request.getRequestDispatcher(urlName).forward(
 						request, response);

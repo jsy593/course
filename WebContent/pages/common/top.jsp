@@ -39,7 +39,7 @@
 								<li class="divider"></li>
 
 								<li>
-									<a href="#">
+									<a href="exit.do">
 										<i class="icon-off"></i>
 										退出
 									</a>

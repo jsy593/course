@@ -37,7 +37,7 @@ function login(){
 			    time: 2000,
 			    title:'提示'//2秒关闭（如果不配置，默认是3秒）
 			}, function(){
-				window.location.href= "personalCenter/myself.do";
+				window.location.href= "myselfPage.do";
 			}); 
 		}else{
 			layer.alert("账号不存在!",{icon:5});

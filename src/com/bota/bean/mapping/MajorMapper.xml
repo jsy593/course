@@ -5,9 +5,10 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="collegeId" property="collegeid" jdbcType="BIGINT" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, collegeId
+    id, name, collegeId, createTime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -20,10 +21,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.bota.bean.Major" >
-    insert into major (id, name, collegeId
-      )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{collegeid,jdbcType=BIGINT}
-      )
+    insert into major (id, name, collegeId, 
+      createTime)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{collegeid,jdbcType=BIGINT}, 
+      #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.bota.bean.Major" >
     insert into major
@@ -37,6 +38,9 @@
       <if test="collegeid != null" >
         collegeId,
       </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -47,6 +51,9 @@
       </if>
       <if test="collegeid != null" >
         #{collegeid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -59,13 +66,17 @@
       <if test="collegeid != null" >
         collegeId = #{collegeid,jdbcType=BIGINT},
       </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bota.bean.Major" >
     update major
     set name = #{name,jdbcType=VARCHAR},
-      collegeId = #{collegeid,jdbcType=BIGINT}
+      collegeId = #{collegeid,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
