@@ -3,6 +3,21 @@
 <html lang="ch">
 <script type="text/javascript">
 </script>
+<script src="/course/js/jquery-1.9.1.min.js"></script>
+<script src="/course/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/course/assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="/course/assets/js/chosen.jquery.min.js"></script>
+<script src="/course/assets/js/fuelux/fuelux.spinner.min.js"></script>
+<script src="/course/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+<script src="/course/assets/js/date-time/moment.min.js"></script>
+<script src="/course/assets/js/date-time/daterangepicker.min.js"></script>
+<script src="/course/assets/js/bootstrap-colorpicker.min.js"></script>
+<script src="/course/assets/js/jquery.knob.min.js"></script>
+<script src="/course/assets/js/jquery.autosize.min.js"></script>
+<script src="/course/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+<script src="/course/assets/js/jquery.maskedinput.min.js"></script>
+<script src="/course/assets/js/bootstrap-tag.min.js"></script>
+<link rel="stylesheet" href="/course/assets/css/daterangepicker.css" />
 <%@ include file="../common.jsp" %>
 	<div class="main-content">
 				<div class="breadcrumbs" id="breadcrumbs">
@@ -79,55 +94,9 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 入职日期 </label>
 											
-											<div class="input-group col-sm-5">
-													<input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
-													<span class="input-group-addon">
-														<i class="icon-calendar bigger-110 "></i>
-													</span>
+											<div class="col-sm-9">
+													<input   id="form-field-3" type="text" placeholder="请选择日期..."  onclick="laydate()" class="col-xs-10 col-sm-5"/>
 											</div>
-											
-											
-											<div class="widget-body">
-													<div class="widget-main">
-														<label for="id-date-picker-1">Date Picker</label>
-
-														<div class="row">
-															<div class="col-xs-8 col-sm-11">
-																<div class="input-group">
-																	<input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
-																	<span class="input-group-addon">
-																		<i class="icon-calendar bigger-110"></i>
-																	</span>
-																</div>
-															</div>
-														</div>
-
-														<hr />
-														<label for="id-date-range-picker-1">Date Range Picker</label>
-
-														<div class="row">
-															<div class="col-xs-8 col-sm-11">
-																<div class="input-group">
-																	<span class="input-group-addon">
-																		<i class="icon-calendar bigger-110"></i>
-																	</span>
-
-																	<input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" />
-																</div>
-															</div>
-														</div>
-
-														<hr />
-														<label for="timepicker1">Time Picker</label>
-
-														<div class="input-group bootstrap-timepicker">
-															<input id="timepicker1" type="text" class="form-control" />
-															<span class="input-group-addon">
-																<i class="icon-time bigger-110"></i>
-															</span>
-														</div>
-													</div>
-												</div>
 									</div>
 
 									<div class="space-4"></div>
@@ -154,12 +123,9 @@
 					</div><!-- /.row -->
 				</div><!-- /.page-content -->
 			</div><!-- /.main-content -->
-			<script type="text/javascript">
-			window.jQuery || document.write("<script src='../assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
-		</script>
-
 		<script type="text/javascript">
-			if("ontouchend" in document) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+			/*设置日历颜色*/
+			laydate.skin('molv');
 		</script>
 </body>
 </html>
