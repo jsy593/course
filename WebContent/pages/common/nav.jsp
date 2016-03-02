@@ -338,8 +338,6 @@
 		</a>
 	</div><!-- /.main-container -->
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
 	<script type="text/javascript">
 		window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
 	</script>
