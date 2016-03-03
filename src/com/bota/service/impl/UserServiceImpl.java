@@ -51,4 +51,10 @@ public class UserServiceImpl implements UserService{
 	public boolean updateUserById(User user) {
 		return userDao.updateByPrimaryKeySelective(user) > 0;
 	}
+	
+	@Override
+	public boolean addUser(User user){
+		return userDao.insertSelective(user) > 0;
+				
+	}
 }

@@ -60,7 +60,7 @@
 						<!-- 二级菜单开始 -->
 						<ul class="submenu">
 								<li>
-									<a href="collegeListByPage.do?pageNum=1&pageSize=5">
+									<a href="collegeListByPage.do?pageNum=1&pageSize=5" >
 										<i class="icon-double-angle-right"></i>
 										学院列表
 									</a>
@@ -79,15 +79,33 @@
 					</li>
 
 					<li>
-						<a href="typography.html">
+						<a href="javascript:void(0);" class="dropdown-toggle" onclick="majorListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">专业管理</span>
 						</a>
+						
+						<!-- 二级菜单开始 -->
+						<ul class="submenu">
+								<li>
+									<a href="majorListByPage.do?pageNum=1&pageSize=5">
+										<i class="icon-double-angle-right"></i>
+										专业列表
+									</a>
+								</li>
+								
+								<li>
+									<a href="addMajorPage.do">
+										<i class="icon-double-angle-right"></i>
+										添加专业
+									</a>
+								</li>
+							</ul>
+						<!-- 二级菜单结束 -->
 					</li>
 					
 					
-					<li>
-						<a href="typography.html">
+					<li >
+						<a href="javascript:void(0);" class="dropdown-toggle" onclick="majorListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">班级管理</span>
 						</a>

@@ -1,6 +1,5 @@
 package com.bota.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,4 +36,11 @@ public interface UserService {
 	 * 修改用户信息
 	 */
 	public boolean updateUserById(User user);
+	
+	/**
+	 * 添加用户
+	 * @param user 用户实体
+	 * @return
+	 */
+	public boolean addUser(User user);
 }

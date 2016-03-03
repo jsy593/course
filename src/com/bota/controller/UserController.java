@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bota.bean.User;
 import com.bota.service.UserService;
@@ -131,8 +132,8 @@ public class UserController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "updateHeadImage")
-	public boolean updateHeadImage(HttpServletRequest request) throws Exception {
+	@RequestMapping("updateHeadImage")
+	public String updateHeadImage(HttpServletRequest request, RedirectAttributes attribute) throws Exception {
 		HttpSession session = request.getSession();
 		@SuppressWarnings("unchecked")
 		Map<String, Object> userMap = (Map<String, Object>) session.getAttribute("user");
@@ -141,7 +142,30 @@ public class UserController {
 		User user = new User();
 		user.setId(Long.parseLong(id));
 		user.setImageurl(imageUrl);
-		return userService.updateUserById(user);
+		if( userService.updateUserById(user)){
+			attribute.addFlashAttribute("message", "修改成功！");
+			userMap.put("imageUrl", imageUrl);
+		}else{
+			attribute.addFlashAttribute("error", "修改失败！");
+		}
+		return "redirect:pages/personalCenter/myself.jsp";
 	}
 	
+	/**
+	 * 添加用户页面
+	 * @return
+	 */
+	@RequestMapping("addUserPage")
+	public String addUserPage(){
+		return "person/addUser";
+	}
+	
+	/**
+	 * 添加用户
+	 */
+	@RequestMapping("addUser")
+	public boolean addUser(User user){
+		user.setImageurl("assets/avatars/user.jpg");
+		return userService.addUser(user);
+	}
 }

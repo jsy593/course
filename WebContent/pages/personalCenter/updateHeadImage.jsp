@@ -44,7 +44,7 @@
 			                       	 	</div>
 			                        <!-- 修改头像结束 -->
 								</div>
-					</form>				
+								
 						
 				<!---------------------------------提交按钮开始 ------------------------------->
 				
@@ -66,6 +66,7 @@
 										</div>
 									</div>
 				<!---------------------------------提交按钮结束      ------------------------------->		
+				</form>	
 							<!-- PAGE CONTENT ENDS -->
 						</div><!-- /.col -->
 					</div><!-- /.row -->
@@ -73,10 +74,31 @@
 			</div><!-- /.main-content -->
 		<script type="text/javascript">
 		
+		/**
+		*修改完图片显示成功或失败
+		*/
+// 		if("${message}"){
+// 			alert("123");
+// 			layer.msg('${message}', {icon: 6,time:2000});
+// 		}else if('${error}'){
+// 			alert("");
+// 			layer.msg('${error}', {icon: 5,time:2000});
+// 		}
+		
+		if("${message}"){
+			alert("23123");
+	        layer.msg('${message}', {
+	            offset: 0,
+	        });
+	    }
+	    if("${error}"){
+	        layer.msg('${error}', {
+	            offset: 0,
+	            shift: 6
+	        });
+	    }
+		
 		$('input[class=js_file]').change(function() {
-// 		    $(".js_imgUrl").attr("src","");
-// 		    $(".js_imgUrl").attr("src",path);
-// 		    $('#uploadurl').val(path);
             var fileNames = '';
             $.each(this.files, function() {
                 fileNames += '<span >' + this.name + '</span>';
