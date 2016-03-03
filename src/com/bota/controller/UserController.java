@@ -56,4 +56,15 @@ public class UserController {
 	public List<Map<String, Object>> studentsCourseSelection(long courseId){
 		return userService.studentsCourseSelection(courseId);
 	}
+	
+	@RequestMapping("updatePwdPage")
+	public String updatePwdPage(){
+		return "updatePwd";
+	}
+	
+	@RequestMapping("updateHeadImagePage")
+	public String updateHeadImagePage(){
+		return "updateHeadImage";
+	}
+	
 }

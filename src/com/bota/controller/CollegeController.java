@@ -1,5 +1,6 @@
 package com.bota.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bota.bean.College;
 import com.bota.service.CollegeService;
+import com.bota.util.DateStrConvert;
+import com.bota.util.MapAction;
 
 @Controller
 public class CollegeController {
@@ -20,9 +23,16 @@ public class CollegeController {
 	private CollegeService collegeService;
 	
 	
-	@RequestMapping("collegePage")
-	public String collegePage(){
-		return "college/college";
+	@RequestMapping("addCollegePage")
+	public String addCollegePage(){
+		return "college/addCollege";
+	}
+	
+	@RequestMapping("editCollegePage")
+	public String editCollegePage(long id,HttpServletRequest request){
+		College college = collegeService.selectOne(id);
+		request.setAttribute("college", college);
+		return "college/editCollege";
 	}
 	
 	/**
@@ -70,6 +80,25 @@ public class CollegeController {
 	public College selectOne(long id){
 		return collegeService.selectOne(id);
 	}
+	
+	
+	/**
+	 * 添加学院
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("addCollege")
+	@ResponseBody
+	public boolean addCollege(MapAction mapVo){
+		Map<String, Object> map = mapVo.getMapVo();
+		College college = new College();
+		college.setName(map.get("name").toString());
+		Date date = DateStrConvert.strToDate(map.get("createtime").toString(), "yyyy-MM-dd");
+		college.setCreatetime(date);
+		return collegeService.addCollege(college);
+	}
+	
+	
 	/**
 	 * 修改学院的信息
 	 * @param college
@@ -77,7 +106,13 @@ public class CollegeController {
 	 */
 	@RequestMapping("updateCollege")
 	@ResponseBody
-	public boolean updateById(College college){
+	public boolean updateById(MapAction mapVo){
+		Map<String, Object> map = mapVo.getMapVo();
+		College college = new College();
+		college.setId(Long.parseLong(map.get("id").toString()));
+		college.setName(map.get("name").toString());
+		Date date = DateStrConvert.strToDate(map.get("createtime").toString(), "yyyy-MM-dd");
+		college.setCreatetime(date);
 		return collegeService.updateById(college);
 	}
 	/**
@@ -100,10 +135,6 @@ public class CollegeController {
 	@ResponseBody
 	public boolean deleteById(String ids){
 		return collegeService.deleteByIds(ids);
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(1/5 +1);
 	}
 	
 }

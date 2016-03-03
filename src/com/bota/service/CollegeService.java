@@ -50,4 +50,11 @@ public interface CollegeService {
 	 */
 	public boolean deleteByIds(String id);
 
+	/**
+	 * 添加学院
+	 * @param college
+	 * @return
+	 */
+	public boolean addCollege(College college);
+
 }

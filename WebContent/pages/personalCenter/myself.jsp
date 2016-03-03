@@ -76,12 +76,11 @@
 										
 						
 						
-						<!-- 管理员可修改 -->				
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 入职日期 </label>
 											
 											<div class="col-sm-9">
-													<input   id="form-field-3" readOnly="true" type="text" value="${sessionScope.user.createTime}"  onclick="laydate()" class="col-xs-10 col-sm-5"/>
+													<input   id="form-field-3" readOnly="true" type="text" value="${sessionScope.user.createTime}"  class="col-xs-10 col-sm-5"/>
 											</div>
 									</div>
 

@@ -83,5 +83,13 @@ public class CollegeServiceImpl implements CollegeService{
 	public boolean deleteByIds(String ids){
 		return collegeDao.deleteByPrimaryKeys(ids);
 	}
+
+	/**
+	 * 添加学院
+	 */
+	@Override
+	public boolean addCollege(College college) {
+		return collegeDao.insertSelective(college) > 0;
+	}
 	
 }

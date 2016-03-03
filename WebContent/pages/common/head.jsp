@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="<%=basePath%>/assets/css/ace-rtl.min.css" />
 	<link rel="stylesheet" href="<%=basePath%>/assets/css/ace-skins.min.css" />
 	<script src="<%=basePath%>/js/jquery-1.9.1.min.js"></script>
+	<script src="<%=basePath%>/js/course/common.js"></script>
 	<script src="<%=basePath%>/assets/js/ace-elements.min.js"></script>
 	<script src="<%=basePath%>/assets/js/ace.min.js"></script>
 	<script src="<%=basePath%>/assets/js/ace-extra.min.js"></script>

@@ -9,12 +9,13 @@
   <sql id="Base_Column_List" >
     id, name, createTime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultType="com.bota.bean.College" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from college
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from college
     where id = #{id,jdbcType=BIGINT}
