@@ -46,4 +46,9 @@ public class UserServiceImpl implements UserService{
 		String password = map.get("newPwd").toString();
 		return userDaoImpl.updatePwd(id, password);
 	}
+
+	@Override
+	public boolean updateUserById(User user) {
+		return userDao.updateByPrimaryKeySelective(user) > 0;
+	}
 }

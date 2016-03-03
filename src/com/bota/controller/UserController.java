@@ -1,19 +1,27 @@
 package com.bota.controller;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.bota.bean.User;
 import com.bota.service.UserService;
 import com.bota.util.Dictionary;
+import com.bota.util.FileUtil;
 import com.bota.util.MapAction;
 
 /**
@@ -120,6 +128,45 @@ public class UserController {
 	@RequestMapping("updateHeadImagePage")
 	public String updateHeadImagePage(){
 		return "personalCenter/updateHeadImage";
+	}
+
+	@RequestMapping(value = "updateHeadImage")
+	public String updateHeadImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		@SuppressWarnings("unchecked")
+		Map<String, Object> userMap = (Map<String, Object>) session.getAttribute("user");
+		// 解析器解析request的上下文
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		// 先判断request中是否包含multipart类型的数据，
+		if (multipartResolver.isMultipart(request)) {
+			// 再将request中的数据转化成multipart类型的数据
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+			Iterator iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile((String) iter.next());
+				if (file != null) {
+					String fileName = file.getOriginalFilename();
+					String suffix = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+					String id = userMap.get("id").toString();
+					String imageUrl = "upload/" + id + "/" + id + suffix;
+					String path = request.getSession().getServletContext().getRealPath("/") + imageUrl;
+					File filePath = new File(path);
+					if (!filePath.exists()) {
+						File parentFile = filePath.getParentFile();
+						if (!parentFile.exists()) {
+							FileUtil.createDirectory(parentFile.getPath());
+						}
+						filePath.createNewFile();
+					}
+					file.transferTo(filePath);
+					User user = new User();
+					user.setId(Long.parseLong(id));
+					user.setImageurl(imageUrl);
+					userService.updateUserById(user);
+				}
+			}
+		}
+		return "/success";
 	}
 	
 }

@@ -33,4 +33,8 @@ public interface UserService {
 	 */
 	public boolean updatePwd(Map<String,Object> map);
 		
+	/**
+	 * 修改用户信息
+	 */
+	public boolean updateUserById(User user);
 }
