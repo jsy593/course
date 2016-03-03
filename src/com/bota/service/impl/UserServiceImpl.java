@@ -1,5 +1,6 @@
 package com.bota.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public List<Map<String, Object>> studentsCourseSelection(long courseId) {
-		return null;
+		return userDaoImpl.studentsCourseSelection(courseId);
 	}
 
 	@Override
@@ -39,4 +40,10 @@ public class UserServiceImpl implements UserService{
 		return userDaoImpl.verifyByUser(usernumber,password,identity);
 	}
 
+	@Override
+	public boolean updatePwd(Map<String, Object> map){
+		long id = Long.parseLong(map.get("id").toString());
+		String password = map.get("newPwd").toString();
+		return userDaoImpl.updatePwd(id, password);
+	}
 }

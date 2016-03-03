@@ -1,5 +1,6 @@
 package com.bota.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,5 +25,12 @@ public interface UserService {
 	 * @return
 	 */
 	public Map<String, Object> verifyByUser(User user);
+
+	/**
+	 * 修改密码
+	 * @param map
+	 * @return
+	 */
+	public boolean updatePwd(Map<String,Object> map);
 		
 }

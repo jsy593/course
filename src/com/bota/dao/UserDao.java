@@ -37,5 +37,13 @@ public interface UserDao {
 	 * @return
 	 */
 	public Map<String, Object> verifyByUser(long usernumber, String password, int identity);
+
+	/**
+	 * 修改密码
+	 * @param id 用户id
+	 * @param password 新密码
+	 * @return
+	 */
+	boolean updatePwd(long id, String password);
 	
 }

@@ -92,4 +92,10 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 		return resultMap;
 	}
 	
+	@Override
+	public boolean updatePwd(long id,String password){
+		String sql = "update user set password='"+ password +"' where id = "+ id;
+		return super.updateClass(sql);
+	}
+	
 }

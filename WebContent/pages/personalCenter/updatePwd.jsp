@@ -40,7 +40,7 @@
 										</label>
 
 										<div class="col-sm-9">
-											<input type="text"  id="form-field-1"  class="js_name col-xs-10 col-sm-5" />
+											<input type="password"  id="form-field-1"  class="js_oldPwd col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									<div class="space-4"></div>
@@ -51,7 +51,7 @@
 										</label>
 
 										<div class="col-sm-9">
-											<input type="text"  id="form-field-1"  class="js_name col-xs-10 col-sm-5" />
+											<input type="password"  id="form-field-1"  class="js_newPwd col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									<div class="space-4"></div>
@@ -61,7 +61,7 @@
 										</label>
 
 										<div class="col-sm-9">
-											<input type="text"  id="form-field-1"  class="js_name col-xs-10 col-sm-5" />
+											<input type="password"  id="form-field-1"  class="js_confirmPwd col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									<div class="space-4"></div>
@@ -95,28 +95,42 @@
 			添加学院
 		*/
 		function addCollege(){
-			var name = $.trim($(".js_name").val());
-			if(name == "" || name == null){
-				layer.alert('请输入学院名称!', {icon: 5});
+			var oldPwd = $.trim($(".js_oldPwd").val());
+			if(oldPwd == "" || oldPwd == null){
+				layer.alert('请输入原密码!', {icon: 5});
 				return;
 			}
 			
-			var createTime = $.trim($(".js_createTime").val());
-			if(createTime == null  || createTime ==""){
-				layer.alert('请选择日期!', {icon: 5});
+			var newPwd = $.trim($(".js_newPwd").val());
+			if(newPwd == null  || newPwd ==""){
+				layer.alert('请输入新密码!', {icon: 5});
+				return;
+			}
+			
+			var confirmPwd = $.trim($(".js_confirmPwd").val());
+			if(confirmPwd == null  || confirmPwd ==""){
+				layer.alert('请输入确认密码!', {icon: 5});
+				return;
+			}
+			if(confirmPwd != newPwd){
+				layer.alert('密码不一致，请重新输入!', {icon: 5});
+				newPwd.val("");
+				confirmPwd.val("");
 				return;
 			}
 			
 			var mapVo = {};
-			mapVo.name = name;
-			mapVo.createtime = createTime;
-			$.post("addCollege.do",{'mapVo':mapVo},function(data){
-				if(data == true){
-					layer.msg('添加成功!', {icon: 6,time:2000},function(){
-						window.location.reload();
+			mapVo.oldPwd = oldPwd;
+			mapVo.newPwd = newPwd;
+			$.post("updatePwd.do",{'mapVo':mapVo},function(data){
+				if(data.status == "success"){
+					layer.msg(data.message, {icon: 6,time:2000},function(){
+						window.location.href= "myselfPage.do";
 					});
 				}else{
-					layer.msg('添加失败!', {icon: 5});
+					layer.msg(data.message, {icon: 5},function(){
+						window.location.reload();
+					});
 				}
 			});
 		}
