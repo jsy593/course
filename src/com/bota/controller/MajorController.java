@@ -1,6 +1,7 @@
 package com.bota.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bota.bean.Major;
+import com.bota.service.CollegeService;
 import com.bota.service.MajorService;
 import com.bota.util.DateStrConvert;
 import com.bota.util.MapAction;
@@ -22,15 +25,26 @@ public class MajorController {
 	@Autowired
 	private MajorService majorService;
 	
+	@Autowired
+	private CollegeService collegeService;
 	
 	@RequestMapping("addMajorPage")
-	public String addMajorPage(){
-		return "major/addMajor";
+	public ModelAndView addMajorPage(){
+		List<Map<String, Object>> listMap = collegeService.selectAllCollege();
+		Map<String,Object> map = new HashMap<String, Object>();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("major/addMajor");
+		model.addObject(map);
+		model.addObject("colleges", listMap);
+		model.addObject("status", "123");
+		return model;
 	}
 	
 	@RequestMapping("editMajorPage")
 	public String editMajorPage(long id,HttpServletRequest request){
 		Major major = majorService.selectOne(id);
+		List<Map<String, Object>> listMap = collegeService.selectAllCollege();
+		request.setAttribute("colleges", listMap);
 		request.setAttribute("major", major);
 		return "major/editMajor";
 	}
@@ -112,6 +126,7 @@ public class MajorController {
 		Major major = new Major();
 		major.setId(Long.parseLong(map.get("id").toString()));
 		major.setName(map.get("name").toString());
+		major.setCollegeid(Long.parseLong(map.get("collegeid").toString()));
 		Date date = DateStrConvert.strToDate(map.get("createtime").toString(), "yyyy-MM-dd");
 		major.setCreatetime(date);
 		return majorService.updateById(major);

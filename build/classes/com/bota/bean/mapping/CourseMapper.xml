@@ -17,7 +17,7 @@
     id, courseNumber, name, credit, teacherId, schooltime, address, specialtyId, numberLimit, 
     isFinish
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultType="com.bota.bean.Course" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from course

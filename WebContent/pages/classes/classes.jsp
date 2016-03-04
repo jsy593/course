@@ -46,15 +46,15 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>专业名</th>
-														<th>所属学院</th>
+														<th>班级名</th>
+														<th>所属专业</th>
 														<th>创建时间</th>
 														<th>操作</th>
 													</tr>
 												</thead>
 
 												<tbody>
-													<c:forEach items="${majors}" var="major" >
+													<c:forEach items="${classes}" var="clazz" >
 													<tr>
 														<th class="center">
 															<label>
@@ -62,24 +62,24 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>${major.name }</th>
-														<th>${major.cname }</th>
-														<th>${major.createTime }</th>
+														<th>${clazz.name }</th>
+														<th>${clazz.mname }</th>
+														<th>${clazz.createTime }</th>
 														<th>
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
-																<a class="blue" href="addmajorPage.do" >
+																<a class="blue" href="addClassPage.do" >
 																	<i class="icon-plus-sign bigger-130"></i>
 																</a>
 																<!-- <a class="blue" href="#">
 																	<i class="icon-zoom-in bigger-130"></i>
 																</a> -->
 
-																<a class="green" href="editMajorPage.do?id=${major.id }">
+																<a class="green" href="editClassPage.do?id=${clazz.id }">
 																	<i class="icon-pencil bigger-130"></i>
 																</a>
 
-																<a class="red" href="javascript:void(0);" onclick="deleteMajor(${major.id })">
+																<a class="red" href="javascript:void(0);" onclick="deleteClass(${clazz.id })">
 																	<i class="icon-trash bigger-130"></i>
 																</a>
 															</div>
@@ -135,7 +135,7 @@
 										<!-- 分页开始 -->
 												<ul class="pagination pull-right no-margin">
 													<li class="prev">
-														<a href="majorListByPage.do?pageSize=5&pageNum=${pageNum-1}">
+														<a href="classListByPage.do?pageSize=5&pageNum=${pageNum-1}">
 															<i class="icon-double-angle-left"></i>
 														</a>
 													</li>
@@ -145,7 +145,7 @@
 												<c:if test="${pageNum+4 <= totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${pageNum +4 }">
 															<li >
-																<a href="majorListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
+																<a href="classListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -153,7 +153,7 @@
 												<c:if test="${pageNum+4> totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${totalPage }">
 															<li >
-																<a href="majorListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
+																<a href="classListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -161,7 +161,7 @@
 													
 												<c:if test="${pageNum < totalPage}">
 													<li class="next">
-														<a href="majorListByPage.do?pageSize=5&pageNum=${page+1}">
+														<a href="classListByPage.do?pageSize=5&pageNum=${page+1}">
 															<i class="icon-double-angle-right"></i>
 														</a>
 													</li>
@@ -178,9 +178,9 @@
 			/*设置日历颜色*/
 			laydate.skin('molv');
 			
-			function deleteMajor(id){
+			function deleteClass(id){
 				layer.confirm('确认要删除吗?', {icon: 3, title:'提示'}, function(){
-				    $.post("deleteMajor.do",{"id":id},function(data){
+				    $.post("deleteClass.do",{"id":id},function(data){
 				    	if(data == true){
 				    		layer.msg('删除成功!', {icon: 6,time:2000},function(){
 				    			history.go(0);

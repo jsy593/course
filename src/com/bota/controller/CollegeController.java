@@ -41,8 +41,8 @@ public class CollegeController {
 	 */
 	@RequestMapping("collegeList")
 	@ResponseBody
-	public List<Map<String, Object>> selectAllCollege(){
-		return collegeService.selectAllCollege();
+	public void selectAllCollege(HttpServletRequest request){
+		request.setAttribute("colleges", collegeService.selectAllCollege());
 	}
 	
 	/**

@@ -105,19 +105,57 @@
 					
 					
 					<li >
-						<a href="javascript:void(0);" class="dropdown-toggle" onclick="majorListByPage.do?pageNum=1&pageSize=5">
+						<a href="javascript:void(0);" class="dropdown-toggle" onclick="classListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">班级管理</span>
 						</a>
+						
+						<!-- 二级菜单开始 -->
+						<ul class="submenu">
+								<li>
+									<a href="classListByPage.do?pageNum=1&pageSize=5">
+										<i class="icon-double-angle-right"></i>
+										班级列表
+									</a>
+								</li>
+								
+								<li>
+									<a href="addClassPage.do">
+										<i class="icon-double-angle-right"></i>
+										添加班级
+									</a>
+								</li>
+							</ul>
+						<!-- 二级菜单结束 -->
+						
 					</li>
 					
 					
 					
 					<li>
-						<a href="typography.html">
+						<a href="javascript:void(0);" class="dropdown-toggle" onclick="adminListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">人员管理</span>
 						</a>
+						
+						
+						<!-- 二级菜单开始 -->
+						<ul class="submenu">
+								<li>
+									<a href="classListByPage.do?pageNum=1&pageSize=5">
+										<i class="icon-double-angle-right"></i>
+										管理员列表
+									</a>
+								</li>
+								
+								<li>
+									<a href="addClassPage.do">
+										<i class="icon-double-angle-right"></i>
+										添加班级
+									</a>
+								</li>
+							</ul>
+						<!-- 二级菜单结束 -->
 					</li>
 					
 </c:if>
@@ -187,9 +225,16 @@
 							<li>
 								<a href="myselfPage.do">
 									<i class="icon-double-angle-right"></i>
-									个人信息
+									我的主页
 								</a>
 							</li>
+							
+<!-- 							<li> -->
+<!-- 								<a href="myselfPage.do"> -->
+<!-- 									<i class="icon-double-angle-right"></i> -->
+<!-- 									修改信息 -->
+<!-- 								</a> -->
+<!-- 							</li> -->
 						
 							<li>
 								<a href="updatePwdPage.do">

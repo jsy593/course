@@ -10,7 +10,7 @@
   <sql id="Base_Column_List" >
     id, name, collegeId, createTime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultType="com.bota.bean.Major" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from major

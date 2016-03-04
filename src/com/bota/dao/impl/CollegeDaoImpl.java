@@ -47,7 +47,7 @@ public class CollegeDaoImpl extends CommonDaoImpl<College> implements CollegeDao
 	
 	@Override
 	public List<Map<String, Object>> selectAllCollege(){
-		String sql = "select id,name,date_format(createTime,'%Y-%m-%d') createTime from college";
+		String sql = "select id,name,createTime from college";
 		return super.findManyBySql(sql);
 	}
 

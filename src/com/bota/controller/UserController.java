@@ -143,12 +143,12 @@ public class UserController {
 		user.setId(Long.parseLong(id));
 		user.setImageurl(imageUrl);
 		if( userService.updateUserById(user)){
-			attribute.addFlashAttribute("message", "修改成功！");
+			request.setAttribute("message", "修改成功！");
 			userMap.put("imageUrl", imageUrl);
 		}else{
-			attribute.addFlashAttribute("error", "修改失败！");
+			request.setAttribute("error", "修改失败！");
 		}
-		return "redirect:pages/personalCenter/myself.jsp";
+		return "personalCenter/myself";
 	}
 	
 	/**

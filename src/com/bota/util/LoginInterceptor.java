@@ -25,6 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (obj == null || "".equals(obj.toString())) {  
             res.sendRedirect(LOGIN_URL);  
         }  
+        System.out.println("hdsfsa ");
         return true;  
     }  
   

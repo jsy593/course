@@ -18,9 +18,9 @@
 						</li>
 
 						<li>
-							<a href="majorListByPage.do">专业管理</a>
+							<a href="classListByPage.do">班级管理</a>
 						</li>
-						<li class="active">添加专业</li>
+						<li class="active">添加班级</li>
 					</ul><!-- .breadcrumb -->
 
 					<!-- <div class="nav-search" id="nav-search">
@@ -40,20 +40,20 @@
 							<form class="form-horizontal" role="form">
 							
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">请选择学院
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">请选择专业
 										</label>
 										
 										<div class="col-sm-9">
 											<select class="js_select col-xs-10 col-sm-5" id="form-field-1">
-											<c:forEach items="${colleges}" var="college">
-												<option value="${college.id}">${college.name }</option>
+											<c:forEach items="${majors}" var="major">
+												<option value="${major.id}">${major.name }</option>
 											</c:forEach>
 											</select>
 										</div>
 									</div>
 									
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">专业名称
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">班级名称
 										</label>
 
 										<div class="col-sm-9">
@@ -82,7 +82,7 @@
 				
 						<div class="clearfix form-actions">
 										<div class="col-md-offset-3 col-md-9">
-											<button class="btn btn-info" type="button" onclick="addMajor()">
+											<button class="btn btn-info" type="button" onclick="addClass()">
 												<i class="icon-ok bigger-110"></i>
 												提交
 											</button>
@@ -102,12 +102,12 @@
 			</div><!-- /.main-content -->
 		<script type="text/javascript">
 		/**
-			添加专业
+			添加班级
 		*/
-		function addMajor(){
+		function addClass(){
 			var name = $.trim($(".js_name").val());
 			if(name == "" || name == null){
-				layer.alert('请输入专业名称!', {icon: 5});
+				layer.alert('请输入班级名称!', {icon: 5});
 				return;
 			}
 			
@@ -120,8 +120,8 @@
 			var mapVo = {};
 			mapVo.name = name;
 			mapVo.createtime = createTime;
-			mapVo.collegeid = $(".js_select option:selected").val();
-			$.post("addMajor.do",{'mapVo':mapVo},function(data){
+			mapVo.majorid = $(".js_select option:selected").val();
+			$.post("addClass.do",{'mapVo':mapVo},function(data){
 				if(data == true){
 					layer.msg('添加成功!', {icon: 6,time:2000},function(){
 						window.location.reload();
@@ -133,7 +133,7 @@
 		}
 		
 			/*设置日历颜色*/
-			laydate.skin('dahong');
+			laydate.skin('molv');
 		</script>
 </body>
 </html>

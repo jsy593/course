@@ -5,11 +5,12 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="majorId" property="majorid" jdbcType="BIGINT" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, majorId
+    id, name, majorId, createTime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultType="com.bota.bean.Classes" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from classes
@@ -20,10 +21,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.bota.bean.Classes" >
-    insert into classes (id, name, majorId
-      )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{majorid,jdbcType=BIGINT}
-      )
+    insert into classes (id, name, majorId, 
+      createTime)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{majorid,jdbcType=BIGINT}, 
+      #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.bota.bean.Classes" >
     insert into classes
@@ -37,6 +38,9 @@
       <if test="majorid != null" >
         majorId,
       </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -47,6 +51,9 @@
       </if>
       <if test="majorid != null" >
         #{majorid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -59,13 +66,17 @@
       <if test="majorid != null" >
         majorId = #{majorid,jdbcType=BIGINT},
       </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bota.bean.Classes" >
     update classes
     set name = #{name,jdbcType=VARCHAR},
-      majorId = #{majorid,jdbcType=BIGINT}
+      majorId = #{majorid,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

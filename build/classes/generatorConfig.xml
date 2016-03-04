@@ -26,12 +26,12 @@
         </javaClientGenerator>    
         
         
-        
-        <table tableName="college" domainObjectName="College" enableCountByExample="false" 
+         <table tableName="classes" domainObjectName="Classes" enableCountByExample="false" 
         enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
         selectByExampleQueryId="false"></table>
         
-        <table tableName="major" domainObjectName="Major" enableCountByExample="false" 
+        
+        <table tableName="college" domainObjectName="College" enableCountByExample="false" 
         enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
         selectByExampleQueryId="false"></table>
         

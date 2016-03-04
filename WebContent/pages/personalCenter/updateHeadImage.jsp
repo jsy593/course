@@ -1,9 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> --%>
+<%-- <c:set var="ctx" value="${pageContext.request.contextPath}"/> --%>
+
 <!DOCTYPE html>
 <html lang="ch">
 <%@ include file="../common.jsp" %>
+
+<script type="text/javascript">
+	function test(){
+		alert("进入test");
+		$.post("test.do",{},function(data){
+			
+		});
+	}
+</script>
 	<div class="main-content">
 				<div class="breadcrumbs" id="breadcrumbs">
 					<script type="text/javascript">
@@ -19,9 +29,9 @@
 						<li>
 							<a href="collegeListByPage.do">个人中心</a>
 						</li>
-						<li class="active">修改密码</li>
+						<li class="active">修改头像</li>
 					</ul><!-- .breadcrumb -->
-
+					<button value="test" onclick="test()"/>
 					<!-- <div class="nav-search" id="nav-search">
 						<form class="form-search">
 							<span class="input-icon">
@@ -40,7 +50,7 @@
 									<div class="form-group">
 									<!-- 修改头像开始 -->
 										<div style="text-align: center;margin-bottom: 10px">
-			                           		 <img src="${ctx }/images/2.jpg" class="js_imgUrl img-circle" width="140" height="140">
+			                           		 <img src="${ctx }/${sessionScope.user.imageUrl}" class="js_imgUrl img-circle" width="140" height="140">
 			                       	 	</div>
 			                        <!-- 修改头像结束 -->
 								</div>
@@ -84,19 +94,6 @@
 // 			alert("");
 // 			layer.msg('${error}', {icon: 5,time:2000});
 // 		}
-		
-		if("${message}"){
-			alert("23123");
-	        layer.msg('${message}', {
-	            offset: 0,
-	        });
-	    }
-	    if("${error}"){
-	        layer.msg('${error}', {
-	            offset: 0,
-	            shift: 6
-	        });
-	    }
 		
 		$('input[class=js_file]').change(function() {
             var fileNames = '';

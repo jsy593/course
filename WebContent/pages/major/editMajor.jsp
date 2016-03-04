@@ -36,6 +36,21 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 							<form class="form-horizontal" role="form">
+							
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">请选择学院
+										</label>
+										
+										<div class="col-sm-9">
+											<select class="js_select col-xs-10 col-sm-5" id="form-field-1">
+											<c:forEach items="${colleges}" var="college">
+												<option value="${college.id}" <c:if test="${college.id == major.collegeid }">selected</c:if>>${college.name }</option>
+											</c:forEach>
+											</select>
+										</div>
+									</div>
+							
+							
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">专业名称
 										</label>
@@ -65,7 +80,7 @@
 				<!---------------------------------提交按钮开始 ------------------------------->
 						<div class="clearfix form-actions">
 										<div class="col-md-offset-3 col-md-9">
-											<button class="btn btn-info" type="button" onclick="editMajor(${Major.id})">
+											<button class="btn btn-info" type="button" onclick="editMajor(${major.id})">
 												<i class="icon-ok bigger-110"></i>
 												提交
 											</button>
@@ -98,6 +113,7 @@
 				mapVo.name = name;
 				mapVo.createtime = createTime;
 				mapVo.id = id;
+				mapVo.collegeid = $(".js_select").val(); 
 				$.post("updateMajor.do",{'mapVo':mapVo},function(data){
 					if(data == true){
 						layer.msg('修改成功!', {icon: 6,time:2000},function(){

@@ -10,7 +10,7 @@
   <sql id="Base_Column_List" >
     id, studentId, courseId, grade
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultType="com.bota.bean.StudentCourse" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from studentcourse

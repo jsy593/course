@@ -29,10 +29,7 @@ public class MajorDaoImpl extends CommonDaoImpl<Major> implements MajorDao{
 
 	@Override
 	public Major selectByPrimaryKey(Long id) {
-		Major major = new Major();
-		major.setCreatetime(new Date());
-		major.setId(2l);
-		return major;
+		return null;
 	}
 
 	@Override
@@ -54,7 +51,7 @@ public class MajorDaoImpl extends CommonDaoImpl<Major> implements MajorDao{
 	@Override
 	public List<Map<String, Object>> selectAllMajor(int pageNum, int pageSize){
 		int start = (pageNum -1) * pageSize;
-		String sql = "select id,name,date_format(createTime,'%Y-%m-%d') createTime from major limit " +start + ","+ pageSize;
+		String sql = "select m.id,m.name,date_format(m.createTime,'%Y-%m-%d') createTime,c.name cname from major m,college c where m.collegeId=c.id limit " +start + ","+ pageSize;
 //		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql);
 		return listMap;

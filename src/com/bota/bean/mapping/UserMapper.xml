@@ -16,7 +16,7 @@
   <sql id="Base_Column_List" >
     id, userNumber, username, password, classid, credit, identity, imageUrl, sex, createTime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultType="com.bota.bean.User" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from user
