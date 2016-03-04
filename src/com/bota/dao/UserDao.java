@@ -36,7 +36,7 @@ public interface UserDao {
 	 * @param identity 身份
 	 * @return
 	 */
-	public Map<String, Object> verifyByUser(long usernumber, String password, int identity);
+	public Map<String, Object> verifyByUser(long userNumber, String password, int identity);
 
 	/**
 	 * 修改密码
@@ -45,5 +45,32 @@ public interface UserDao {
 	 * @return
 	 */
 	boolean updatePwd(long id, String password);
+	
+	
+	
+	/**
+	 * 查询所有的用户
+	 * @return
+	 */
+	List<Map<String, Object>> selectAllUser();
+	
+	/**
+	 * 分页查询所有的用户
+	 * @return
+	 */
+	List<Map<String, Object>> selectAllUser(int pageNum,int pageSize);
+	
+	/**
+	 * 批量删除用户
+	 * @param ids
+	 * @return
+	 */
+	boolean deleteByPrimaryKeys(String ids);
+
+	/**
+	 * 查询用户的数量
+	 * @return 
+	 */
+	Map<String, Object> selectUserNumber();
 	
 }

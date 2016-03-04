@@ -1,5 +1,6 @@
 package com.bota.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bota.bean.User;
+import com.bota.service.ClassService;
 import com.bota.service.UserService;
+import com.bota.util.DateStrConvert;
 import com.bota.util.Dictionary;
 import com.bota.util.FileUtil;
 import com.bota.util.MapAction;
@@ -28,6 +32,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ClassService classService;
 	/**
 	 * 跳转到个人中心页面
 	 * @return
@@ -151,14 +158,6 @@ public class UserController {
 		return "personalCenter/myself";
 	}
 	
-	/**
-	 * 添加用户页面
-	 * @return
-	 */
-	@RequestMapping("addUserPage")
-	public String addUserPage(){
-		return "person/addUser";
-	}
 	
 	/**
 	 * 添加用户
@@ -166,6 +165,142 @@ public class UserController {
 	@RequestMapping("addUser")
 	public boolean addUser(User user){
 		user.setImageurl("assets/avatars/user.jpg");
+//		Date date = DateStrConvert.strToDate(map.get("createtime").toString(), "yyyy-MM-dd");
+//		User.setCreatetime(date);
 		return userService.addUser(user);
 	}
+	
+
+	/**
+	 * 添加用户页面
+	 * @return
+	 */
+	@RequestMapping("addUserPage")
+	public String addUserPage(){
+		List<Map<String, Object>> listMap = classService.selectAllClasses();
+		Map<String,Object> map = new HashMap<String, Object>();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("User/addUser");
+		model.addObject(map);
+		model.addObject("classes", listMap);
+		return "user/addUser";
+	}
+	
+	
+	/***
+	 * 修改用户页面
+	 * @param id
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("editUserPage")
+	public String editUserPage(long id,HttpServletRequest request){
+		User user = userService.selectOne(id);
+		if(user.getIdentity() == 2){
+			List<Map<String, Object>> listMap = classService.selectAllClasses();
+			request.setAttribute("colleges", listMap);
+		}
+		request.setAttribute("User", user);
+		return "user/editUser";
+	}
+	
+	/**
+	 * 查询所有的用户
+	 * @return
+	 */
+	@RequestMapping("userList")
+	@ResponseBody
+	public List<Map<String, Object>> selectAllUser(){
+		return userService.selectAllUser();
+	}
+	
+	/**
+	 * 分页查询所有的用户
+	 * @return
+	 */
+	
+	@RequestMapping("userListByPage")
+	public String selectAllUser(int pageNum,int pageSize,HttpServletRequest request){
+		request.setAttribute("users", userService.selectAllUser(pageNum,pageSize));
+		Map<String, Object> numberMap = userService.selectUserNumber();
+		if(numberMap != null && numberMap.size() > 0){
+			int count = Integer.parseInt(numberMap.get("count").toString());
+			int totalPage  = 0;
+			if(count % 5 != 0 ){
+				totalPage =count/5 + 1; 
+			}else{
+				totalPage =count/5;
+			}
+			request.setAttribute("count",numberMap.get("count"));
+			request.setAttribute("totalPage",totalPage);
+		}
+		request.setAttribute("pageNum", pageNum);
+		
+		return "user/user";
+	}
+	
+	/**
+	 * 根据id查询用户
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("selectUser")
+	@ResponseBody
+	public User selectOne(long id){
+		return userService.selectOne(id);
+	}
+	
+	
+	/**
+	 * 添加用户
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("addUser")
+	@ResponseBody
+	public boolean addUser(MapAction mapVo){
+		Map<String, Object> map = mapVo.getMapVo();
+		User User = new User();
+		User.setUsername(map.get("name").toString());
+		Date date = DateStrConvert.strToDate(map.get("createtime").toString(), "yyyy-MM-dd");
+		User.setCreatetime(date);
+		return userService.addUser(User);
+	}
+	
+	
+	/**
+	 * 修改用户的信息
+	 * @param User
+	 * @return
+	 */
+	@RequestMapping("updateUser")
+	@ResponseBody
+	public boolean updateById(User user){
+		return userService.updateById(user);
+	}
+	/**
+	 * 根据id删除用户
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("deleteUser")
+	@ResponseBody
+	public boolean deleteById(long id){
+		return userService.deleteById(id);
+	}
+	
+	/**
+	 * 根据ids批量删除用户
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping("deleteManyUsers")
+	@ResponseBody
+	public boolean deleteById(String ids){
+		return userService.deleteByIds(ids);
+	}
+	
+	
+	
+	
 }

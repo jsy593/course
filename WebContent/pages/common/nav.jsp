@@ -135,23 +135,23 @@
 					<li>
 						<a href="javascript:void(0);" class="dropdown-toggle" onclick="adminListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
-							<span class="menu-text">人员管理</span>
+							<span class="menu-text">用户管理</span>
 						</a>
 						
 						
 						<!-- 二级菜单开始 -->
 						<ul class="submenu">
 								<li>
-									<a href="classListByPage.do?pageNum=1&pageSize=5">
+									<a href="userListByPage.do?pageNum=1&pageSize=5">
 										<i class="icon-double-angle-right"></i>
-										管理员列表
+										用户列表
 									</a>
 								</li>
 								
 								<li>
-									<a href="addClassPage.do">
+									<a href="addUserPage.do">
 										<i class="icon-double-angle-right"></i>
-										添加班级
+										添加用户
 									</a>
 								</li>
 							</ul>

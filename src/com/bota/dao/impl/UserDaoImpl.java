@@ -98,4 +98,30 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 		return super.updateClass(sql);
 	}
 	
+	@Override
+	public List<Map<String, Object>> selectAllUser(){
+		String sql = "select *,date_format(createTime,'%Y-%m-%d') time from user";
+		return super.findManyBySql(sql);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAllUser(int pageNum, int pageSize){
+		int start = (pageNum -1) * pageSize;
+		String sql = "select  u.*,c.name cname from user u,classes c where u.classId=c.id limit " +start + ","+ pageSize;
+//		System.out.println(sql);
+		List<Map<String, Object>> listMap = super.findManyBySql(sql);
+		return listMap;
+	}
+	
+	@Override
+	public Map<String, Object> selectUserNumber(){
+		String sql = "select count(*) count from User";
+		Map<String, Object> listMap = super.findBySql(sql);
+		return listMap;
+	}
+	
+	@Override
+	public boolean deleteByPrimaryKeys(String ids){
+		return super.deletetClass(User.class,"id", ids);
+	}
 }
