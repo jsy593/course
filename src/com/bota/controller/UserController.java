@@ -163,10 +163,12 @@ public class UserController {
 	 * 添加用户
 	 */
 	@RequestMapping("addUser")
-	public boolean addUser(User user){
-		user.setImageurl("assets/avatars/user.jpg");
-//		Date date = DateStrConvert.strToDate(map.get("createtime").toString(), "yyyy-MM-dd");
-//		User.setCreatetime(date);
+	@ResponseBody
+	public boolean addUser(User user,String createTime){
+		Date date = DateStrConvert.strToDate(createTime, "yyyy-MM-dd");
+		user.setCreatetime(date);
+		user.setImageurl("images/2.jpg");
+		System.out.println(user);
 		return userService.addUser(user);
 	}
 	
@@ -176,13 +178,9 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("addUserPage")
-	public String addUserPage(){
+	public String addUserPage(HttpServletRequest request){
 		List<Map<String, Object>> listMap = classService.selectAllClasses();
-		Map<String,Object> map = new HashMap<String, Object>();
-		ModelAndView model = new ModelAndView();
-		model.setViewName("User/addUser");
-		model.addObject(map);
-		model.addObject("classes", listMap);
+		request.setAttribute("classes", listMap);
 		return "user/addUser";
 	}
 	
@@ -251,21 +249,21 @@ public class UserController {
 	}
 	
 	
-	/**
-	 * 添加用户
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping("addUser")
-	@ResponseBody
-	public boolean addUser(MapAction mapVo){
-		Map<String, Object> map = mapVo.getMapVo();
-		User User = new User();
-		User.setUsername(map.get("name").toString());
-		Date date = DateStrConvert.strToDate(map.get("createtime").toString(), "yyyy-MM-dd");
-		User.setCreatetime(date);
-		return userService.addUser(User);
-	}
+//	/**
+//	 * 添加用户
+//	 * @param id
+//	 * @return
+//	 */
+//	@RequestMapping("addUser")
+//	@ResponseBody
+//	public boolean addUser(MapAction mapVo){
+//		Map<String, Object> map = mapVo.getMapVo();
+//		User User = new User();
+//		User.setUsername(map.get("name").toString());
+//		Date date = DateStrConvert.strToDate(map.get("createtime").toString(), "yyyy-MM-dd");
+//		User.setCreatetime(date);
+//		return userService.addUser(User);
+//	}
 	
 	
 	/**

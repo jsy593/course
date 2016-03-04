@@ -80,11 +80,11 @@
 															<span class="lbl">男</span></c:if>
 														</label>
 															<label>
-															<c:if test="${sessionScope.user.sex == 2}"><input type="radio" checked value="1" class="ace js_radio" />
+															<c:if test="${sessionScope.user.sex == 2}"><input type="radio" checked value="2" class="ace js_radio" />
 															<span class="lbl">女</span></c:if>
 														</label>
 														<label>
-															<c:if test="${sessionScope.user.sex == 0}"> <input type="radio" checked  value="1" class="ace js_radio" />
+															<c:if test="${sessionScope.user.sex == 0}"> <input type="radio" checked  value="0" class="ace js_radio" />
 															<span class="lbl">未知</span></c:if>
 														</label>
 										</div>

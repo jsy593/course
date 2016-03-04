@@ -34,7 +34,7 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
-							<form class="form-horizontal" role="form">
+							<form class="js_form form-horizontal" role="form" action="addUser.do">
 							<!-- 所有 -->	
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">用户角色
@@ -49,49 +49,51 @@
 										</div>
 									</div>
 									<div class="space-4"></div>
-							
+									
+									<div class="form-group">
+										<label class="js_labelName col-sm-3 control-label no-padding-right" for="form-field-1">学号
+										</label>
+
+										<div class="col-sm-9">
+											<input type="text" name="usernumber"  id="form-field-1"  class="js_usernumber col-xs-10 col-sm-5" />
+										</div>
+									</div>
+									<div class="space-4"></div>
+									
 							
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">用户名
 										</label>
 
 										<div class="col-sm-9">
-											<input type="text" name="username" id="form-field-1"  class="js_name col-xs-10 col-sm-5" />
+											<input type="text" name="username" id="form-field-1"  class="js_username col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									<div class="space-4"></div>
 									
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">初始密码
+										<label class=" col-sm-3 control-label no-padding-right" for="form-field-1">初始密码
 										</label>
 
 										<div class="col-sm-9">
-											<input type="password"  id="form-field-1"  class="js_name col-xs-10 col-sm-5" />
+											<input type="password" name="password"  id="form-field-1"  class="js_password col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									<div class="space-4"></div>
+									
+									
 							<!-- 所有 -->	
 							
 							
 							<!-- 学生开始 -->
 							<div class="js_form_student">
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">学号
-										</label>
-
-										<div class="col-sm-9">
-											<input type="text" name="usernumber"  id="form-field-1"  class="js_name col-xs-10 col-sm-5" />
-										</div>
-									</div>
-									<div class="space-4"></div>
-									
 									
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">班级
 										</label>
-
+										
 										<div class="col-sm-9">
-											<select class="js_select col-xs-10 col-sm-5" id="form-field-1">
+											<select name="classid" class="js_select col-xs-10 col-sm-5" id="form-field-1">
 											<c:forEach items="${classes}" var="clazz">
 												<option value="${clazz.id}">${clazz.name }</option>
 											</c:forEach>
@@ -104,93 +106,62 @@
 							
 							
 							
-							<!-- 老师开始 -->
-							<div class="js_form_teacher">
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">学号
-										</label>
+<!-- 							老师或管理员开始 -->
+<!-- 							<div class="js_form_user"> -->
+<!-- 									<div class="form-group"> -->
+<!-- 										<label class="js_labelName col-sm-3 control-label no-padding-right" for="form-field-1">工号 -->
+<!-- 										</label> -->
 
-										<div class="col-sm-9">
-											<input type="text" name="usernumber"  id="form-field-1"  class="js_name col-xs-10 col-sm-5" />
-										</div>
-									</div>
-									<div class="space-4"></div>
-									
-									
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">班级
-										</label>
-
-										<div class="col-sm-9">
-											<select class="js_select col-xs-10 col-sm-5" id="form-field-1">
-											<c:forEach items="${classes}" var="clazz">
-												<option value="${clazz.id}">${clazz.name }</option>
-											</c:forEach>
-											</select>
-										</div>
-									</div>
-									<div class="space-4"></div>
-							</div>	
-							<!-- 老师结束 -->		
-							
-							
-							<!-- 管理员开始 -->
-							
-							<div class="js_form_admin">
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">学号
-										</label>
-
-										<div class="col-sm-9">
-											<input type="text" name="usernumber"  id="form-field-1"  class="js_name col-xs-10 col-sm-5" />
-										</div>
-									</div>
-									<div class="space-4"></div>
-									
-									
-									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">班级
-										</label>
-
-										<div class="col-sm-9">
-											<select class="js_select col-xs-10 col-sm-5" id="form-field-1">
-											<c:forEach items="${classes}" var="clazz">
-												<option value="${clazz.id}">${clazz.name }</option>
-											</c:forEach>
-											</select>
-										</div>
-									</div>
-									<div class="space-4"></div>
-							</div>	
-							<!-- 管理员结束 -->	
+<!-- 										<div class="col-sm-9"> -->
+<!-- 											<input type="text" name="usernumber"  id="form-field-1"  class="js_name col-xs-10 col-sm-5" /> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="space-4"></div> -->
+<!-- 							</div>	 -->
+<!-- 							老师或管理员结束		 -->
 								
 						
-						<!-- 所有 -->				
+						<!-- 所有 -->		
+							<div class="form-group">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 性别:</label>
+										<div class="col-sm-9">
+														<label>
+														 <input name="sex"  type="radio" checked value="1" class="ace js_radio" />
+															<span class="lbl">男</span>
+														</label>
+															<label>
+															<input name="sex" type="radio"  value="2" class="ace js_radio" />
+															<span class="lbl">女</span>
+														</label>
+														<label>
+															 <input name="sex"  type="radio" value="0" class="ace js_radio" />
+															<span class="lbl">未知</span>
+														</label>
+										</div>
+									</div>
+								</div>
+								<div class="space-4"></div>
+								
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 注册日期 </label>
 											
 											<div class="col-sm-9">
-													<input   id="form-field-3" type="text"  onclick="laydate()" class="js_createTime col-xs-10 col-sm-5"/>
+													<input  id="form-field-3" type="text"  onclick="laydate()" class="js_createTime col-xs-10 col-sm-5"/>
 											</div>
 									</div>
 
 									<div class="space-4"></div>
 									
 						
-					<div class="col-sm-9">
-							<select name="sex" class="js_select_sex col-xs-10 col-sm-5" id="form-field-1">
-								<option value="1" selected>男</option>
-								<option value="2">女</option>
-								<option value="0">未知</option>
-							</select>
-							</div>
+					
 					<!-- 所有 -->	
 				</form>				
 				<!---------------------------------提交按钮开始 ------------------------------->
 				
 						<div class="clearfix form-actions">
 										<div class="col-md-offset-3 col-md-9">
-											<button class="btn btn-info" type="button" onclick="addCollege()">
+											<button class="btn btn-info" type="button" onclick="addUser()">
 												<i class="icon-ok bigger-110"></i>
 												提交
 											</button>
@@ -210,12 +181,43 @@
 			</div><!-- /.main-content -->
 		<script type="text/javascript">
 		/**
-			添加学院
+		* 改变显示的内容
 		*/
-		function addCollege(){
-			var name = $.trim($(".js_name").val());
+		$(function(){
+			$(".js_select_role").change(function(){
+				if($(".js_select_role").val() != 2){
+					$(".js_form_student").hide();
+					$(".js_labelName").text("工号");
+				}else{
+					$(".js_form_student").show();
+					$(".js_labelName").text("学号");
+				}
+			});
+			
+		});
+		
+		
+		/**
+			添加用户
+		*/
+		function addUser(){
+// 			$(".js_form").submit();
+			
+			var usernumber = $.trim($(".js_usernumber").val());
+			if(usernumber == "" || usernumber == null){
+				layer.alert('请输入编号!', {icon: 5});
+				return;
+			}
+			
+			var name = $.trim($(".js_username").val());
 			if(name == "" || name == null){
-				layer.alert('请输入学院名称!', {icon: 5});
+				layer.alert('请输入用户名!', {icon: 5});
+				return;
+			}
+			
+			var password = $.trim($(".js_password").val());
+			if(password == "" || password == null){
+				layer.alert('请输入密码!', {icon: 5});
 				return;
 			}
 			
@@ -225,18 +227,16 @@
 				return;
 			}
 			
-			var mapVo = {};
-			mapVo.name = name;
-			mapVo.createtime = createTime;
-			$.post("addCollege.do",{'mapVo':mapVo},function(data){
+			var user = $(".js_form").serialize();
+			console.info(user);
+			 $.post($(".js_form").attr("action")+"?createTime="+$(".js_createTime").val(),user,function(data){
 				if(data == true){
-					layer.msg('添加成功!', {icon: 6,time:2000},function(){
-						window.location.reload();
-					});
+					layer.alert('添加成功!', {icon: 6});
+					window.location.reload();
 				}else{
-					layer.msg('添加失败!', {icon: 5});
+					layer.alert('添加失败!', {icon: 5});
 				}
-			});
+			}); 
 		}
 		
 			/*设置日历颜色*/

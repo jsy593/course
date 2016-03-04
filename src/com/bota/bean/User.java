@@ -102,4 +102,12 @@ public class User {
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", usernumber=" + usernumber + ", username=" + username + ", password=" + password
+				+ ", classid=" + classid + ", credit=" + credit + ", identity=" + identity + ", imageurl=" + imageurl
+				+ ", sex=" + sex + ", createtime=" + createtime + "]";
+	}
+    
 }
