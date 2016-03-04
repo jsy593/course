@@ -15,25 +15,43 @@
 						</li>
 
 						<li>
-							<a href="#">学院管理</a>
+							<a href="#">用户管理</a>
 						</li>
-						<li class="active">学院信息</li>
+						<li class="active">用户列表</li>
 					</ul><!-- .breadcrumb -->
 
-					<!-- <div class="nav-search" id="nav-search">
+					 <div class="nav-search" id="nav-search">
 						<form class="form-search">
 							<span class="input-icon">
-								<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+								<input type="text" placeholder="请输入用户的编号或者姓名 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
 								<i class="icon-search nav-search-icon"></i>
 							</span>
 						</form>
-					</div> --><!-- #nav-search -->
+					</div> <!-- #nav-search -->
 				</div>
 
 				<div class="page-content">
 					<div class="row">
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
+										<div class="form-group" style="float:right;padding:0px 20px 0px 0px">
+										<label class="control-label no-padding-right" for="form-field-1">请选择
+										</label>
+											<select name="identity" class="js_select_role" id="form-field-1">
+												<option value="-1" selected>所有</option>
+												<option value="2" >学生</option>
+												<option value="1">老师</option>
+												<option value="0">管理员</option>
+											</select>
+											
+											<select name="classid" class="js_select_role" id="form-field-1">
+												<option value="-1" selected>所有</option>
+												<c:forEach items="${classes }" var="clazz">
+													<option value="${calzz.id }">${clazz.name }</option>
+												</c:forEach>
+											</select>
+									</div>
+							
 							<div class="row">
 									<div class="col-xs-12">
 										<div class="table-responsive">
@@ -46,7 +64,10 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>学院名</th>
+														<th>编号</th>
+														<th>用户名</th>
+														<th>学院</th>
+														<th>班级</th>
 														<th>创建时间</th>
 														<th>操作</th>
 													</tr>

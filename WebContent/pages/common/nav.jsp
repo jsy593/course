@@ -133,7 +133,7 @@
 					
 					
 					<li>
-						<a href="javascript:void(0);" class="dropdown-toggle" onclick="adminListByPage.do?pageNum=1&pageSize=5">
+						<a href="javascript:void(0);" class="dropdown-toggle" onclick="userListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">用户管理</span>
 						</a>

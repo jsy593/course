@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bota.bean.User;
@@ -167,7 +166,7 @@ public class UserController {
 	public boolean addUser(User user,String createTime){
 		Date date = DateStrConvert.strToDate(createTime, "yyyy-MM-dd");
 		user.setCreatetime(date);
-		user.setImageurl("images/2.jpg");
+		user.setImageurl("images/2.jpg");//默认图片地址
 		System.out.println(user);
 		return userService.addUser(user);
 	}
@@ -220,6 +219,7 @@ public class UserController {
 	@RequestMapping("userListByPage")
 	public String selectAllUser(int pageNum,int pageSize,HttpServletRequest request){
 		request.setAttribute("users", userService.selectAllUser(pageNum,pageSize));
+		request.setAttribute("classes", classService.selectAllClasses());
 		Map<String, Object> numberMap = userService.selectUserNumber();
 		if(numberMap != null && numberMap.size() > 0){
 			int count = Integer.parseInt(numberMap.get("count").toString());
@@ -273,9 +273,12 @@ public class UserController {
 	 */
 	@RequestMapping("updateUser")
 	@ResponseBody
-	public boolean updateById(User user){
+	public boolean updateById(User user, String createTime){
+		Date date = DateStrConvert.strToDate(createTime, "yyyy-MM-dd");
+		user.setCreatetime(date);
 		return userService.updateById(user);
 	}
+	
 	/**
 	 * 根据id删除用户
 	 * @param id
