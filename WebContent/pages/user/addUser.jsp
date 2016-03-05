@@ -231,8 +231,9 @@
 			console.info(user);
 			 $.post($(".js_form").attr("action")+"?createTime="+$(".js_createTime").val(),user,function(data){
 				if(data == true){
-					layer.alert('添加成功!', {icon: 6});
-					window.location.reload();
+					layer.alert('添加成功!', {icon: 6, time:2000},function(){
+						window.location.reload();
+					});
 				}else{
 					layer.alert('添加失败!', {icon: 5});
 				}

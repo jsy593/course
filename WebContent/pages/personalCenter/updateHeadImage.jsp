@@ -6,14 +6,6 @@
 <html lang="ch">
 <%@ include file="../common.jsp" %>
 
-<script type="text/javascript">
-	function test(){
-		alert("进入test");
-		$.post("test.do",{},function(data){
-			
-		});
-	}
-</script>
 	<div class="main-content">
 				<div class="breadcrumbs" id="breadcrumbs">
 					<script type="text/javascript">
@@ -31,7 +23,6 @@
 						</li>
 						<li class="active">修改头像</li>
 					</ul><!-- .breadcrumb -->
-					<button value="test" onclick="test()"/>
 					<!-- <div class="nav-search" id="nav-search">
 						<form class="form-search">
 							<span class="input-icon">

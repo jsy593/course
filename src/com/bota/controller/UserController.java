@@ -151,6 +151,7 @@ public class UserController {
 		if( userService.updateUserById(user)){
 			request.setAttribute("message", "修改成功！");
 			userMap.put("imageUrl", imageUrl);
+			session.setAttribute("user", userMap);
 		}else{
 			request.setAttribute("error", "修改失败！");
 		}

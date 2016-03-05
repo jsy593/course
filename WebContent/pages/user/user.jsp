@@ -38,13 +38,12 @@
 										<label class="control-label no-padding-right" for="form-field-1">请选择
 										</label>
 											<select name="identity" class="js_select_role" id="form-field-1">
-												<option value="-1" selected>所有</option>
-												<option value="2" >学生</option>
+												<option value="2" selected>学生</option>
 												<option value="1">老师</option>
 												<option value="0">管理员</option>
 											</select>
 											
-											<select name="classid" class="js_select_role" id="form-field-1">
+											<select name="classid" class="js_select_class" id="form-field-1">
 												<option value="-1" selected>所有</option>
 												<c:forEach items="${classes }" var="clazz">
 													<option value="${calzz.id }">${clazz.name }</option>
@@ -66,15 +65,15 @@
 														</th>
 														<th>编号</th>
 														<th>用户名</th>
-														<th>学院</th>
-														<th>班级</th>
+														<th class="js_th">学院</th>
+														<th class="js_th">班级</th>
 														<th>创建时间</th>
 														<th>操作</th>
 													</tr>
 												</thead>
 
 												<tbody>
-													<c:forEach items="${colleges}" var="college" >
+													<c:forEach items="${users}" var="user" >
 													<tr>
 														<th class="center">
 															<label>
@@ -82,23 +81,26 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>${college.name }</th>
-														<th>${college.createTime }</th>
+														<th>${user.usernumber }</th>
+														<th>${user.username }</th>
+														<th class="js_th">${user.userCollege }</th>
+														<th class="js_th">${user.className }</th>
+														<th>${user.createTime }</th>
 														<th>
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
-																<a class="blue" href="addCollegePage.do" >
+																<a class="blue" href="addUserPage.do" >
 																	<i class="icon-plus-sign bigger-130"></i>
 																</a>
 																<!-- <a class="blue" href="#">
 																	<i class="icon-zoom-in bigger-130"></i>
 																</a> -->
 
-																<a class="green" href="editCollegePage.do?id=${college.id }">
+																<a class="green" href="editUserPage.do?id=${user.id }">
 																	<i class="icon-pencil bigger-130"></i>
 																</a>
 
-																<a class="red" href="javascript:void(0);" onclick="deleteCollege(${college.id })">
+																<a class="red" href="javascript:void(0);" onclick="deleteUser(${user.id })">
 																	<i class="icon-trash bigger-130"></i>
 																</a>
 															</div>
@@ -154,9 +156,11 @@
 										<!-- 分页开始 -->
 												<ul class="pagination pull-right no-margin">
 													<li class="prev">
-														<a href="collegeListByPage.do?pageSize=5&pageNum=${pageNum-1}">
+													<c:if test='${pageNum > 1}'>
+														<a href="userListByPage.do?pageSize=5&pageNum=${pageNum -1 }">
 															<i class="icon-double-angle-left"></i>
 														</a>
+														</c:if>
 													</li>
 
 													<!-- forEach标签开始 -->
@@ -164,7 +168,7 @@
 												<c:if test="${pageNum+4 <= totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${pageNum +4 }">
 															<li >
-																<a href="collegeListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
+																<a href="userListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -172,15 +176,15 @@
 												<c:if test="${pageNum+4> totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${totalPage }">
 															<li >
-																<a href="collegeListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
+																<a href="userListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
 													<!-- forEach标签结束 -->
 													
-												<c:if test="${pageNum < totalPage}">
+												<c:if test="${pageNum + 4 < totalPage}">
 													<li class="next">
-														<a href="collegeListByPage.do?pageSize=5&pageNum=${page+1}">
+														<a href="userListByPage.do?pageSize=5&pageNum=${page+1}">
 															<i class="icon-double-angle-right"></i>
 														</a>
 													</li>
@@ -194,12 +198,31 @@
 				</div><!-- /.page-content -->
 			</div><!-- /.main-content -->
 		<script type="text/javascript">
+		
+		/**
+		* 改变显示的内容
+		*/
+		$(function(){
+			$(".js_select_role").change(function(){
+				if($(".js_select_role").val() != 2){
+					$(".js_select_class").hide();
+					$(".js_th").hide();
+				}else{
+					$(".js_form_student").show();
+					$(".js_th").show();
+				}
+			});
+			
+		});
+		
+		
+		
 			/*设置日历颜色*/
 			laydate.skin('molv');
 			
-			function deleteCollege(id){
+			function deleteUser(id){
 				layer.confirm('确认要删除吗?', {icon: 3, title:'提示'}, function(){
-				    $.post("deleteCollege.do",{"id":id},function(data){
+				    $.post("deleteUser.do",{"id":id},function(data){
 				    	if(data == true){
 				    		layer.msg('删除成功!', {icon: 6,time:2000},function(){
 				    			history.go(0);
