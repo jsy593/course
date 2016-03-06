@@ -1,6 +1,5 @@
 package com.bota.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,13 +77,14 @@ public class UserServiceImpl implements UserService{
 	public Map<String, Object> selectAllUser(int pageNum,int pageSize,Map<String, Object> paramMap){
 		StringBuffer whereSql = new StringBuffer(" where 1=1 ");
 		if(paramMap != null){
-			if(paramMap.containsKey("search") && paramMap.get("search") != null && !paramMap.get("search").equals("")){
-				whereSql.append(" and (u.name='"+paramMap.get("search").toString()+"' or u.usernumber='"+paramMap.get("search").toString()+"') ");
+			if(paramMap.get("search") != null && !paramMap.get("search").equals("")){
+				whereSql.append(" and (u.username like'%"+paramMap.get("search").toString()+"%' or u.usernumber like'%"+paramMap.get("search").toString()+"%') ");
 			}
-			if(paramMap.containsKey("identity") && paramMap.get("identity") != null && !paramMap.get("identity").equals("")){
+			if(paramMap.get("identity") != null && !paramMap.get("identity").equals("")){
 				whereSql.append(" and u.identity = " + paramMap.get("identity").toString());
 			}
-			if(paramMap.containsKey("classid") && paramMap.get("classid") != null && !paramMap.get("calssid").equals("")){
+			System.out.println(paramMap.get("classid"));			System.out.println(paramMap.containsKey("classid"));
+			if(paramMap.get("classid") != null && !paramMap.get("classid").equals("")){
 				whereSql.append(" and u.classid="+paramMap.get("classid").toString());
 			}
 			System.out.println(whereSql);

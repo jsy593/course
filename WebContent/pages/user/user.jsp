@@ -29,22 +29,24 @@
 									<div class="form-group" style="float:right;padding:0px 20px 0px 0px">
 										<label class="control-label no-padding-right" for="form-field-1">请选择
 										</label>
-											<select name="identity" value="${identity }" class="js_select_role" id="form-field-1">
-												<option value="2" selected>学生</option>
-												<option value="1">老师</option>
-												<option value="0">管理员</option>
+											<select name="identity" class="js_select_role" id="form-field-1">
+												<option value="2" <c:if test="${identity == 2}">selected</c:if>>学生</option>
+												<option value="1" <c:if test="${identity == 1}">selected</c:if>>老师</option>
+												<option value="0" <c:if test="${identity == 0}">selected</c:if>>管理员</option>
 											</select>
 											
+											<c:if test="${identity ==2 }">
 											<select name="classid" value="${classid }" class="js_select_class" id="form-field-1">
 												<option value="-1" selected>所有</option>
 												<c:forEach items="${classes }" var="clazz">
-													<option value="${clazz.id }">${clazz.name }</option>
+													<option value="${clazz.id }" <c:if test="${clazz.id == classid}">selected</c:if>>${clazz.name }</option>
 												</c:forEach>
 											</select>
+											</c:if>
 											
 											
 											<span class="input-icon">
-												<input type="text"  value="${search }" placeholder="请输入用户的编号或者姓名 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
+												<input type="text"  value="${search }" placeholder="请输入编号或者姓名 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
 												<button class="btn btn-info" type="button" onclick="selectUser()">
 														<i class="icon-search bigger-110"></i>
 															搜索
@@ -65,8 +67,11 @@
 														</th>
 														<th>编号</th>
 														<th>用户名</th>
-														<th class="js_th">专业</th>
-														<th class="js_th">班级</th>
+														<c:if test="${identity ==2 }">
+															<th class="js_th">专业</th>
+															<th class="js_th">班级</th>
+															<th>学分</th>
+														</c:if>
 														<th>创建时间</th>
 														<th>操作</th>
 													</tr>
@@ -83,8 +88,11 @@
 														</th>
 														<th>${user.userNumber }</th>
 														<th>${user.username }</th>
-														<th class="js_th">${user.mname }</th>
-														<th class="js_th">${user.cname }</th>
+														<c:if test="${identity ==2 }">
+															<th class="js_th">${user.mname }</th>
+															<th class="js_th">${user.cname }</th>
+															<th class="js_th">${user.credit}</th>
+														</c:if>
 														<th>${user.time }</th>
 														<th>
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
@@ -157,7 +165,7 @@
 												<ul class="pagination pull-right no-margin">
 													<li class="prev">
 													<c:if test='${pageNum > 1}'>
-														<a href="userListByPage.do?pageSize=5&pageNum=${pageNum -1 }">
+														<a href="javascript:void(0);" onclick="selectUser(${pageNum - 1})" >
 															<i class="icon-double-angle-left"></i>
 														</a>
 														</c:if>
@@ -168,7 +176,7 @@
 												<c:if test="${pageNum+4 <= totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${pageNum +4 }">
 															<li >
-																<a href="userListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
+																<a href="javascript:void(0);" onclick="selectUser(${page})" value="${page }">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -176,7 +184,7 @@
 												<c:if test="${pageNum+4> totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${totalPage }">
 															<li >
-																<a href="userListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
+																<a href="javascript:void(0);" onclick="selectUser(${page})">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -184,7 +192,7 @@
 													
 												<c:if test="${pageNum + 4 < totalPage}">
 													<li class="next">
-														<a href="userListByPage.do?pageSize=5&pageNum=${page+1}">
+														<a href="javascript:void(0);" onclick="selectUser(${page + 1})">
 															<i class="icon-double-angle-right"></i>
 														</a>
 													</li>
@@ -204,46 +212,25 @@
 		*/
 		$(function(){
 			$(".js_select_role").change(function(){
-				
-				if($(".js_select_role").val() != 2){
-					$(".js_select_class").hide();
-					$(".js_th").hide();
-				}else{
-					$(".js_select_class").show();
-					$(".js_th").show();
-				} 
-				selectUser();
+				selectUser(1);
+			});
+			$(".js_select_class").change(function(){
+				selectUser(1);
 			});
 			
 		});
 		
-		function selectUser(){
+		function selectUser(pageNum){
 			var search = $(".js_search").val();
 			var identity = $(".js_select_role").val();
-			var classid;
+			var classid = "-1";
 			if(identity == 2){
-				classid = $(".js_select_class").val();
-			}
-			var mapVo = {};
-			mapVo.search = search;
-			mapVo.classid = classid;
-			mapVo.identity = identity;
-			
-			$.ajax({
-				url:"userListByPage.do?pageNum=1&pageSize=5",
-				async:false,
-				dataType:'json',
-				data:{"mapVo":mapVo},
-				success:function(data){
-					
+				var clazzid = $(".js_select_class").val();
+				if(clazzid != undefined && clazzid != null){
+					classid = clazzid;
 				}
-				
-			});
-			
-			
-// 			$.post("userListByPage.do?pageNum=1&pageSize=5",{'mapVo':mapVo},function(data){
-// 				window.location.reload();
-// 			});
+			}
+			window.location.href="userListBySearch.do?pageNum="+pageNum+"&pageSize=5&search="+search+"&identity="+identity+"&classid="+classid;
 		}
 		
 		

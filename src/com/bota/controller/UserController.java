@@ -1,5 +1,7 @@
 package com.bota.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bota.bean.User;
@@ -199,9 +202,9 @@ public class UserController {
 		User user = userService.selectOne(id);
 		if(user.getIdentity() == 2){
 			List<Map<String, Object>> listMap = classService.selectAllClasses();
-			request.setAttribute("colleges", listMap);
+			request.setAttribute("classes", listMap);
 		}
-		request.setAttribute("User", user);
+		request.setAttribute("user", user);
 		return "user/editUser";
 	}
 	
@@ -220,16 +223,46 @@ public class UserController {
 	 * @return
 	 */
 	
+	@RequestMapping("userListBySearch")
+	public ModelAndView selectAllUsers(int pageNum,int pageSize,String identity,String search, String classid){
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("identity", identity);
+		paramMap.put("search", search);
+		if(!classid.equals("-1")){
+			paramMap.put("classid", classid);
+		}
+		ModelAndView model = new ModelAndView();
+		Map<String, Object> map = userService.selectAllUser(pageNum,pageSize,paramMap);
+		model.addObject("users", map.get("listMap"));
+		model.addObject("classes", classService.selectAllClasses());
+		
+		if(map.get("count") != null){
+			int count = Integer.parseInt(map.get("count").toString());
+			int totalPage  = 0;
+			if(count % 5 != 0 ){
+				totalPage =count/5 + 1; 
+			}else{
+				totalPage =count/5;
+			}
+			model.addObject("count", count);
+			model.addObject("totalPage", totalPage);
+		}
+		model.addObject("pageNum", pageNum);
+		if(paramMap != null){
+			model.addObject("search", paramMap.get("search"));
+			model.addObject("identity", paramMap.get("identity"));
+			model.addObject("classid", paramMap.get("classid"));
+		}
+		model.setViewName("user/user");
+		return model;
+	}
+	
+	
 	@RequestMapping("userListByPage")
-	public String selectAllUser(int pageNum,int pageSize,String identity, HttpServletRequest request,MapAction mapVo){
-			
-		Map<String, Object> paramMap = mapVo.getMapVo();
-		if(paramMap == null){
-			paramMap = new HashMap<String, Object>();
-		}
-		if(identity != null){
-			paramMap.put("identity",identity);
-		}
+	public String selectAllUser(int pageNum,int pageSize,String identity, HttpServletRequest request){
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("identity", identity);
+		
 		Map<String, Object> map = userService.selectAllUser(pageNum,pageSize,paramMap);
 		request.setAttribute("users", map.get("listMap"));
 		request.setAttribute("classes", classService.selectAllClasses());
@@ -245,12 +278,8 @@ public class UserController {
 			request.setAttribute("count",count);
 			request.setAttribute("totalPage",totalPage);
 		}
-		request.setAttribute("pageNum", pageNum);
-		if(paramMap != null){
-			request.setAttribute("search", paramMap.get("search"));
-			request.setAttribute("identity", paramMap.get("identity"));
-			request.setAttribute("classid", paramMap.get("classid"));
-		}
+		request.setAttribute("identity",identity);
+		request.setAttribute("pageNum",pageNum);
 		return "user/user";
 	}
 	
@@ -288,7 +317,7 @@ public class UserController {
 	 * @param User
 	 * @return
 	 */
-	@RequestMapping("updateUser")
+	@RequestMapping("editUser")
 	@ResponseBody
 	public boolean updateById(User user, String createTime){
 		Date date = DateStrConvert.strToDate(createTime, "yyyy-MM-dd");
