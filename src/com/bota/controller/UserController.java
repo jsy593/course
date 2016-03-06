@@ -166,6 +166,9 @@ public class UserController {
 	@ResponseBody
 	public boolean addUser(User user,String createTime){
 		Date date = DateStrConvert.strToDate(createTime, "yyyy-MM-dd");
+		if(user.getIdentity() != 2){//如果用户不是学生，就不要给他设置班级
+			user.setClassid(null);
+		}
 		user.setCreatetime(date);
 		user.setImageurl("images/2.jpg");//默认图片地址
 		System.out.println(user);
@@ -218,23 +221,36 @@ public class UserController {
 	 */
 	
 	@RequestMapping("userListByPage")
-	public String selectAllUser(int pageNum,int pageSize,HttpServletRequest request){
-		request.setAttribute("users", userService.selectAllUser(pageNum,pageSize));
+	public String selectAllUser(int pageNum,int pageSize,String identity, HttpServletRequest request,MapAction mapVo){
+			
+		Map<String, Object> paramMap = mapVo.getMapVo();
+		if(paramMap == null){
+			paramMap = new HashMap<String, Object>();
+		}
+		if(identity != null){
+			paramMap.put("identity",identity);
+		}
+		Map<String, Object> map = userService.selectAllUser(pageNum,pageSize,paramMap);
+		request.setAttribute("users", map.get("listMap"));
 		request.setAttribute("classes", classService.selectAllClasses());
-		Map<String, Object> numberMap = userService.selectUserNumber();
-		if(numberMap != null && numberMap.size() > 0){
-			int count = Integer.parseInt(numberMap.get("count").toString());
+		
+		if(map.get("count") != null){
+			int count = Integer.parseInt(map.get("count").toString());
 			int totalPage  = 0;
 			if(count % 5 != 0 ){
 				totalPage =count/5 + 1; 
 			}else{
 				totalPage =count/5;
 			}
-			request.setAttribute("count",numberMap.get("count"));
+			request.setAttribute("count",count);
 			request.setAttribute("totalPage",totalPage);
 		}
 		request.setAttribute("pageNum", pageNum);
-		
+		if(paramMap != null){
+			request.setAttribute("search", paramMap.get("search"));
+			request.setAttribute("identity", paramMap.get("identity"));
+			request.setAttribute("classid", paramMap.get("classid"));
+		}
 		return "user/user";
 	}
 	

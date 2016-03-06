@@ -75,8 +75,21 @@ public class UserServiceImpl implements UserService{
 	 * @return
 	 */
 	@Override
-	public List<Map<String, Object>> selectAllUser(int pageNum,int pageSize){
-		return userDaoImpl.selectAllUser(pageNum,pageSize);
+	public Map<String, Object> selectAllUser(int pageNum,int pageSize,Map<String, Object> paramMap){
+		StringBuffer whereSql = new StringBuffer(" where 1=1 ");
+		if(paramMap != null){
+			if(paramMap.containsKey("search") && paramMap.get("search") != null && !paramMap.get("search").equals("")){
+				whereSql.append(" and (u.name='"+paramMap.get("search").toString()+"' or u.usernumber='"+paramMap.get("search").toString()+"') ");
+			}
+			if(paramMap.containsKey("identity") && paramMap.get("identity") != null && !paramMap.get("identity").equals("")){
+				whereSql.append(" and u.identity = " + paramMap.get("identity").toString());
+			}
+			if(paramMap.containsKey("classid") && paramMap.get("classid") != null && !paramMap.get("calssid").equals("")){
+				whereSql.append(" and u.classid="+paramMap.get("classid").toString());
+			}
+			System.out.println(whereSql);
+		}
+		return userDaoImpl.selectAllUser(pageNum,pageSize,whereSql.toString());
 	}
 	
 	/**

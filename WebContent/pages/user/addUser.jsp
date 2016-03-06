@@ -228,7 +228,6 @@
 			}
 			
 			var user = $(".js_form").serialize();
-			console.info(user);
 			 $.post($(".js_form").attr("action")+"?createTime="+$(".js_createTime").val(),user,function(data){
 				if(data == true){
 					layer.alert('添加成功!', {icon: 6, time:2000},function(){

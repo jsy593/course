@@ -142,7 +142,7 @@
 						<!-- 二级菜单开始 -->
 						<ul class="submenu">
 								<li>
-									<a href="userListByPage.do?pageNum=1&pageSize=5">
+									<a href="userListByPage.do?pageNum=1&pageSize=5&identity=2">
 										<i class="icon-double-angle-right"></i>
 										用户列表
 									</a>

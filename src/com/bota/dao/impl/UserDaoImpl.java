@@ -105,12 +105,22 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectAllUser(int pageNum, int pageSize){
+	public Map<String, Object> selectAllUser(int pageNum, int pageSize,String whereSql){
 		int start = (pageNum -1) * pageSize;
-		String sql = "select  u.*,c.name cname from user u,classes c where u.classId=c.id limit " +start + ","+ pageSize;
-//		System.out.println(sql);
-		List<Map<String, Object>> listMap = super.findManyBySql(sql);
-		return listMap;
+		StringBuffer sql = new StringBuffer();
+		sql.append("select  u.*,date_format(u.createTime,'%Y-%m-%d') time,c.name cname,m.name mname from user u left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql).append(" limit " +start + ","+ pageSize);
+		System.out.println(sql);
+		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
+		
+		//记录条数
+		StringBuffer countSql = new StringBuffer();
+		countSql.append("select count(*) from  user u left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql);
+		System.out.println(countSql);
+		long count = super.getCount(countSql.toString());
+		Map<String, Object> resultMap =  new HashMap<String, Object>();
+		resultMap.put("listMap", listMap);
+		resultMap.put("count", count);
+		return resultMap;
 	}
 	
 	@Override

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ch">
 <%@ include file="../common.jsp" %>
@@ -19,38 +20,37 @@
 						</li>
 						<li class="active">用户列表</li>
 					</ul><!-- .breadcrumb -->
-
-					 <div class="nav-search" id="nav-search">
-						<form class="form-search">
-							<span class="input-icon">
-								<input type="text" placeholder="请输入用户的编号或者姓名 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-								<i class="icon-search nav-search-icon"></i>
-							</span>
-						</form>
-					</div> <!-- #nav-search -->
 				</div>
 
 				<div class="page-content">
 					<div class="row">
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
-										<div class="form-group" style="float:right;padding:0px 20px 0px 0px">
+									<div class="form-group" style="float:right;padding:0px 20px 0px 0px">
 										<label class="control-label no-padding-right" for="form-field-1">请选择
 										</label>
-											<select name="identity" class="js_select_role" id="form-field-1">
+											<select name="identity" value="${identity }" class="js_select_role" id="form-field-1">
 												<option value="2" selected>学生</option>
 												<option value="1">老师</option>
 												<option value="0">管理员</option>
 											</select>
 											
-											<select name="classid" class="js_select_class" id="form-field-1">
+											<select name="classid" value="${classid }" class="js_select_class" id="form-field-1">
 												<option value="-1" selected>所有</option>
 												<c:forEach items="${classes }" var="clazz">
-													<option value="${calzz.id }">${clazz.name }</option>
+													<option value="${clazz.id }">${clazz.name }</option>
 												</c:forEach>
 											</select>
-									</div>
-							
+											
+											
+											<span class="input-icon">
+												<input type="text"  value="${search }" placeholder="请输入用户的编号或者姓名 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
+												<button class="btn btn-info" type="button" onclick="selectUser()">
+														<i class="icon-search bigger-110"></i>
+															搜索
+												</button>
+											</span>
+							</div>
 							<div class="row">
 									<div class="col-xs-12">
 										<div class="table-responsive">
@@ -65,7 +65,7 @@
 														</th>
 														<th>编号</th>
 														<th>用户名</th>
-														<th class="js_th">学院</th>
+														<th class="js_th">专业</th>
 														<th class="js_th">班级</th>
 														<th>创建时间</th>
 														<th>操作</th>
@@ -81,11 +81,11 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>${user.usernumber }</th>
+														<th>${user.userNumber }</th>
 														<th>${user.username }</th>
-														<th class="js_th">${user.userCollege }</th>
-														<th class="js_th">${user.className }</th>
-														<th>${user.createTime }</th>
+														<th class="js_th">${user.mname }</th>
+														<th class="js_th">${user.cname }</th>
+														<th>${user.time }</th>
 														<th>
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
@@ -204,16 +204,48 @@
 		*/
 		$(function(){
 			$(".js_select_role").change(function(){
+				
 				if($(".js_select_role").val() != 2){
 					$(".js_select_class").hide();
 					$(".js_th").hide();
 				}else{
-					$(".js_form_student").show();
+					$(".js_select_class").show();
 					$(".js_th").show();
-				}
+				} 
+				selectUser();
 			});
 			
 		});
+		
+		function selectUser(){
+			var search = $(".js_search").val();
+			var identity = $(".js_select_role").val();
+			var classid;
+			if(identity == 2){
+				classid = $(".js_select_class").val();
+			}
+			var mapVo = {};
+			mapVo.search = search;
+			mapVo.classid = classid;
+			mapVo.identity = identity;
+			
+			$.ajax({
+				url:"userListByPage.do?pageNum=1&pageSize=5",
+				async:false,
+				dataType:'json',
+				data:{"mapVo":mapVo},
+				success:function(data){
+					
+				}
+				
+			});
+			
+			
+// 			$.post("userListByPage.do?pageNum=1&pageSize=5",{'mapVo':mapVo},function(data){
+// 				window.location.reload();
+// 			});
+		}
+		
 		
 		
 		

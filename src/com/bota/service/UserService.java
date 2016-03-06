@@ -54,7 +54,7 @@ public interface UserService {
 	 * 分页查询所有的用户
 	 * @return
 	 */
-	public List<Map<String, Object>> selectAllUser(int pageNum,int pageSize);
+	public Map<String, Object> selectAllUser(int pageNum,int pageSize,Map<String, Object> paramMap);
 	
 	/**
 	 * 查询用户的数量

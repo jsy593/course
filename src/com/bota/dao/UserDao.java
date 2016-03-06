@@ -58,7 +58,7 @@ public interface UserDao {
 	 * 分页查询所有的用户
 	 * @return
 	 */
-	List<Map<String, Object>> selectAllUser(int pageNum,int pageSize);
+	Map<String, Object> selectAllUser(int pageNum,int pageSize,String whereSql);
 	
 	/**
 	 * 批量删除用户
