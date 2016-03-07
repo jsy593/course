@@ -113,7 +113,7 @@ public class TeacherCourseController {
 	@RequestMapping("updateTeacherCourse")
 	@ResponseBody
 	public boolean updateById(TeacherCourse teacherCourse){
-		return teacherCourseService.addTeacherCourse(teacherCourse);
+		return teacherCourseService.updateById(teacherCourse);
 	}
 	/**
 	 * 根据id删除课程

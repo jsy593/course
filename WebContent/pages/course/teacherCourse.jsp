@@ -79,9 +79,10 @@
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
 															<c:if test="${teacherCourse.isAgree  == 0}">
-																<button class="btn  btn-sm btn-success " onclick="editCourse(${course.id },1)">同意</button>
+															
+																<button class="btn  btn-sm btn-success " onclick="editCourse(${teacherCourse.id },1)">同意</button>
 																
-																<button class="btn  btn-sm btn-danger " onclick="editCourse(${course.id },2)">拒绝</button>
+																<button class="btn  btn-sm btn-danger " onclick="editCourse(${teacherCourse.id },2)">拒绝</button>
 															</c:if>
 															
 															<c:if test="${teacherCourse.isAgree  != 0}">

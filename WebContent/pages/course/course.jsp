@@ -143,13 +143,68 @@
 														
 														<c:if test="${sessionScope.user.identity == 1 }">
 															<c:if test="${course.isAgree == 0 }">
-																<button class="btn btn-sm btn-primary" onclick="applyEditCourse(${course.id })">申请详情</button>
+																
+																<button class="btn  btn-sm btn-primary " onclick="applyEditCourse(${course.id })">申请详情</button>
+																
+																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
+																			<li>
+																				<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="orange">查看
+																					</span>
+																				</a>
+																			</li>
+																		</ul>
+																		
+																</div>
 															</c:if>
 															<c:if test="${course.isAgree == null }">
-																<button class="btn btn-sm btn-danger" onclick="applyEditCourse(${course.id })">申请修改</button>
+																
+																<div class="inline dropdown-hover">
+																<button class="btn  btn-sm btn-danger " onclick="applyEditCourse(${course.id })">申请修改</button>
+																
+																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
+																			<li>
+																				<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="orange">申请
+																					</span>
+																				</a>
+																			</li>
+																		</ul>
+																		
+																</div>
+																
 															</c:if>
 															<c:if test="${course.isAgree == 1 }">
+
+															<div class="inline dropdown-hover">
 																<button class="btn  btn-sm btn-success " onclick="editCourse(${course.id })">申请成功</button>
+																
+																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
+																			<li>
+																				<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="green">修改课程
+																					</span>
+																				</a>
+																			</li>
+																		</ul>
+																		
+																</div>
+															</c:if>
+															<c:if test="${course.isAgree == 2 }">
+																
+																<div class="inline dropdown-hover">
+																<button class="btn  btn-sm btn-purple " onclick="editCourse(${course.id })">申请失败</button>
+																
+																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
+																			<li>
+																				<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="green">查看
+																					</span>
+																				</a>
+																			</li>
+																		</ul>
+																		
+																</div>
 															</c:if>
 														</c:if>
 <!-- 															<div class="visible-xs visible-sm hidden-md hidden-lg"> -->
