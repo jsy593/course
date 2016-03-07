@@ -16,9 +16,9 @@
 						</li>
 
 						<li>
-							<a href="#">用户管理</a>
+							<a href="#">课程管理</a>
 						</li>
-						<li class="active">用户列表</li>
+						<li class="active">课程列表</li>
 					</ul><!-- .breadcrumb -->
 				</div>
 
@@ -29,25 +29,24 @@
 									<div class="form-group" style="float:right;padding:0px 20px 0px 0px">
 										<label class="control-label no-padding-right" for="form-field-1">请选择
 										</label>
-											<select name="identity" class="js_select_role" id="form-field-1">
-												<option value="2" <c:if test="${identity == 2}">selected</c:if>>学生</option>
-												<option value="1" <c:if test="${identity == 1}">selected</c:if>>老师</option>
-												<option value="0" <c:if test="${identity == 0}">selected</c:if>>管理员</option>
+											<select name="teacherid" class="js_select_teacher" id="form-field-1">
+											<option value="-1">所有</option>
+											<c:forEach items="${teachers }" var="teacher">
+												<option value="${teacher.id}" <c:if test="${teacher.id == teacherId}">selected</c:if>>${teacher.username }</option>
+											</c:forEach>
 											</select>
 											
-											<c:if test="${identity ==2 }">
-											<select name="classid" value="${classid }" class="js_select_class" id="form-field-1">
-												<option value="-1" selected>所有</option>
-												<c:forEach items="${classes }" var="clazz">
-													<option value="${clazz.id }" <c:if test="${clazz.id == classid}">selected</c:if>>${clazz.name }</option>
+											<select name="specialtyId" class="js_select_major" id="form-field-1">
+												<option value="-1">所有</option>
+												<c:forEach items="${majors }" var="major">
+													<option value="${major.id }" <c:if test="${major.id == specialtyId}">selected</c:if>>${major.name }</option>
 												</c:forEach>
 											</select>
-											</c:if>
 											
 											
 											<span class="input-icon">
-												<input type="text"  value="${search }" placeholder="请输入编号或者姓名 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
-												<button class="btn btn-info" type="button" onclick="selectUser()">
+												<input type="text"  value="${search }" placeholder="请输入课程名或者编号 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
+												<button class="btn btn-info" type="button" onclick="selectCourse(1)">
 														<i class="icon-search bigger-110"></i>
 															搜索
 												</button>
@@ -65,20 +64,22 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>编号</th>
-														<th>用户名</th>
-														<c:if test="${identity ==2 }">
-															<th class="js_th">专业</th>
-															<th class="js_th">班级</th>
-															<th>学分</th>
-														</c:if>
+														<th>课程编号</th>
+														<th>课程名称</th>
+														<th>课程学分</th>
+														<th>任课老师</th>
+														<th>上课时间</th>
+														<th>上课地址</th>
+														<th>所属专业</th>
+														<th>最大容量</th>
+														<th>是否可选</th>
 														<th>创建时间</th>
 														<th>操作</th>
 													</tr>
 												</thead>
 
 												<tbody>
-													<c:forEach items="${users}" var="user" >
+													<c:forEach items="${courses}" var="course" >
 													<tr>
 														<th class="center">
 															<label>
@@ -86,31 +87,45 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>${user.userNumber }</th>
-														<th>${user.username }</th>
-														<c:if test="${identity ==2 }">
-															<th class="js_th">${user.mname }</th>
-															<th class="js_th">${user.cname }</th>
-															<th class="js_th">${user.credit}</th>
+														<th>${course.courseNumber }</th>
+														<th>${course.name }</th>
+														<th>${course.credit }</th>
+														<th>${course.teachername }</th>
+														<th>${course.schooltime}</th>
+														<th>${course.address }</th>
+														<th>${course.mname }</th>
+														<th>${course.numberLimit }</th>
+														<c:if test="${course.isFinish == 0}">
+															<th class="js_th${course.id }">不可选</th>
 														</c:if>
-														<th>${user.time }</th>
+														<c:if test="${course.isFinish == 1}">
+															<th class="js_th${course.id }">可选</th>
+														</c:if>
+														<th>${course.time }</th>
 														<th>
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
-																<a class="blue" href="addUserPage.do" >
+																<a class="blue" href="addcoursePage.do" >
 																	<i class="icon-plus-sign bigger-130"></i>
 																</a>
 																<!-- <a class="blue" href="#">
 																	<i class="icon-zoom-in bigger-130"></i>
 																</a> -->
 
-																<a class="green" href="editUserPage.do?id=${user.id }">
+																<a class="green" href="editCoursePage.do?id=${course.id }">
 																	<i class="icon-pencil bigger-130"></i>
 																</a>
 
-																<a class="red" href="javascript:void(0);" onclick="deleteUser(${user.id })">
+																<a class="red" href="javascript:void(0);" onclick="deleteCourse(${course.id })">
 																	<i class="icon-trash bigger-130"></i>
 																</a>
+																
+																<label class="js_label${course.id }">
+																		<input name="switch-field-1" onChange="changeStatus(${course.id},${course.isFinish})" 
+																		<c:if test="${course.isFinish == 1}">checked</c:if>
+																		 class="js_isFinish${course.id } ace ace-switch ace-switch-4" type="checkbox" />
+																		<span class="lbl"></span>
+																</label>
 															</div>
 
 															<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -143,6 +158,7 @@
 																				</span>
 																			</a>
 																		</li>
+																		
 																	</ul>
 																</div>
 															</div>
@@ -165,7 +181,7 @@
 												<ul class="pagination pull-right no-margin">
 													<li class="prev">
 													<c:if test='${pageNum > 1}'>
-														<a href="javascript:void(0);" onclick="selectUser(${pageNum - 1})" >
+														<a href="javascript:void(0);" onclick="selectCourse(${pageNum - 1})" >
 															<i class="icon-double-angle-left"></i>
 														</a>
 														</c:if>
@@ -176,7 +192,7 @@
 												<c:if test="${pageNum+4 <= totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${pageNum +4 }">
 															<li >
-																<a href="javascript:void(0);" onclick="selectUser(${page})" value="${page }">${page }</a>
+																<a href="javascript:void(0);" onclick="selectCourse(${page})" value="${page }">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -184,7 +200,7 @@
 												<c:if test="${pageNum+4> totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${totalPage }">
 															<li >
-																<a href="javascript:void(0);" onclick="selectUser(${page})">${page }</a>
+																<a href="javascript:void(0);" onclick="selectCourse(${page})">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -192,7 +208,7 @@
 													
 												<c:if test="${pageNum + 4 < totalPage}">
 													<li class="next">
-														<a href="javascript:void(0);" onclick="selectUser(${page + 1})">
+														<a href="javascript:void(0);" onclick="selectCourse(${page + 1})">
 															<i class="icon-double-angle-right"></i>
 														</a>
 													</li>
@@ -207,30 +223,69 @@
 			</div><!-- /.main-content -->
 		<script type="text/javascript">
 		
-		/**
-		* 改变显示的内容
-		*/
+		
+		
+		
+		
 		$(function(){
-			$(".js_select_role").change(function(){
-				selectUser(1);
+			/**
+			* 改变显示的内容
+			*/
+			$(".js_select_teacher").change(function(){
+				selectCourse(1);
 			});
-			$(".js_select_class").change(function(){
-				selectUser(1);
+			$(".js_select_major").change(function(){
+				selectCourse(1);
 			});
-			
+			/**
+			*选课的开启与关闭
+			*/
+			$(".js_isFinish").change(function(){
+				if($(".js_isFinish").is(':checked')){
+					
+				}
+			});
 		});
 		
-		function selectUser(pageNum){
-			var search = $(".js_search").val();
-			var identity = $(".js_select_role").val();
-			var classid = "-1";
-			if(identity == 2){
-				var clazzid = $(".js_select_class").val();
-				if(clazzid != undefined && clazzid != null){
-					classid = clazzid;
-				}
+		
+		function changeStatus(id,isFinish){
+			var finish = 0;
+			var clazz = ".js_isFinish"+id;
+			if(isFinish == 0){//原来为没有选中，点击按钮后，让它选中
+				$(clazz).attr("checked", true);
+				finish = 1;
+			}else{//原来选中，点击按钮后，让它不选中
+				$(clazz).attr("checked", false);
 			}
-			window.location.href="userListBySearch.do?pageNum="+pageNum+"&pageSize=5&search="+search+"&identity="+identity+"&classid="+classid;
+			var user = {};
+			user.id = id;
+			user.isfinish = finish;
+			
+			$.post("editStatus.do",user,function(data){
+				var label = ".js_label"+id;
+				if(data == true){
+					if(finish == 1){
+						var html = "<input name='switch-field-1' onChange='changeStatus("+id+","+finish+")' checked class='js_isFinish"+id +" ace ace-switch ace-switch-4' type='checkbox' />";
+						$(".js_th"+id).text("可选");
+						layer.alert('该门课程可以选课了!', {icon: 6, time:2000});
+					}else{
+						var html = "<input name='switch-field-1' onChange='changeStatus("+id+","+finish+")' class='js_isFinish"+id +" ace ace-switch ace-switch-4' type='checkbox' />";
+						$(".js_th"+id).text("不可选");
+						layer.alert('该门课程选课时间结束了!', {icon: 5});
+					}
+					$(clazz).replaceWith(html);
+				}else{
+					layer.alert('系统错误!', {icon: 5});
+				}
+			}); 
+			
+		}
+		
+		function selectCourse(pageNum){
+			var search = $(".js_search").val();
+			var teacherId = $(".js_select_teacher").val();
+			var specialtyId = $(".js_select_major").val();
+			window.location.href="courseListBySearch.do?pageNum="+pageNum+"&pageSize=5&search="+search+"&specialtyId="+specialtyId+"&teacherId="+teacherId;
 		}
 		
 		
@@ -239,9 +294,9 @@
 			/*设置日历颜色*/
 			laydate.skin('molv');
 			
-			function deleteUser(id){
+			function deleteCourse(id){
 				layer.confirm('确认要删除吗?', {icon: 3, title:'提示'}, function(){
-				    $.post("deleteUser.do",{"id":id},function(data){
+				    $.post("deleteCourse.do",{"id":id},function(data){
 				    	if(data == true){
 				    		layer.msg('删除成功!', {icon: 6,time:2000},function(){
 				    			history.go(0);

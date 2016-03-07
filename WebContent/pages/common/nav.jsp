@@ -158,6 +158,35 @@
 						<!-- 二级菜单结束 -->
 					</li>
 					
+					
+					
+					
+					<li>
+						<a href="javascript:void(0);" class="dropdown-toggle" onclick="courseListByPage.do?pageNum=1&pageSize=5">
+							<i class="icon-text-width"></i>
+							<span class="menu-text">课程管理</span>
+						</a>
+						
+						
+						<!-- 二级菜单开始 -->
+						<ul class="submenu">
+								<li>
+									<a href="courseListByPage.do?pageNum=1&pageSize=5">
+										<i class="icon-double-angle-right"></i>
+										课程列表
+									</a>
+								</li>
+								
+								<li>
+									<a href="addCoursePage.do">
+										<i class="icon-double-angle-right"></i>
+										添加课程
+									</a>
+								</li>
+							</ul>
+						<!-- 二级菜单结束 -->
+					</li>
+					
 </c:if>
 
 <c:if test="${sessionScope.user.identity  == 1}">

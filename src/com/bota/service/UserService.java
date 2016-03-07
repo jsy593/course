@@ -87,5 +87,11 @@ public interface UserService {
 	 * @return
 	 */
 	public boolean deleteByIds(String id);
-
+	
+	/**
+	 *根据用户角色获取该角色的所有的用户
+	 * @param identity
+	 * @return
+	 */
+	List<Map<String, Object>> selectAllUserByIdentity(int identity);
 }

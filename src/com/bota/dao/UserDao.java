@@ -72,5 +72,12 @@ public interface UserDao {
 	 * @return 
 	 */
 	Map<String, Object> selectUserNumber();
+
+	/**
+	 *根据用户角色获取该角色的所有的用户
+	 * @param identity
+	 * @return
+	 */
+	List<Map<String, Object>> selectAllUserByIdentity(int identity);
 	
 }

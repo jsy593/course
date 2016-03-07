@@ -134,4 +134,11 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 	public boolean deleteByPrimaryKeys(String ids){
 		return super.deletetClass(User.class,"id", ids);
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectAllUserByIdentity(int identity){
+		String sql = "select * from user where identity="+identity;
+		return super.findManyBySql(sql);
+	}
+
 }

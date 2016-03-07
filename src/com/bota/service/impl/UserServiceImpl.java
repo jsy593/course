@@ -137,5 +137,10 @@ public class UserServiceImpl implements UserService{
 	public boolean deleteByIds(String ids){
 		return userDao.deleteByPrimaryKeys(ids);
 	}
-
+	
+	
+	@Override
+	public List<Map<String,Object>> selectAllUserByIdentity(int identity){
+		return userDaoImpl.selectAllUserByIdentity(identity);
+	}
 }

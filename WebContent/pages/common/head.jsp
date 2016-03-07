@@ -20,6 +20,7 @@
 	<script src="<%=basePath%>/assets/js/ace.min.js"></script>
 	<script src="<%=basePath%>/assets/js/ace-extra.min.js"></script>
 	<script src="<%=basePath%>/assets/js/bootstrap.min.js"></script>
+	<script src="<%=basePath%>/assets/js/ace-elements.min.js"></script>
 	<script src="<%=basePath%>/assets/js/typeahead-bs2.min.js"></script>
 	<script src="<%=basePath%>/js/layer/layer.js"></script>
 <script src="<%=basePath%>/js/laydate/laydate.js"></script>

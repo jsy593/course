@@ -26,16 +26,7 @@
         </javaClientGenerator>    
         
         
-         <table tableName="classes" domainObjectName="Classes" enableCountByExample="false" 
-        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
-        selectByExampleQueryId="false"></table>
-        
-        
-        <table tableName="college" domainObjectName="College" enableCountByExample="false" 
-        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
-        selectByExampleQueryId="false"></table>
-        
-        <table tableName="bulletinboard" domainObjectName="BulletinBoard" enableCountByExample="false" 
+        <table tableName="course" domainObjectName="Course" enableCountByExample="false" 
         enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
         selectByExampleQueryId="false"></table>
     </context>    

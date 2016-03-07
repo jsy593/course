@@ -1,5 +1,7 @@
 package com.bota.bean;
 
+import java.util.Date;
+
 public class Course {
     private Long id;
 
@@ -20,6 +22,8 @@ public class Course {
     private Integer numberlimit;
 
     private Integer isfinish;
+
+    private Date createtime;
 
     public Long getId() {
         return id;
@@ -99,5 +103,13 @@ public class Course {
 
     public void setIsfinish(Integer isfinish) {
         this.isfinish = isfinish;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

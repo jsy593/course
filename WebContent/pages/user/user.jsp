@@ -47,7 +47,7 @@
 											
 											<span class="input-icon">
 												<input type="text"  value="${search }" placeholder="请输入编号或者姓名 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
-												<button class="btn btn-info" type="button" onclick="selectUser()">
+												<button class="btn btn-info" type="button" onclick="selectUser(1)">
 														<i class="icon-search bigger-110"></i>
 															搜索
 												</button>
