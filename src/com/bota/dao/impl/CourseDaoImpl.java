@@ -63,13 +63,13 @@ public class CourseDaoImpl extends CommonDaoImpl<Course> implements CourseDao{
 	public Map<String, Object> selectAllCourse(int pageNum, int pageSize,String whereSql){
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
-		sql.append("select  c.*,date_format(c.createTime,'%Y-%m-%d') time,u.username  teachername,m.name mname from Course c left join  user u on c.teacherId=u.id left join  major m on c.specialtyId=m.id ").append(whereSql).append(" limit " +start + ","+ pageSize);
+		sql.append("select  c.*,date_format(c.createTime,'%Y-%m-%d') time,u.username  teachername,m.name mname,tc.isAgree from Course c left join  user u on c.teacherId=u.id left join  major m on c.specialtyId=m.id left join teacherCourse tc on c.id= tc.courseid ").append(whereSql).append(" limit " +start + ","+ pageSize);
 		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
 		
 		//记录条数
 		StringBuffer countSql = new StringBuffer();
-		countSql.append("select count(*) from Course c left join  user u on c.teacherId=u.id left join  major m on c.specialtyId=m.id ").append(whereSql);
+		countSql.append("select count(*) from Course c left join  user u on c.teacherId=u.id left join  major m on c.specialtyId=m.id left join teacherCourse tc on c.id= tc.courseid ").append(whereSql);
 		System.out.println(countSql);
 		long count = super.getCount(countSql.toString());
 		Map<String, Object> resultMap =  new HashMap<String, Object>();

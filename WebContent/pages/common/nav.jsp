@@ -49,8 +49,17 @@
 <!--                             判断用户的角色，进入不同的页面                                                                             -->
 <c:if test="${sessionScope.user.identity  ==  0}">
 				<ul class="nav nav-list">
+				
+					<li>
+						<a href="teacherCourseListByPage.do?pageNum=1&pageSize=5">
+							<i class="icon-text-width"></i>
+							<span class="menu-text">申请管理</span>
+						</a>
+					</li>
+				
+				
 					<li class="active">
-						<a href="javascript:void(0);" class="dropdown-toggle" onclick="collegeListByPage.do?pageNum=1&pageSize=5">
+						<a href="javascript:void(0);" onclick="collegeListByPage()">
 							<i class="icon-dashboard"></i>
 							<span class="menu-text">学院管理 </span>
 							
@@ -192,7 +201,7 @@
 <c:if test="${sessionScope.user.identity  == 1}">
 		<ul class="nav nav-list">
 					<li>
-						<a href="collegePage.do">
+						<a href="courseListByTeacher.do?pageNum=1&pageSize=5&teacherId=${sessionScope.user.id}">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">课程管理</span>
 						</a>
@@ -206,14 +215,17 @@
 							<b class="arrow icon-angle-down"></b>
 						</a>
 
-						<ul class="stat">
-							<li>
-								<a href="addStudentsGrade.do">
-									<i class="icon-double-angle-right"></i>
-									成绩录入
-								</a>
-							</li>
-						</ul>
+						<!-- 二级菜单开始 -->
+						<ul class="submenu">
+								<li>
+									<a href="courseListByPage.do?pageNum=1&pageSize=5">
+										<i class="icon-double-angle-right"></i>
+										成绩录入
+									</a>
+								</li>
+								
+							</ul>
+						<!-- 二级菜单结束 -->
 					</li>
 
 </c:if>
@@ -221,7 +233,7 @@
 <c:if test="${sessionScope.user.identity  == 2}">
 				<ul class="nav nav-list">
 					<li>
-						<a href="typography.html">
+						<a href="courseListByTeacher.do?pageNum=1&pageSize=5&teacherId="+${sessionScope.user.id}>
 							<i class="icon-text-width"></i>
 							<span class="menu-text">选课管理</span>
 						</a>

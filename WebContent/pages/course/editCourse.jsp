@@ -231,18 +231,18 @@
 				}
 			}); 
 		}
-		$( "#input-size-slider" ).css('width','200px').slider({
-			value:1,
-			range: "min",
-			min: 1,
-			max: 8,
-			step: 1,
-			slide: function( event, ui ) {
-				var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
-				var val = parseInt(ui.value);
-				$('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
-			}
-		});
+// 		$( "#input-size-slider" ).css('width','200px').slider({
+// 			value:1,
+// 			range: "min",
+// 			min: 1,
+// 			max: 8,
+// 			step: 1,
+// 			slide: function( event, ui ) {
+// 				var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
+// 				var val = parseInt(ui.value);
+// 				$('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
+// 			}
+// 		});
 			/*设置日历颜色*/
 			laydate.skin('molv');
 		</script>

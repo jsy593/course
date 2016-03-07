@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bota.bean.Course;
 import com.bota.service.CourseService;
 import com.bota.service.MajorService;
+import com.bota.service.TeacherCourseService;
 import com.bota.service.UserService;
 import com.bota.util.DateStrConvert;
 
@@ -35,6 +36,8 @@ public class CourseController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private TeacherCourseService teacherCourseService;
 	
 	/**
 	 * 添加课程
@@ -128,10 +131,52 @@ public class CourseController {
 		return model;
 	}
 	
+	/**
+	 * 查询老师的课程
+	 * @param pageNum
+	 * @param pageSize
+	 * @param teacherId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("courseListByTeacher")
+	public String selectAllCourseByTeacher(int pageNum,int pageSize,String teacherId,HttpServletRequest request){
+		Map<String, Object> paramMap = null;
+		paramMap = new HashMap<String, Object>();
+		paramMap.put("teacherId",teacherId);
+		Map<String, Object> map = courseService.selectAllCourse(pageNum,pageSize,paramMap);
+		List<Map<String, Object>> teacherMap = userService.selectAllUserByIdentity(1);//1代表老师的角色
+		List<Map<String, Object>> majorMap = majorService.selectAllMajor();
+		
+		request.setAttribute("courses", map.get("listMap"));
+		request.setAttribute("teachers", teacherMap);
+		request.setAttribute("majors", majorMap);
+		
+		if(map.get("count") != null){
+			int count = Integer.parseInt(map.get("count").toString());
+			int totalPage  = 0;
+			if(count % 5 != 0 ){
+				totalPage =count/5 + 1; 
+			}else{
+				totalPage =count/5;
+			}
+			request.setAttribute("count",count);
+			request.setAttribute("totalPage",totalPage);
+		}
+		request.setAttribute("pageNum",pageNum);
+		return "course/course";
+	}
+	
+	
 	
 	@RequestMapping("courseListByPage")
 	public String selectAllCourse(int pageNum,int pageSize,HttpServletRequest request){
-		Map<String, Object> map = courseService.selectAllCourse(pageNum,pageSize,null);
+		Map<String, Object> paramMap = null;
+		if(request.getAttribute("teacherId") != null){
+			paramMap = new HashMap<String, Object>();
+			paramMap.put("teacherId",request.getAttribute("teacherId").toString());
+		}
+		Map<String, Object> map = courseService.selectAllCourse(pageNum,pageSize,paramMap);
 		List<Map<String, Object>> teacherMap = userService.selectAllUserByIdentity(1);//1代表老师的角色
 		List<Map<String, Object>> majorMap = majorService.selectAllMajor();
 		request.setAttribute("courses", map.get("listMap"));

@@ -26,6 +26,9 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
+							<!--  -->
+							<!-- 搜索栏只有管理员能见 -->
+							<c:if test="${sessionScope.user.identity == 0 }">
 									<div class="form-group" style="float:right;padding:0px 20px 0px 0px">
 										<label class="control-label no-padding-right" for="form-field-1">请选择
 										</label>
@@ -51,7 +54,13 @@
 															搜索
 												</button>
 											</span>
-							</div>
+								</div>
+							
+							</c:if>
+							
+							<!-- 搜索栏结束 -->
+							
+							
 							<div class="row">
 									<div class="col-xs-12">
 										<div class="table-responsive">
@@ -103,6 +112,7 @@
 														</c:if>
 														<th>${course.time }</th>
 														<th>
+														<c:if test="${sessionScope.user.identity == 0 }">
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
 																<a class="blue" href="addcoursePage.do" >
@@ -127,41 +137,58 @@
 																		<span class="lbl"></span>
 																</label>
 															</div>
+														</c:if>
+														
+														
+														
+														<c:if test="${sessionScope.user.identity == 1 }">
+															<c:if test="${course.isAgree == 0 }">
+																<button class="btn btn-sm btn-primary" onclick="applyEditCourse(${course.id })">申请详情</button>
+															</c:if>
+															<c:if test="${course.isAgree == null }">
+																<button class="btn btn-sm btn-danger" onclick="applyEditCourse(${course.id })">申请修改</button>
+															</c:if>
+															<c:if test="${course.isAgree == 1 }">
+																<button class="btn  btn-sm btn-success " onclick="editCourse(${course.id })">申请成功</button>
+															</c:if>
+														</c:if>
+<!-- 															<div class="visible-xs visible-sm hidden-md hidden-lg"> -->
+<!-- 																<div class="inline position-relative"> -->
+<!-- 																	<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> -->
+<!-- 																		<i class="icon-caret-down icon-only bigger-120"></i> -->
+<!-- 																	</button> -->
 
-															<div class="visible-xs visible-sm hidden-md hidden-lg">
-																<div class="inline position-relative">
-																	<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-																		<i class="icon-caret-down icon-only bigger-120"></i>
-																	</button>
+<!-- 																	<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> -->
+<!-- 																		<li> -->
+<!-- 																			<a href="#" class="tooltip-info" data-rel="tooltip" title="View"> -->
+<!-- 																				<span class="blue"> -->
+<!-- 																					<i class="icon-zoom-in bigger-120"></i> -->
+<!-- 																				</span> -->
+<!-- 																			</a> -->
+<!-- 																		</li> -->
 
-																	<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-																		<li>
-																			<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																				<span class="blue">
-																					<i class="icon-zoom-in bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
+<!-- 																		<li> -->
+<!-- 																			<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit"> -->
+<!-- 																				<span class="green"> -->
+<!-- 																					<i class="icon-edit bigger-120"></i> -->
+<!-- 																				</span> -->
+<!-- 																			</a> -->
+<!-- 																		</li> -->
 
-																		<li>
-																			<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																				<span class="green">
-																					<i class="icon-edit bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																				<span class="red">
-																					<i class="icon-trash bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
+<!-- 																		<li> -->
+<!-- 																			<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete"> -->
+<!-- 																				<span class="red"> -->
+<!-- 																					<i class="icon-trash bigger-120"></i> -->
+<!-- 																				</span> -->
+<!-- 																			</a> -->
+<!-- 																		</li> -->
 																		
-																	</ul>
-																</div>
-															</div>
+<!-- 																	</ul> -->
+<!-- 																</div> -->
+<!-- 															</div> -->
+															
+															
+															
 														</th>
 													</tr>
 													
@@ -223,8 +250,20 @@
 			</div><!-- /.main-content -->
 		<script type="text/javascript">
 		
+		/*---------------------------老师开始-----------------------------*/
 		
 		
+		/**
+			*跳转申请修改的页面
+			*/
+			function applyEditCourse(id){
+				window.location.href="addTeacherCoursePage.do?id="+id;
+			}
+		
+			/*---------------------------老师结束-----------------------------*/
+		
+		
+		/*---------------------------管理员-----------------------------*/
 		
 		
 		$(function(){
@@ -237,15 +276,14 @@
 			$(".js_select_major").change(function(){
 				selectCourse(1);
 			});
-			/**
-			*选课的开启与关闭
-			*/
-			$(".js_isFinish").change(function(){
-				if($(".js_isFinish").is(':checked')){
-					
-				}
-			});
 		});
+		
+		function selectCourse(pageNum){
+			var search = $(".js_search").val();
+			var teacherId = $(".js_select_teacher").val();
+			var specialtyId = $(".js_select_major").val();
+			window.location.href="courseListBySearch.do?pageNum="+pageNum+"&pageSize=5&search="+search+"&specialtyId="+specialtyId+"&teacherId="+teacherId;
+		}
 		
 		
 		function changeStatus(id,isFinish){
@@ -281,19 +319,15 @@
 			
 		}
 		
-		function selectCourse(pageNum){
-			var search = $(".js_search").val();
-			var teacherId = $(".js_select_teacher").val();
-			var specialtyId = $(".js_select_major").val();
-			window.location.href="courseListBySearch.do?pageNum="+pageNum+"&pageSize=5&search="+search+"&specialtyId="+specialtyId+"&teacherId="+teacherId;
-		}
-		
 		
 		
 		
 			/*设置日历颜色*/
 			laydate.skin('molv');
 			
+			/*
+			*删除课程
+			*/
 			function deleteCourse(id){
 				layer.confirm('确认要删除吗?', {icon: 3, title:'提示'}, function(){
 				    $.post("deleteCourse.do",{"id":id},function(data){
@@ -308,6 +342,9 @@
 				});
 				//e
 			}
+			
+			/*---------------------------管理员结束-----------------------------*/	
+			
 		</script>
 </body>
 </html>
