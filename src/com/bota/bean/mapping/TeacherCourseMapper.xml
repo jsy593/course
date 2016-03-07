@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bota.dao.TeacherCourseDao" >
+  <resultMap id="BaseResultMap" type="com.bota.bean.TeacherCourse" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="courseId" property="courseid" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="isAgree" property="isagree" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, courseId, content, isAgree, createTime
+  </sql>
+  <select id="selectByPrimaryKey" resultType="com.bota.bean.TeacherCourse" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from teachercourse
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from teachercourse
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bota.bean.TeacherCourse" >
+    insert into teachercourse (id, courseId, content, 
+      isAgree, createTime)
+    values (#{id,jdbcType=BIGINT}, #{courseid,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, 
+      #{isagree,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bota.bean.TeacherCourse" >
+    insert into teachercourse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="courseid != null" >
+        courseId,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="isagree != null" >
+        isAgree,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="courseid != null" >
+        #{courseid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isagree != null" >
+        #{isagree,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bota.bean.TeacherCourse" >
+    update teachercourse
+    <set >
+      <if test="courseid != null" >
+        courseId = #{courseid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isagree != null" >
+        isAgree = #{isagree,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bota.bean.TeacherCourse" >
+    update teachercourse
+    set courseId = #{courseid,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      isAgree = #{isagree,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
