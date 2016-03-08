@@ -6,9 +6,10 @@
     <result column="studentId" property="studentid" jdbcType="BIGINT" />
     <result column="courseId" property="courseid" jdbcType="BIGINT" />
     <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, studentId, courseId, grade
+    id, studentId, courseId, grade, createTime
   </sql>
   <select id="selectByPrimaryKey" resultType="com.bota.bean.StudentCourse" parameterType="java.lang.Long" >
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="com.bota.bean.StudentCourse" >
     insert into studentcourse (id, studentId, courseId, 
-      grade)
+      grade, createTime)
     values (#{id,jdbcType=BIGINT}, #{studentid,jdbcType=BIGINT}, #{courseid,jdbcType=BIGINT}, 
-      #{grade,jdbcType=INTEGER})
+      #{grade,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.bota.bean.StudentCourse" >
     insert into studentcourse
@@ -41,6 +42,9 @@
       <if test="grade != null" >
         grade,
       </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -54,6 +58,9 @@
       </if>
       <if test="grade != null" >
         #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -69,6 +76,9 @@
       <if test="grade != null" >
         grade = #{grade,jdbcType=INTEGER},
       </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -76,7 +86,8 @@
     update studentcourse
     set studentId = #{studentid,jdbcType=BIGINT},
       courseId = #{courseid,jdbcType=BIGINT},
-      grade = #{grade,jdbcType=INTEGER}
+      grade = #{grade,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

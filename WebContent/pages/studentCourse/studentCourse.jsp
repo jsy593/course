@@ -16,9 +16,9 @@
 						</li>
 
 						<li>
-							<a href="#">用户管理</a>
+							<a href="#">学生管理</a>
 						</li>
-						<li class="active">用户列表</li>
+						<li class="active">学生列表</li>
 					</ul><!-- .breadcrumb -->
 				</div>
 
@@ -29,24 +29,19 @@
 									<div class="form-group" style="float:right;padding:0px 20px 0px 0px">
 										<label class="control-label no-padding-right" for="form-field-1">请选择
 										</label>
-											<select name="identity" class="js_select_role" id="form-field-1">
-												<option value="2" <c:if test="${identity == 2}">selected</c:if>>学生</option>
-												<option value="1" <c:if test="${identity == 1}">selected</c:if>>老师</option>
-												<option value="0" <c:if test="${identity == 0}">selected</c:if>>管理员</option>
-											</select>
 											
-											<c:if test="${identity ==2 }">
-											<select name="classid" value="${classid }" class="js_select_class" id="form-field-1">
+											<c:if test="${sessionScope.user.identity ==1 }">
+											<select name="classid" value="${courseid }" class="js_select_course" id="form-field-1">
 												<option value="-1" selected>所有</option>
-												<c:forEach items="${classes }" var="clazz">
-													<option value="${clazz.id }" <c:if test="${clazz.id == classid}">selected</c:if>>${clazz.name }</option>
+												<c:forEach items="${courses }" var="clazz">
+													<option value="${course.id }" <c:if test="${course.id == courseid}">selected</c:if>>${course.name }</option>
 												</c:forEach>
 											</select>
 											</c:if>
 											
 											
 											<span class="input-icon">
-												<input type="text"  value="${search }" placeholder="请输入编号或者姓名 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
+												<input type="text"  value="${search }" placeholder="学生编号或者姓名 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
 												<button class="btn btn-info" type="button" onclick="selectUser(1)">
 														<i class="icon-search bigger-110"></i>
 															搜索
@@ -65,20 +60,18 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>编号</th>
-														<th>用户名</th>
-														<c:if test="${identity ==2 }">
-															<th class="js_th">专业</th>
-															<th class="js_th">班级</th>
-															<th>学分</th>
-														</c:if>
+														<th>学号</th>
+														<th>姓名</th>
+														<th>班级</th>
+														<th>课程名</th>
+														<th>课程学分</th>
 														<th>创建时间</th>
 														<th>操作</th>
 													</tr>
 												</thead>
 
 												<tbody>
-													<c:forEach items="${users}" var="user" >
+													<c:forEach items="${studentCourses}" var="studentCourse" >
 													<tr>
 														<th class="center">
 															<label>
@@ -86,65 +79,22 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>${user.userNumber }</th>
-														<th>${user.username }</th>
-														<c:if test="${identity ==2 }">
-															<th class="js_th">${user.mname }</th>
-															<th class="js_th">${user.cname }</th>
-															<th class="js_th">${user.credit}</th>
-														</c:if>
-														<th>${user.time }</th>
+														<th>${studentCourse.usernumber }</th>
+														<th>${studentCourse.username }</th>
+														<th>${studentCourse.cname }</th>
+														<th>${studentCourse.classname }</th>
+														<th>${studentCourse.credit }</th>
+														<th>${studentCourse.time }</th>
 														<th>
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
-																<a class="blue" href="addUserPage.do" >
+																<a class="blue" href="addStudentCoursePage.do" >
 																	<i class="icon-plus-sign bigger-130"></i>
 																</a>
-																<!-- <a class="blue" href="#">
-																	<i class="icon-zoom-in bigger-130"></i>
-																</a> -->
 
-																<a class="green" href="editUserPage.do?id=${user.id }">
-																	<i class="icon-pencil bigger-130"></i>
-																</a>
-
-																<a class="red" href="javascript:void(0);" onclick="deleteUser(${user.id })">
+																<a class="red" href="javascript:void(0);" onclick="deleteStudentCourse(${studentCourse.id })">
 																	<i class="icon-trash bigger-130"></i>
 																</a>
-															</div>
-
-															<div class="visible-xs visible-sm hidden-md hidden-lg">
-																<div class="inline position-relative">
-																	<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-																		<i class="icon-caret-down icon-only bigger-120"></i>
-																	</button>
-
-																	<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-																		<li>
-																			<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																				<span class="blue">
-																					<i class="icon-zoom-in bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																				<span class="green">
-																					<i class="icon-edit bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																				<span class="red">
-																					<i class="icon-trash bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-																	</ul>
-																</div>
 															</div>
 														</th>
 													</tr>
@@ -211,26 +161,15 @@
 		* 改变显示的内容
 		*/
 		$(function(){
-			$(".js_select_role").change(function(){
+			$(".js_select_course").change(function(){
 				selectUser(1);
 			});
-			$(".js_select_class").change(function(){
-				selectUser(1);
-			});
-			
 		});
 		
 		function selectUser(pageNum){
 			var search = $(".js_search").val();
-			var identity = $(".js_select_role").val();
-			var classid = "-1";
-			if(identity == 2){
-				var clazzid = $(".js_select_class").val();
-				if(clazzid != undefined && clazzid != null){
-					classid = clazzid;
-				}
-			}
-			window.location.href="userListBySearch.do?pageNum="+pageNum+"&pageSize=5&search="+search+"&identity="+identity+"&classid="+classid;
+			var courseid = $(".js_select_course").val();
+			window.location.href="userListBySearch.do?pageNum="+pageNum+"&pageSize=5&search="+search+"&courseid="+courseid;
 		}
 		
 		
@@ -240,8 +179,8 @@
 			laydate.skin('molv');
 			
 			function deleteUser(id){
-				layer.confirm('确认要删除吗?', {icon: 3, title:'提示'}, function(){
-				    $.post("deleteUser.do",{"id":id},function(data){
+				layer.confirm('确认要删除该学生吗?', {icon: 3, title:'提示'}, function(){
+				    $.post("deleteStudentCourse.do",{"id":id},function(data){
 				    	if(data == true){
 				    		layer.msg('删除成功!', {icon: 6,time:2000},function(){
 				    			history.go(0);

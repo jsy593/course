@@ -57,7 +57,8 @@ public class CourseServiceImpl implements CourseService{
 		StringBuffer whereSql = new StringBuffer(" where 1=1 ");
 		if(paramMap != null){
 			if(paramMap.get("search") != null && !paramMap.get("search").equals("")){
-				whereSql.append(" and (c.name like'%"+paramMap.get("search").toString()+"%' or c.courseNumber like'%"+paramMap.get("search").toString()+"%') ");
+				whereSql.append(" and (u.username like'%"+paramMap.get("search").toString()+"%' "
+						+ " or c.name like'%"+paramMap.get("search").toString()+"%' or c.courseNumber like'%"+paramMap.get("search").toString()+"%') ");
 			}
 			if(paramMap.get("teacherId") != null &&!paramMap.get("teacherId").equals("") &&  !paramMap.get("teacherId").equals("-1")){
 				whereSql.append(" and c.teacherId = " + paramMap.get("teacherId").toString());

@@ -36,9 +36,6 @@ public class CourseController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private TeacherCourseService teacherCourseService;
-	
 	/**
 	 * 添加课程
 	 */

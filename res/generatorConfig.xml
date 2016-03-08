@@ -30,7 +30,7 @@
 <!--         enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"  -->
 <!--         selectByExampleQueryId="false"></table> -->
         
-        <table tableName="teachercourse" domainObjectName="TeacherCourse" enableCountByExample="false" 
+        <table tableName="studentcourse" domainObjectName="StudentCourse" enableCountByExample="false" 
         enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
         selectByExampleQueryId="false"></table>
     </context>    

@@ -233,7 +233,7 @@
 <c:if test="${sessionScope.user.identity  == 2}">
 				<ul class="nav nav-list">
 					<li>
-						<a href="courseListByTeacher.do?pageNum=1&pageSize=5&teacherId="+${sessionScope.user.id}>
+						<a href="courseListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">选课管理</span>
 						</a>

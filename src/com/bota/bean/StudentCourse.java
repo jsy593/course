@@ -1,5 +1,7 @@
 package com.bota.bean;
 
+import java.util.Date;
+
 public class StudentCourse {
     private Long id;
 
@@ -8,6 +10,8 @@ public class StudentCourse {
     private Long courseid;
 
     private Integer grade;
+
+    private Date createtime;
 
     public Long getId() {
         return id;
@@ -39,5 +43,13 @@ public class StudentCourse {
 
     public void setGrade(Integer grade) {
         this.grade = grade;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

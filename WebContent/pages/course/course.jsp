@@ -48,7 +48,7 @@
 											
 											
 											<span class="input-icon">
-												<input type="text"  value="${search }" placeholder="请输入课程名或者编号 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
+												<input type="text"  value="${search }" placeholder="课程名或者编号或老师 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
 												<button class="btn btn-info" type="button" onclick="selectCourse(1)">
 														<i class="icon-search bigger-110"></i>
 															搜索
@@ -112,6 +112,9 @@
 														</c:if>
 														<th>${course.time }</th>
 														<th>
+														
+														
+											<!------------------ 管理员模块开始 ----------------------->
 														<c:if test="${sessionScope.user.identity == 0 }">
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
@@ -138,9 +141,9 @@
 																</label>
 															</div>
 														</c:if>
+													<!------------------ 管理员模块开结束 ----------------------->	
 														
-														
-														
+													<!------------------ 老师模块开始 ----------------------->	
 														<c:if test="${sessionScope.user.identity == 1 }">
 															<c:if test="${course.isAgree == 0  && course.isChange == 0}">
 																
@@ -222,7 +225,20 @@
 																</div>
 															</c:if>
 														</c:if>
+														<!------------------ 老师模块结束 ----------------------->	
+														
+														
+														<!------------------ 学生模块开始 ----------------------->
+														<c:if test="${sessionScope.user.identity == 2 }">
+															<c:if test="${course.studentCourseId != null && course.studentCourseId != ''}">
+																<button class="btn  btn-sm btn-danger " onclick="deleteStudentCourse(${course.studentCourseId})">退选</button>
+															</c:if>
 															
+															<c:if test="${course.studentCourseId == null || course.studentCourseId == ''}">
+																<button class="btn  btn-sm btn-purple " onclick="addStudentCourse(${course.id},${sessionScope.user.id })">选课</button>
+															</c:if>
+														</c:if>
+														<!------------------ 学生模块结束 ----------------------->
 														</th>
 													</tr>
 													
@@ -376,8 +392,41 @@
 				//e
 			}
 			
-			/*---------------------------管理员结束-----------------------------*/	
+			/*---------------------------管理员结束-----------------------------*/
+			/*---------------------------学生开始-----------------------------*/	
+			function deleteStudentCourse(id){
+				layer.confirm('确认要退选吗?', {icon: 3, title:'提示'}, function(){
+				    $.post("deleteStudentCourse.do",{"id":id},function(data){
+				    	if(data == true){
+				    		layer.msg('退选成功!', {icon: 6,time:1000},function(){
+				    			history.go(0);
+							});
+				    	}else{
+				    		layer.msg("退选失败!",{icon:5});
+				    	}
+				    });
+				});
+			}
 			
+			
+			function addStudentCourse(courseId,studentId){
+				var studentCourse = {};
+				studentCourse.courseid = courseId;
+				studentCourse.studentid = studentId;
+				layer.confirm('确认要选该门课程吗?', {icon: 3, title:'提示'}, function(){
+				    $.post("addStudentCourse.do",studentCourse,function(data){
+				    	if(data == true){
+				    		layer.msg('选课成功!', {icon: 6,time:1000},function(){
+				    			history.go(0);
+							});
+				    	}else{
+				    		layer.msg("选课失败!",{icon:5});
+				    	}
+				    });
+				});
+			}
+			
+				/*---------------------------学生结束-----------------------------*/	
 		</script>
 </body>
 </html>
