@@ -62,8 +62,8 @@ public class TeacherCourseServiceImpl implements TeacherCourseService{
 	 * @return
 	 */
 	@Override
-	public boolean selectOneByCourseId(long id){
-		return teacherCourseDao.selectOneByCourseId(id);
+	public Map<String, Object> selectOneByCourseId(long id){
+		return teacherCourseDaoImpl.selectOneByCourseId(id);
 	}
 	/**
 	 * 修改课程的信息

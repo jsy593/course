@@ -142,29 +142,29 @@
 														
 														
 														<c:if test="${sessionScope.user.identity == 1 }">
-															<c:if test="${course.isAgree == 0 }">
+															<c:if test="${course.isAgree == 0  && course.isChange == 0}">
 																
-																<button class="btn  btn-sm btn-primary " onclick="applyEditCourse(${course.id })">申请详情</button>
+																<button class="btn  btn-sm btn-primary ">申请中</button>
 																
 																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
-																			<li>
-																				<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
-																					<span class="orange">查看
-																					</span>
-																				</a>
-																			</li>
+<!-- 																			<li> -->
+<!-- 																				<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done"> -->
+<!-- 																					<span class="orange">待查看 -->
+<!-- 																					</span> -->
+<!-- 																				</a> -->
+<!-- 																			</li> -->
 																		</ul>
 																		
 																</div>
 															</c:if>
-															<c:if test="${course.isAgree == null }">
+															<c:if test="${course.isAgree == null && course.isChange == 0}">
 																
 																<div class="inline dropdown-hover">
 																<button class="btn  btn-sm btn-danger " onclick="applyEditCourse(${course.id })">申请修改</button>
 																
 																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
 																			<li>
-																				<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																				<a href="javascript:void(0);" onclick="applyEditCourse(${course.id })" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
 																					<span class="orange">申请
 																					</span>
 																				</a>
@@ -174,14 +174,16 @@
 																</div>
 																
 															</c:if>
-															<c:if test="${course.isAgree == 1 }">
+															
+															<!-- null代表管理员同意后，删除了teacherCourse的记录 -->
+															<c:if test="${(course.isAgree == 1 || course.isAgree == null) && course.isChange == 1}"> 
 
 															<div class="inline dropdown-hover">
-																<button class="btn  btn-sm btn-success " onclick="editCourse(${course.id })">申请成功</button>
+																<button class="btn  btn-sm btn-success " onclick="javascript:location='editCoursePage.do?id=${course.id }'">申请成功</button>
 																
 																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
 																			<li>
-																				<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																				<a href="editCoursePage.do?id=${course.id }" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
 																					<span class="green">修改课程
 																					</span>
 																				</a>
@@ -190,15 +192,28 @@
 																		
 																</div>
 															</c:if>
-															<c:if test="${course.isAgree == 2 }">
+															
+															
+															<c:if test="${(course.isAgree == 1 || course.isAgree == null) && course.isChange == 2}">
+
+															<div class="inline dropdown-hover">
+																<button class="btn  btn-sm btn-success ">已修改</button>
+																
+<!-- 																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right"> -->
+<!-- 																		</ul> -->
+																		
+																</div>
+															</c:if>
+															
+															<c:if test="${course.isAgree == 2 }"><!-- 管理员拒绝申请 -->
 																
 																<div class="inline dropdown-hover">
-																<button class="btn  btn-sm btn-purple " onclick="editCourse(${course.id })">申请失败</button>
+																<button class="btn  btn-sm btn-purple ">申请失败</button>
 																
 																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close pull-right">
 																			<li>
-																				<a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
-																					<span class="green">查看
+																				<a href="javascript:void(0);" onclick="applyEditCourse(${course.id })" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+																					<span class="green">再次申请
 																					</span>
 																				</a>
 																			</li>
@@ -207,46 +222,9 @@
 																</div>
 															</c:if>
 														</c:if>
-<!-- 															<div class="visible-xs visible-sm hidden-md hidden-lg"> -->
-<!-- 																<div class="inline position-relative"> -->
-<!-- 																	<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> -->
-<!-- 																		<i class="icon-caret-down icon-only bigger-120"></i> -->
-<!-- 																	</button> -->
-
-<!-- 																	<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> -->
-<!-- 																		<li> -->
-<!-- 																			<a href="#" class="tooltip-info" data-rel="tooltip" title="View"> -->
-<!-- 																				<span class="blue"> -->
-<!-- 																					<i class="icon-zoom-in bigger-120"></i> -->
-<!-- 																				</span> -->
-<!-- 																			</a> -->
-<!-- 																		</li> -->
-
-<!-- 																		<li> -->
-<!-- 																			<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit"> -->
-<!-- 																				<span class="green"> -->
-<!-- 																					<i class="icon-edit bigger-120"></i> -->
-<!-- 																				</span> -->
-<!-- 																			</a> -->
-<!-- 																		</li> -->
-
-<!-- 																		<li> -->
-<!-- 																			<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete"> -->
-<!-- 																				<span class="red"> -->
-<!-- 																					<i class="icon-trash bigger-120"></i> -->
-<!-- 																				</span> -->
-<!-- 																			</a> -->
-<!-- 																		</li> -->
-																		
-<!-- 																	</ul> -->
-<!-- 																</div> -->
-<!-- 															</div> -->
-															
-															
 															
 														</th>
 													</tr>
-													
 													
 													</c:forEach>	
 												</tbody>

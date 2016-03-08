@@ -8,7 +8,7 @@
 					<script type="text/javascript">
 						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
 					</script>
-
+						<input type="hidden" value="${sessionScope.user.id }" class="js_userid"/>
 					<ul class="breadcrumb">
 						<li>
 							<i class="icon-home home-icon"></i>
@@ -113,10 +113,11 @@
 			 $.post($(".js_form").attr("action"),teacherCourse,function(data){
 				if(data == true){
 					layer.alert('申请成功!', {icon: 6, time:2000},function(){
-						window.location.reload();
+						var teacherId = $(".js_userid").val();
+						window.location.href="courseListByTeacher.do?pageNum=1&pageSize=5&teacherId="+teacherId;
 					});
 				}else{
-					layer.alert('申请失败!', {icon: 5});
+					layer.alert('请重试!', {icon: 5});
 				}
 			}); 
 		}

@@ -145,6 +145,7 @@ public class CourseController {
 		paramMap = new HashMap<String, Object>();
 		paramMap.put("teacherId",teacherId);
 		Map<String, Object> map = courseService.selectAllCourse(pageNum,pageSize,paramMap);
+		System.out.println(map);
 		List<Map<String, Object>> teacherMap = userService.selectAllUserByIdentity(1);//1代表老师的角色
 		List<Map<String, Object>> majorMap = majorService.selectAllMajor();
 		

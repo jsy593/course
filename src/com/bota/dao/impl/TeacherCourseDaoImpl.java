@@ -69,12 +69,9 @@ public class TeacherCourseDaoImpl extends CommonDaoImpl<TeacherCourse> implement
 	}
 
 	@Override
-	public boolean selectOneByCourseId(long id) {
+	public Map<String, Object> selectOneByCourseId(long id) {
 		String sql = "select * from teacherCourse where courseId="+id;
 		Map<String, Object> map =  super.findBySql(sql);
-		if(map != null && map.size() > 0){
-			return true;
-		}
-		return false;
+		return map ;
 	}
 }

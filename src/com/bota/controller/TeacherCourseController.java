@@ -92,29 +92,64 @@ public class TeacherCourseController {
 	
 	
 	/**
-	 * 添加课程
+	 * 添加申请记录
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping("addTeacherCourse")
 	@ResponseBody
 	public boolean addTeacherCourse(TeacherCourse teacherCourse){
-		Date date = new Date();
-		teacherCourse.setCreatetime(date);
-		return teacherCourseService.addTeacherCourse(teacherCourse);
+		long courseId = teacherCourse.getCourseid();
+		Map<String, Object> resultMap = teacherCourseService.selectOneByCourseId(courseId);
+		if(resultMap != null && resultMap.size() > 0){
+			TeacherCourse tCourse = new TeacherCourse();
+			tCourse.setId(Long.parseLong(resultMap.get("id").toString()));
+			tCourse.setContent(teacherCourse.getContent());
+			tCourse.setIsagree(0);//待查看
+			return teacherCourseService.updateById(tCourse);
+		}else{
+			Date date = new Date();
+			teacherCourse.setCreatetime(date);
+			return teacherCourseService.addTeacherCourse(teacherCourse);
+		}
 	}
 	
 	
 	/**
-	 * 修改课程的信息
+	 * 审批申请
 	 * @param TeacherCourse
 	 * @return
 	 */
 	@RequestMapping("updateTeacherCourse")
 	@ResponseBody
 	public boolean updateById(TeacherCourse teacherCourse){
+		if(teacherCourseService.updateById(teacherCourse)){
+			if(teacherCourse.getIsagree() == 1){//如果同意申请
+				Course course = new Course();
+				course.setId(teacherCourse.getCourseid());
+				course.setIschange(1);//1代表可修改
+				boolean flag = courseService.updateById(course);
+				System.out.println(flag);
+				return flag;
+			}else{
+				return true;
+			}
+		}
+			return false;
+	}
+	
+	/**
+	 * 审批申请
+	 * @param TeacherCourse
+	 * @return
+	 */
+	@RequestMapping("editTeacherCourse")
+	@ResponseBody
+	public boolean editById(TeacherCourse teacherCourse){
 		return teacherCourseService.updateById(teacherCourse);
 	}
+	
+	
 	/**
 	 * 根据id删除课程
 	 * @param id

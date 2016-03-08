@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ch">
 <%@ include file="../common.jsp" %>
@@ -15,25 +16,43 @@
 						</li>
 
 						<li>
-							<a href="#">申请管理</a>
+							<a href="#">用户管理</a>
 						</li>
-						<li class="active">申请信息</li>
+						<li class="active">用户列表</li>
 					</ul><!-- .breadcrumb -->
-
-					<!-- <div class="nav-search" id="nav-search">
-						<form class="form-search">
-							<span class="input-icon">
-								<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-								<i class="icon-search nav-search-icon"></i>
-							</span>
-						</form>
-					</div> --><!-- #nav-search -->
 				</div>
 
 				<div class="page-content">
 					<div class="row">
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
+									<div class="form-group" style="float:right;padding:0px 20px 0px 0px">
+										<label class="control-label no-padding-right" for="form-field-1">请选择
+										</label>
+											<select name="identity" class="js_select_role" id="form-field-1">
+												<option value="2" <c:if test="${identity == 2}">selected</c:if>>学生</option>
+												<option value="1" <c:if test="${identity == 1}">selected</c:if>>老师</option>
+												<option value="0" <c:if test="${identity == 0}">selected</c:if>>管理员</option>
+											</select>
+											
+											<c:if test="${identity ==2 }">
+											<select name="classid" value="${classid }" class="js_select_class" id="form-field-1">
+												<option value="-1" selected>所有</option>
+												<c:forEach items="${classes }" var="clazz">
+													<option value="${clazz.id }" <c:if test="${clazz.id == classid}">selected</c:if>>${clazz.name }</option>
+												</c:forEach>
+											</select>
+											</c:if>
+											
+											
+											<span class="input-icon">
+												<input type="text"  value="${search }" placeholder="请输入编号或者姓名 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
+												<button class="btn btn-info" type="button" onclick="selectUser(1)">
+														<i class="icon-search bigger-110"></i>
+															搜索
+												</button>
+											</span>
+							</div>
 							<div class="row">
 									<div class="col-xs-12">
 										<div class="table-responsive">
@@ -46,16 +65,20 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>课程名称</th>
-														<th>申请原因</th>
-														<th>申请时间</th>
-														<th>申请状态</th>
+														<th>编号</th>
+														<th>用户名</th>
+														<c:if test="${identity ==2 }">
+															<th class="js_th">专业</th>
+															<th class="js_th">班级</th>
+															<th>学分</th>
+														</c:if>
+														<th>创建时间</th>
 														<th>操作</th>
 													</tr>
 												</thead>
 
 												<tbody>
-													<c:forEach items="${teacherCourses}" var="teacherCourse" >
+													<c:forEach items="${users}" var="user" >
 													<tr>
 														<th class="center">
 															<label>
@@ -63,35 +86,31 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>${teacherCourse.cname }</th>
-														<th>${teacherCourse.content}</th>
-														<c:if test="${teacherCourse.isAgree == 0}">
-															<th>待反馈</th>
+														<th>${user.userNumber }</th>
+														<th>${user.username }</th>
+														<c:if test="${identity ==2 }">
+															<th class="js_th">${user.mname }</th>
+															<th class="js_th">${user.cname }</th>
+															<th class="js_th">${user.credit}</th>
 														</c:if>
-														<c:if test="${teacherCourse.isAgree == 1}">
-															<th>同意</th>
-														</c:if>
-														<c:if test="${teacherCourse.isAgree == 2}">
-															<th>拒绝</th>
-														</c:if>
-														<th>${teacherCourse.time }</th>
+														<th>${user.time }</th>
 														<th>
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
-															<c:if test="${teacherCourse.isAgree  == 0}">
-															
-																<button class="btn  btn-sm btn-success " onclick="editCourse(${teacherCourse.id },1,${teacherCourse.courseId })">同意</button>
-																
-																<button class="btn  btn-sm btn-danger " onclick="editCourse(${teacherCourse.id },2,${teacherCourse.courseId })">拒绝</button>
-															</c:if>
-															
-															<c:if test="${teacherCourse.isAgree  != 0}">
-																<a class="red" href="javascript:void(0);" onclick="deleteteacherCourse(${teacherCourse.id })">
+																<a class="blue" href="addUserPage.do" >
+																	<i class="icon-plus-sign bigger-130"></i>
+																</a>
+																<!-- <a class="blue" href="#">
+																	<i class="icon-zoom-in bigger-130"></i>
+																</a> -->
+
+																<a class="green" href="editUserPage.do?id=${user.id }">
+																	<i class="icon-pencil bigger-130"></i>
+																</a>
+
+																<a class="red" href="javascript:void(0);" onclick="deleteUser(${user.id })">
 																	<i class="icon-trash bigger-130"></i>
 																</a>
-															</c:if>
-															
-															
 															</div>
 
 															<div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -145,9 +164,11 @@
 										<!-- 分页开始 -->
 												<ul class="pagination pull-right no-margin">
 													<li class="prev">
-														<a href="teacherCourseListByPage.do?pageSize=5&pageNum=${pageNum-1}">
+													<c:if test='${pageNum > 1}'>
+														<a href="javascript:void(0);" onclick="selectUser(${pageNum - 1})" >
 															<i class="icon-double-angle-left"></i>
 														</a>
+														</c:if>
 													</li>
 
 													<!-- forEach标签开始 -->
@@ -155,7 +176,7 @@
 												<c:if test="${pageNum+4 <= totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${pageNum +4 }">
 															<li >
-																<a href="teacherCourseListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
+																<a href="javascript:void(0);" onclick="selectUser(${page})" value="${page }">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -163,15 +184,15 @@
 												<c:if test="${pageNum+4> totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${totalPage }">
 															<li >
-																<a href="teacherCourseListByPage.do?pageSize=5&pageNum=${page}">${page }</a>
+																<a href="javascript:void(0);" onclick="selectUser(${page})">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
 													<!-- forEach标签结束 -->
 													
-												<c:if test="${pageNum < totalPage}">
+												<c:if test="${pageNum + 4 < totalPage}">
 													<li class="next">
-														<a href="teacherCourseListByPage.do?pageSize=5&pageNum=${page+1}">
+														<a href="javascript:void(0);" onclick="selectUser(${page + 1})">
 															<i class="icon-double-angle-right"></i>
 														</a>
 													</li>
@@ -186,31 +207,41 @@
 			</div><!-- /.main-content -->
 		<script type="text/javascript">
 		
-			function editCourse(id,isAgree,courseid){
-				var teacherCourse = {};
-				teacherCourse.id = id;
-				teacherCourse.isagree =isAgree;
-				teacherCourse.courseid =courseid;
-				
-				$.post("updateTeacherCourse.do",teacherCourse,function(data){
-					if(data == true){
-						layer.alert('修改成功!', {icon: 6, time:2000},function(){
-							window.location.reload();
-						});
-					}else{
-						layer.alert('修改失败!', {icon: 5}),function(){
-							window.location.reload();
-						};
-					}
-				}); 
+		/**
+		* 改变显示的内容
+		*/
+		$(function(){
+			$(".js_select_role").change(function(){
+				selectUser(1);
+			});
+			$(".js_select_class").change(function(){
+				selectUser(1);
+			});
+			
+		});
+		
+		function selectUser(pageNum){
+			var search = $(".js_search").val();
+			var identity = $(".js_select_role").val();
+			var classid = "-1";
+			if(identity == 2){
+				var clazzid = $(".js_select_class").val();
+				if(clazzid != undefined && clazzid != null){
+					classid = clazzid;
+				}
 			}
+			window.location.href="userListBySearch.do?pageNum="+pageNum+"&pageSize=5&search="+search+"&identity="+identity+"&classid="+classid;
+		}
+		
+		
+		
 		
 			/*设置日历颜色*/
 			laydate.skin('molv');
 			
-			function deleteteacherCourse(id){
+			function deleteUser(id){
 				layer.confirm('确认要删除吗?', {icon: 3, title:'提示'}, function(){
-				    $.post("deleteTeacherCourse.do",{"id":id},function(data){
+				    $.post("deleteUser.do",{"id":id},function(data){
 				    	if(data == true){
 				    		layer.msg('删除成功!', {icon: 6,time:2000},function(){
 				    			history.go(0);

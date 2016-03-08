@@ -62,6 +62,6 @@ public interface TeacherCourseService {
 	 * @param id
 	 * @return
 	 */
-	public boolean  selectOneByCourseId(long id);
+	public Map<String, Object>  selectOneByCourseId(long id);
 
 }

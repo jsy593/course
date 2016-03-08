@@ -48,5 +48,5 @@ public interface TeacherCourseDao {
 	 * @param id
 	 * @return
 	 */
-	boolean selectOneByCourseId(long id);
+	Map<String, Object> selectOneByCourseId(long id);
 }

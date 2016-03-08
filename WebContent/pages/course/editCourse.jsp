@@ -37,6 +37,8 @@
 							<!-- PAGE CONTENT BEGINS -->
 							<form class="js_form form-horizontal" role="form" action="editCourse.do">
 							<input type="hidden" value="${course.id }" name="id"/>
+							<input type="hidden" value="${sessionScope.user.identity }" class="js_identity"/>
+							<input type="hidden" value="${sessionScope.user.id }" class="js_userid"/>
 							<!-- 所有 -->	
 									<div class="form-group">
 										<label class="js_labelName col-sm-3 control-label no-padding-right" for="form-field-1">课程编号:
@@ -220,16 +222,33 @@
 			}
 			
 			
-			var course = $(".js_form").serialize();
-			 $.post($(".js_form").attr("action")+"?createTime="+$(".js_createTime").val(),course,function(data){
-				if(data == true){
-					layer.alert('修改成功!', {icon: 6, time:2000},function(){
-						window.location.reload();
-					});
-				}else{
-					layer.alert('修改失败!', {icon: 5});
-				}
-			}); 
+			var course = $(".js_form").serialize();//course为字符串
+			if($(".js_identity").val() == 1){//如果为老师，只能修改一次
+				layer.confirm('您只能修改一次，确定修改吗', {icon: 3, title:'提示'}, function(index){
+					course = course + "&ischange=2"//2代表已修改
+					 $.post($(".js_form").attr("action")+"?createTime="+$(".js_createTime").val(),course,function(data){
+							if(data == true){
+								layer.alert('修改成功!', {icon: 6, time:2000},function(){
+									var teacherId = $(".js_userid").val();
+									window.location.href="courseListByTeacher.do?pageNum=1&pageSize=5&teacherId="+teacherId;
+								});
+							}else{
+								layer.alert('修改失败!', {icon: 5});
+							}
+						}); 
+				});
+			}else{
+				 $.post($(".js_form").attr("action")+"?createTime="+$(".js_createTime").val(),course,function(data){
+					if(data == true){
+						layer.alert('修改成功!', {icon: 6, time:2000},function(){
+							window.location.reload();
+						});
+					}else{
+						layer.alert('修改失败!', {icon: 5});
+					}
+				});
+			 
+			}
 		}
 // 		$( "#input-size-slider" ).css('width','200px').slider({
 // 			value:1,
