@@ -256,11 +256,49 @@ public class UserController {
 	}
 	
 	
+	/**
+	 * 老是搜索的页面
+	 * @param pageNum
+	 * @param pageSize
+	 * @param search
+	 * @return
+	 */
+	@RequestMapping("userListByTeacher")
+	public ModelAndView selectAllStudent(int pageNum,int pageSize,String search){
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("identity", 2);
+		paramMap.put("search", search);
+		ModelAndView model = new ModelAndView();
+		Map<String, Object> map = userService.selectAllUser(pageNum,pageSize,paramMap);
+		model.addObject("users", map.get("listMap"));
+		model.addObject("classes", classService.selectAllClasses());
+		
+		if(map.get("count") != null){
+			int count = Integer.parseInt(map.get("count").toString());
+			int totalPage  = 0;
+			if(count % 5 != 0 ){
+				totalPage =count/5 + 1; 
+			}else{
+				totalPage =count/5;
+			}
+			model.addObject("count", count);
+			model.addObject("totalPage", totalPage);
+		}
+		model.addObject("pageNum", pageNum);
+		if(paramMap != null){
+			model.addObject("search", paramMap.get("search"));
+			model.addObject("identity", paramMap.get("identity"));
+			model.addObject("classid", paramMap.get("classid"));
+		}
+		model.setViewName("user/user");
+		return model;
+	}
+	
+	
 	@RequestMapping("userListByPage")
 	public String selectAllUser(int pageNum,int pageSize,String identity, HttpServletRequest request){
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("identity", identity);
-		
 		Map<String, Object> map = userService.selectAllUser(pageNum,pageSize,paramMap);
 		request.setAttribute("users", map.get("listMap"));
 		request.setAttribute("classes", classService.selectAllClasses());

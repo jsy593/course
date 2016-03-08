@@ -141,28 +141,7 @@ public class CourseController {
 		Map<String, Object> paramMap = null;
 		paramMap = new HashMap<String, Object>();
 		paramMap.put("teacherId",teacherId);
-		Map<String, Object> map = courseService.selectAllCourse(pageNum,pageSize,paramMap);
-		System.out.println(map);
-		List<Map<String, Object>> teacherMap = userService.selectAllUserByIdentity(1);//1代表老师的角色
-		List<Map<String, Object>> majorMap = majorService.selectAllMajor();
-		
-		request.setAttribute("courses", map.get("listMap"));
-		request.setAttribute("teachers", teacherMap);
-		request.setAttribute("majors", majorMap);
-		
-		if(map.get("count") != null){
-			int count = Integer.parseInt(map.get("count").toString());
-			int totalPage  = 0;
-			if(count % 5 != 0 ){
-				totalPage =count/5 + 1; 
-			}else{
-				totalPage =count/5;
-			}
-			request.setAttribute("count",count);
-			request.setAttribute("totalPage",totalPage);
-		}
-		request.setAttribute("pageNum",pageNum);
-		return "course/course";
+		return commonExecute(pageNum,pageSize,paramMap,request);
 	}
 	
 	
@@ -170,10 +149,25 @@ public class CourseController {
 	@RequestMapping("courseListByPage")
 	public String selectAllCourse(int pageNum,int pageSize,HttpServletRequest request){
 		Map<String, Object> paramMap = null;
-		if(request.getAttribute("teacherId") != null){
-			paramMap = new HashMap<String, Object>();
-			paramMap.put("teacherId",request.getAttribute("teacherId").toString());
-		}
+		return commonExecute(pageNum,pageSize,paramMap,request);
+	}
+	
+	/**
+	 * 学生页面显示的可以选的课程
+	 * @param pageNum
+	 * @param pageSize
+	 * @param isFinish 0：不可选  1：可选
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("courseListByStudent")
+	public String selectAllCourseByStudent(int pageNum,int pageSize,int isFinish,HttpServletRequest request){
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("isFinish",isFinish);
+		return commonExecute(pageNum,pageSize,paramMap,request);
+	}
+	
+	public  String commonExecute(int pageNum,int pageSize,Map<String, Object> paramMap,HttpServletRequest request){
 		Map<String, Object> map = courseService.selectAllCourse(pageNum,pageSize,paramMap);
 		List<Map<String, Object>> teacherMap = userService.selectAllUserByIdentity(1);//1代表老师的角色
 		List<Map<String, Object>> majorMap = majorService.selectAllMajor();

@@ -55,7 +55,7 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public Map<String, Object> selectAllCourse(int pageNum,int pageSize,Map<String, Object> paramMap){
 		StringBuffer whereSql = new StringBuffer(" where 1=1 ");
-		if(paramMap != null){
+		if(paramMap != null && paramMap.size() > 0){
 			if(paramMap.get("search") != null && !paramMap.get("search").equals("")){
 				whereSql.append(" and (u.username like'%"+paramMap.get("search").toString()+"%' "
 						+ " or c.name like'%"+paramMap.get("search").toString()+"%' or c.courseNumber like'%"+paramMap.get("search").toString()+"%') ");
@@ -63,10 +63,12 @@ public class CourseServiceImpl implements CourseService{
 			if(paramMap.get("teacherId") != null &&!paramMap.get("teacherId").equals("") &&  !paramMap.get("teacherId").equals("-1")){
 				whereSql.append(" and c.teacherId = " + paramMap.get("teacherId").toString());
 			}
-			System.out.println(paramMap.get("classid"));			
-			System.out.println(paramMap.containsKey("classid"));
 			if(paramMap.get("specialtyId") != null && !paramMap.get("specialtyId").equals("") && !paramMap.get("specialtyId").equals("-1")){
 				whereSql.append(" and c.specialtyId="+paramMap.get("specialtyId").toString());
+			}
+			
+			if(paramMap.get("isFinish") != null && !paramMap.get("isFinish").equals("") && !paramMap.get("isFinish").equals("-1")){
+				whereSql.append(" and c.isFinish="+paramMap.get("isFinish").toString());
 			}
 			System.out.println(whereSql);
 		}

@@ -79,5 +79,14 @@ public interface UserDao {
 	 * @return
 	 */
 	List<Map<String, Object>> selectAllUserByIdentity(int identity);
+
+	/**
+	 * 老师根据条件查询学生列表
+	 * @param pageNum 第几页
+	 * @param pageSize 每页数量
+	 * @param whereSql where条件
+	 * @return
+	 */
+	Map<String, Object> selectUserByTeacher(int pageNum, int pageSize, String whereSql);
 	
 }

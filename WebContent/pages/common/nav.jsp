@@ -218,6 +218,12 @@
 						<!-- 二级菜单开始 -->
 						<ul class="submenu">
 								<li>
+									<a href="courseListByPage.do?pageNum=1&pageSize=5&identity=2">
+										<i class="icon-double-angle-right"></i>
+										学生列表
+									</a>
+								</li>
+								<li>
 									<a href="courseListByPage.do?pageNum=1&pageSize=5">
 										<i class="icon-double-angle-right"></i>
 										成绩录入
@@ -233,7 +239,7 @@
 <c:if test="${sessionScope.user.identity  == 2}">
 				<ul class="nav nav-list">
 					<li>
-						<a href="courseListByPage.do?pageNum=1&pageSize=5">
+						<a href="courseListByStudent.do?pageNum=1&pageSize=5&isFinish=1">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">选课管理</span>
 						</a>
@@ -305,47 +311,6 @@
 				</script>
 			</div>
 
-			<!-- <div class="main-content">
-				<div class="breadcrumbs" id="breadcrumbs">
-					<script type="text/javascript">
-						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-					</script>
-
-					<ul class="breadcrumb">
-						<li>
-							<i class="icon-home home-icon"></i>
-							<a href="#">Home</a>
-						</li>
-
-						<li>
-							<a href="#">Other Pages</a>
-						</li>
-						<li class="active">Blank Page</li>
-					</ul>.breadcrumb
-
-
-
-					<div style="width:700px;height:400px;border:2px solid red;"></div>
-					<div class="nav-search" id="nav-search">
-						<form class="form-search">
-							<span class="input-icon">
-								<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-								<i class="icon-search nav-search-icon"></i>
-							</span>
-						</form>
-					</div> --><!-- #nav-search
-				</div>
-
-				<div class="page-content">
-					<div class="row">
-						<div class="col-xs-12">
-							PAGE CONTENT BEGINS
-
-							PAGE CONTENT ENDS
-						</div>/.col
-					</div>/.row
-				</div>/.page-content
-			</div>/.main-content -->
 
 		<!-- 设置开始 -->
 				<div class="ace-settings-container" id="ace-settings-container">
