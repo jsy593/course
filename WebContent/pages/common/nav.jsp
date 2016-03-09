@@ -218,7 +218,7 @@
 						<!-- 二级菜单开始 -->
 						<ul class="submenu">
 								<li>
-									<a href="courseListByPage.do?pageNum=1&pageSize=5&identity=2">
+									<a href="studentListByPage.do?pageNum=1&pageSize=5&teacherId=${sessionScope.user.id }">
 										<i class="icon-double-angle-right"></i>
 										学生列表
 									</a>
@@ -239,12 +239,31 @@
 <c:if test="${sessionScope.user.identity  == 2}">
 				<ul class="nav nav-list">
 					<li>
-						<a href="courseListByStudent.do?pageNum=1&pageSize=5&isFinish=1">
-							<i class="icon-text-width"></i>
-							<span class="menu-text">选课管理</span>
+						<a href="courseListByStudent.do?pageNum=1&pageSize=5&isFinish=1" class="dropdown-toggle">
+							<i class="icon-list"></i>
+							<span class="menu-text">选择课程 </span>
+
+							<b class="arrow icon-angle-down"></b>
 						</a>
-					</li>
+						<!-- 二级菜单开始 -->
+						<ul class="submenu">
+								<li>
+									<a href="courseListByStudent.do?pageNum=1&pageSize=5&isFinish=1">
+										<i class="icon-double-angle-right"></i>
+										选择课程
+									</a>
+								</li>
+								<li>
+									<a href="courseListByPage.do?pageNum=1&pageSize=5">
+										<i class="icon-double-angle-right"></i>
+										查看课表
+									</a>
+								</li>
+								
+							</ul>
+						<!-- 二级菜单结束 -->
 					
+					</li>
 					
 					<li>
 						<a href="typography.html">

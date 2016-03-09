@@ -31,7 +31,13 @@ public class UserServiceImpl implements UserService{
 	public String selectUserByUserNumber(long userNumber) {
 		return userDaoImpl.selectUserByUserNumber(userNumber);
 	}
-
+	
+	@Override
+	public Map<String, Object> selectOneByUserNumber(long userNumber) {
+		return userDaoImpl.selectOneByUserNumber(userNumber);
+	}
+	
+	
 	@Override
 	public Map<String, Object> verifyByUser(User user) {
 		long usernumber = user.getUsernumber();
@@ -77,6 +83,13 @@ public class UserServiceImpl implements UserService{
 	public Map<String, Object> selectAllUser(int pageNum,int pageSize,Map<String, Object> paramMap){
 		StringBuffer whereSql = new StringBuffer(" where 1=1 ");
 		if(paramMap != null){
+			if(paramMap.get("teacherId") != null && !paramMap.get("teacherId").equals("")){
+				whereSql.append(" and co.teacherId="+paramMap.get("teacherId").toString());
+				if(paramMap.get("courseId") != null && !paramMap.get("courseId").equals("")){
+					whereSql.append(" and sc.courseId="+paramMap.get("courseId").toString());
+				}
+				return userDaoImpl.selectAllStudent(pageNum,pageSize,whereSql.toString());
+			}
 			if(paramMap.get("search") != null && !paramMap.get("search").equals("")){
 				whereSql.append(" and (u.username like'%"+paramMap.get("search").toString()+"%' or u.usernumber like'%"+paramMap.get("search").toString()+"%') ");
 			}
@@ -87,6 +100,7 @@ public class UserServiceImpl implements UserService{
 			if(paramMap.get("classid") != null && !paramMap.get("classid").equals("")){
 				whereSql.append(" and u.classid="+paramMap.get("classid").toString());
 			}
+			
 			System.out.println(whereSql);
 		}
 		return userDaoImpl.selectAllUser(pageNum,pageSize,whereSql.toString());

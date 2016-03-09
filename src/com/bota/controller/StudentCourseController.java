@@ -19,6 +19,7 @@ import com.bota.bean.StudentCourse;
 import com.bota.service.ClassService;
 import com.bota.service.CourseService;
 import com.bota.service.StudentCourseService;
+import com.bota.service.UserService;
 import com.bota.util.DateStrConvert;
 import com.bota.util.Dictionary;
 import com.bota.util.FileUtil;
@@ -37,6 +38,9 @@ public class StudentCourseController {
 	@Autowired
 	private CourseService courseService;
 	
+	@Autowired
+	private UserService userService;
+	
 	/**
 	 * 添加学生选课
 	 */
@@ -46,6 +50,30 @@ public class StudentCourseController {
 		studentCourse.setCreatetime(new Date());
 		System.out.println(studentCourse);
 		return studentCourseService.addStudentCourse(studentCourse);
+	}
+	
+	
+	/**
+	 * 老师添加学生
+	 */
+	@RequestMapping("teacherAddStudentCourse")
+	@ResponseBody
+	public String teacherAddStudentCourse(long courseId,long userNumber){
+		Map<String, Object> map = userService.selectOneByUserNumber(userNumber);
+		if(map == null || map.size() < 0){
+			return Dictionary.S_NOT_EXIST;
+		}
+		long studentId = Long.parseLong(map.get("id").toString());
+		StudentCourse studentCourse = new StudentCourse();
+		studentCourse.setCreatetime(new Date());
+		studentCourse.setCourseid(courseId);
+		studentCourse.setStudentid(studentId);
+		System.out.println(studentCourse);
+		if(studentCourseService.addStudentCourse(studentCourse)){
+			return Dictionary.S_SUCCESS;
+		}else{
+			return Dictionary.S_FAIL;
+		}
 	}
 	
 

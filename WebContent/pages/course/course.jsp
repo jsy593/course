@@ -239,6 +239,41 @@
 															</c:if>
 														</c:if>
 														<!------------------ 学生模块结束 ----------------------->
+														
+														
+														<div class="visible-xs visible-sm hidden-md hidden-lg">
+																<div class="inline position-relative">
+																	<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+																		<i class="icon-caret-down icon-only bigger-120"></i>
+																	</button>
+
+																	<ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+																		<li>
+																			<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+																				<span class="blue">
+																					<i class="icon-zoom-in bigger-120"></i>
+																				</span>
+																			</a>
+																		</li>
+
+																		<li>
+																			<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+																				<span class="green">
+																					<i class="icon-edit bigger-120"></i>
+																				</span>
+																			</a>
+																		</li>
+
+																		<li>
+																			<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+																				<span class="red">
+																					<i class="icon-trash bigger-120"></i>
+																				</span>
+																			</a>
+																		</li>
+																	</ul>
+																</div>
+															</div>
 														</th>
 													</tr>
 													

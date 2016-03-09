@@ -120,4 +120,10 @@ public class CourseServiceImpl implements CourseService{
 	public boolean deleteByIds(String ids){
 		return courseDao.deleteByPrimaryKeys(ids);
 	}
+
+
+	@Override
+	public List<Map<String, Object>> selectCourseByTeacherId(long teacherId) {
+		return courseDaoImpl.selectCourseByTeacherId(teacherId);
+	}
 }

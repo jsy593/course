@@ -91,4 +91,10 @@ public class CourseDaoImpl extends CommonDaoImpl<Course> implements CourseDao{
 	public boolean deleteByPrimaryKeys(String ids){
 		return super.deletetClass(Course.class,"id", ids);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectCourseByTeacherId(long teacherId) {
+		String sql = "select id,name from course where teacherId="+teacherId;
+		return super.findManyBySql(sql);
+	}
 }

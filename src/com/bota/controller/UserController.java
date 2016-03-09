@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bota.bean.User;
 import com.bota.service.ClassService;
+import com.bota.service.CourseService;
 import com.bota.service.UserService;
 import com.bota.util.DateStrConvert;
 import com.bota.util.Dictionary;
@@ -35,6 +36,9 @@ public class UserController {
 	
 	@Autowired
 	private ClassService classService;
+	
+	@Autowired
+	private CourseService courseService;
 	/**
 	 * 跳转到个人中心页面
 	 * @return
@@ -217,7 +221,7 @@ public class UserController {
 	}
 	
 	/**
-	 * 分页查询所有的用户
+	 * 分页查询所有的用户（管理员打开的页面）
 	 * @return
 	 */
 	
@@ -229,45 +233,6 @@ public class UserController {
 		if(!classid.equals("-1")){
 			paramMap.put("classid", classid);
 		}
-		ModelAndView model = new ModelAndView();
-		Map<String, Object> map = userService.selectAllUser(pageNum,pageSize,paramMap);
-		model.addObject("users", map.get("listMap"));
-		model.addObject("classes", classService.selectAllClasses());
-		
-		if(map.get("count") != null){
-			int count = Integer.parseInt(map.get("count").toString());
-			int totalPage  = 0;
-			if(count % 5 != 0 ){
-				totalPage =count/5 + 1; 
-			}else{
-				totalPage =count/5;
-			}
-			model.addObject("count", count);
-			model.addObject("totalPage", totalPage);
-		}
-		model.addObject("pageNum", pageNum);
-		if(paramMap != null){
-			model.addObject("search", paramMap.get("search"));
-			model.addObject("identity", paramMap.get("identity"));
-			model.addObject("classid", paramMap.get("classid"));
-		}
-		model.setViewName("user/user");
-		return model;
-	}
-	
-	
-	/**
-	 * 老是搜索的页面
-	 * @param pageNum
-	 * @param pageSize
-	 * @param search
-	 * @return
-	 */
-	@RequestMapping("userListByTeacher")
-	public ModelAndView selectAllStudent(int pageNum,int pageSize,String search){
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("identity", 2);
-		paramMap.put("search", search);
 		ModelAndView model = new ModelAndView();
 		Map<String, Object> map = userService.selectAllUser(pageNum,pageSize,paramMap);
 		model.addObject("users", map.get("listMap"));
@@ -320,6 +285,71 @@ public class UserController {
 	}
 	
 	/**
+	 * 老师打开的页面
+	 * @param pageNum 页码
+	 * @param pageSize  每页显示数量
+	 * @param teacherId 老师id
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("studentListByPage")
+	public String selectAllStudent(int pageNum,int pageSize,long teacherId, HttpServletRequest request){
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("teacherId", teacherId);
+		return commonExecute(pageNum,pageSize,paramMap,request);
+	}
+	
+	/**
+	 * 老师搜索的页面
+	 * @param pageNum 页码
+	 * @param pageSize  每页显示数量
+	 * @param teacherId 老师id
+	 * @param courseId  课程id
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("studentListBySearch")
+	public String selectAllStudentBySearch(int pageNum,int pageSize,long teacherId,long courseId,HttpServletRequest request){
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("teacherId", teacherId);
+		paramMap.put("courseId", courseId);
+		request.setAttribute("courseId",courseId);
+		return commonExecute(pageNum,pageSize,paramMap,request);
+	}
+	
+	/**
+	 * 公共方法
+	 * @param pageNum 页码
+	 * @param pageSize 每页显示数量
+	 * @param paramMap 条件map
+	 * @param request
+	 * @return
+	 */
+	public String commonExecute(int pageNum,int pageSize,Map<String, Object> paramMap, HttpServletRequest request){
+		Map<String, Object> map = userService.selectAllUser(pageNum,pageSize,paramMap);
+		request.setAttribute("users", map.get("listMap"));
+		request.setAttribute("classes", classService.selectAllClasses());
+		
+		long teacherId = Long.parseLong(paramMap.get("teacherId").toString());
+		request.setAttribute("courses",courseService.selectCourseByTeacherId(teacherId));
+		
+		if(map.get("count") != null){
+			int count = Integer.parseInt(map.get("count").toString());
+			int totalPage  = 0;
+			if(count % 5 != 0 ){
+				totalPage =count/5 + 1; 
+			}else{
+				totalPage =count/5;
+			}
+			request.setAttribute("count",count);
+			request.setAttribute("totalPage",totalPage);
+		}
+		request.setAttribute("teacherId",teacherId);
+		request.setAttribute("pageNum",pageNum);
+		return "user/user";
+	}
+	
+	/**
 	 * 根据id查询用户
 	 * @param id
 	 * @return
@@ -329,23 +359,6 @@ public class UserController {
 	public User selectOne(long id){
 		return userService.selectOne(id);
 	}
-	
-	
-//	/**
-//	 * 添加用户
-//	 * @param id
-//	 * @return
-//	 */
-//	@RequestMapping("addUser")
-//	@ResponseBody
-//	public boolean addUser(MapAction mapVo){
-//		Map<String, Object> map = mapVo.getMapVo();
-//		User User = new User();
-//		User.setUsername(map.get("name").toString());
-//		Date date = DateStrConvert.strToDate(map.get("createtime").toString(), "yyyy-MM-dd");
-//		User.setCreatetime(date);
-//		return userService.addUser(User);
-//	}
 	
 	
 	/**

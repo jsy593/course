@@ -17,4 +17,9 @@ public class Dictionary {
 	 * 失败
 	 */
 	public static final String S_FAIL = "fail";
+	
+	/**
+	 * 不存在
+	 */
+	public static final String S_NOT_EXIST = "notExist";
 }

@@ -71,6 +71,14 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 		return Dictionary.S_FAIL;
 	}
 
+	
+	@Override
+	public Map<String, Object> selectOneByUserNumber(long userNumber) {
+		String sql = "select * from user where userNumber="+userNumber;
+		Map<String, Object> map = super.findBySql(sql);
+		return map;
+	}
+	
 	@Override
 	public Map<String,Object> verifyByUser(long userNumber, String password, int identity){
 		Map<String,Object> resultMap = new HashMap<String,Object>();
@@ -124,6 +132,29 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 	}
 	
 	@Override
+	public Map<String, Object> selectAllStudent(int pageNum, int pageSize,String whereSql){
+		int start = (pageNum -1) * pageSize;
+		StringBuffer sql = new StringBuffer();
+		sql.append("select  sc.id studentCourseId,sc.courseId,u.*,date_format(u.createTime,'%Y-%m-%d') time,c.name cname,m.name mname from user u inner join studentCourse sc on u.id=sc.studentId "
+				+ "inner join course co on co.id=sc.courseId "
+				+ "left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql).append(" limit " +start + ","+ pageSize);
+		System.out.println(sql);
+		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
+		
+		//记录条数
+		StringBuffer countSql = new StringBuffer();
+		countSql.append("select count(*) from user u inner join studentCourse sc on u.id=sc.studentId "
+				+ "inner join course co on co.id=sc.courseId "
+				+ "left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql);
+		System.out.println(countSql);
+		long count = super.getCount(countSql.toString());
+		Map<String, Object> resultMap =  new HashMap<String, Object>();
+		resultMap.put("listMap", listMap);
+		resultMap.put("count", count);
+		return resultMap;
+	}
+	
+	@Override
 	public Map<String, Object> selectUserNumber(){
 		String sql = "select count(*) count from User";
 		Map<String, Object> listMap = super.findBySql(sql);
@@ -146,7 +177,7 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 	public Map<String,Object> selectUserByTeacher(int pageNum, int pageSize,String whereSql){
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
-		sql.append("select  u.*,date_format(u.createTime,'%Y-%m-%d') time,cl.name cname,m.name mname"
+		sql.append("select  sc.id studentCourseId,sc.courseId,u.*,date_format(u.createTime,'%Y-%m-%d') time,cl.name cname,m.name mname"
 				+ " from  user u inner JOIN studentCourse sc on u.id=sc.studentid inner join course c on c.id=sc.courseid "
 				+ "left join  classes cl on u.classId=cl.id left join  major m on cl.majorid=m.id ").append(whereSql).append(" limit " +start + ","+ pageSize);
 		System.out.println(sql);

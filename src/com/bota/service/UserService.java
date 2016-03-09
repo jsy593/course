@@ -94,4 +94,11 @@ public interface UserService {
 	 * @return
 	 */
 	List<Map<String, Object>> selectAllUserByIdentity(int identity);
+
+	/**
+	 * 根据学号查询用户
+	 * @param userNumber
+	 * @return
+	 */
+	Map<String, Object> selectOneByUserNumber(long userNumber);
 }

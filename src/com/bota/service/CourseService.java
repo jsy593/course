@@ -44,6 +44,14 @@ public interface CourseService {
 	 */
 	Map<String, Object> selectCourseNumber();
 	
+	
+	/**
+	 * 根据老师id查询课程
+	 * @param id
+	 * @return
+	 */
+	public List<Map<String, Object>> selectCourseByTeacherId(long teacherId);
+	
 	/**
 	 * 根据id查询课程
 	 * @param id
