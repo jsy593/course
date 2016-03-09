@@ -309,10 +309,14 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("studentListBySearch")
-	public String selectAllStudentBySearch(int pageNum,int pageSize,long teacherId,long courseId,HttpServletRequest request){
+	public String selectAllStudentBySearch(int pageNum,int pageSize,long teacherId,long courseId,String search,HttpServletRequest request){
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("teacherId", teacherId);
-		paramMap.put("courseId", courseId);
+		if(courseId != -1){
+			paramMap.put("courseId", courseId);
+		}
+		paramMap.put("search", search);
+		request.setAttribute("search",search);
 		request.setAttribute("courseId",courseId);
 		return commonExecute(pageNum,pageSize,paramMap,request);
 	}

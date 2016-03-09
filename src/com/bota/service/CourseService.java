@@ -77,4 +77,13 @@ public interface CourseService {
 	 * @return
 	 */
 	public boolean deleteByIds(String id);
+
+	/**
+	 * 老师查询课程
+	 * @param pageNum
+	 * @param pageSize
+	 * @param paramMap
+	 * @return
+	 */
+	public Map<String, Object> selectAllCourseByTeacher(int pageNum, int pageSize, Map<String, Object> paramMap);
 }

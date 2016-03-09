@@ -141,7 +141,27 @@ public class CourseController {
 		Map<String, Object> paramMap = null;
 		paramMap = new HashMap<String, Object>();
 		paramMap.put("teacherId",teacherId);
-		return commonExecute(pageNum,pageSize,paramMap,request);
+		
+		Map<String, Object> map = courseService.selectAllCourseByTeacher(pageNum,pageSize,paramMap);
+		List<Map<String, Object>> teacherMap = userService.selectAllUserByIdentity(1);//1代表老师的角色
+		List<Map<String, Object>> majorMap = majorService.selectAllMajor();
+		request.setAttribute("courses", map.get("listMap"));
+		request.setAttribute("teachers", teacherMap);
+		request.setAttribute("majors", majorMap);
+		
+		if(map.get("count") != null){
+			int count = Integer.parseInt(map.get("count").toString());
+			int totalPage  = 0;
+			if(count % 5 != 0 ){
+				totalPage =count/5 + 1; 
+			}else{
+				totalPage =count/5;
+			}
+			request.setAttribute("count",count);
+			request.setAttribute("totalPage",totalPage);
+		}
+		request.setAttribute("pageNum",pageNum);
+		return "course/course";
 	}
 	
 	

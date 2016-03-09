@@ -60,15 +60,17 @@ public class StudentCourseController {
 	@ResponseBody
 	public String teacherAddStudentCourse(long courseId,long userNumber){
 		Map<String, Object> map = userService.selectOneByUserNumber(userNumber);
+		long studentId = 0;
 		if(map == null || map.size() < 0){
 			return Dictionary.S_NOT_EXIST;
+		}else{
+			studentId = Long.parseLong(map.get("id").toString());
 		}
 		
-		if(!studentCourseService.selectOneByCourserId(courseId)){
+		if(!studentCourseService.selectOneByCourserId(studentId,courseId)){
 			return Dictionary.S_EXIST;
 		}
 		
-		long studentId = Long.parseLong(map.get("id").toString());
 		StudentCourse studentCourse = new StudentCourse();
 		studentCourse.setCreatetime(new Date());
 		studentCourse.setCourseid(courseId);

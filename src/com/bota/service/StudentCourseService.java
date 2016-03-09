@@ -58,6 +58,6 @@ public interface StudentCourseService {
 	 * @param courserId
 	 * @return
 	 */
-	boolean selectOneByCourserId(long courserId);
+	boolean selectOneByCourserId(long studentId, long courseid);
 	
 }

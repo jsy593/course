@@ -49,7 +49,7 @@ public interface StudentCourseDao {
 	 * @param id
 	 * @return
 	 */
-	Map<String, Object> selectOneByCourseId(long id);
+	Map<String, Object> selectOneByCourseId(long studentId, long courseid);
 
 
 }

@@ -57,4 +57,11 @@ public interface CourseDao {
 	 */
 	List<Map<String, Object>> selectCourseByTeacherId(long teacherId);
 	
+	/**
+	 *	老师查询自己的课程
+	 * @param teacherId
+	 * @return
+	 */
+	Map<String, Object> selectAllCourseByTeacher(int pageNum, int pageSize, String whereSql);
+	
 }

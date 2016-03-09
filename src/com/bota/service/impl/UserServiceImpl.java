@@ -88,6 +88,9 @@ public class UserServiceImpl implements UserService{
 				if(paramMap.get("courseId") != null && !paramMap.get("courseId").equals("")){
 					whereSql.append(" and sc.courseId="+paramMap.get("courseId").toString());
 				}
+				if(paramMap.get("search") != null && !paramMap.get("search").equals("")){
+					whereSql.append(" and (co.name like'%"+paramMap.get("search").toString()+"%' or u.username like'%"+paramMap.get("search").toString()+"%' or u.usernumber like'%"+paramMap.get("search").toString()+"%') ");
+				}
 				return userDaoImpl.selectAllStudent(pageNum,pageSize,whereSql.toString());
 			}
 			if(paramMap.get("search") != null && !paramMap.get("search").equals("")){
@@ -96,7 +99,8 @@ public class UserServiceImpl implements UserService{
 			if(paramMap.get("identity") != null && !paramMap.get("identity").equals("")){
 				whereSql.append(" and u.identity = " + paramMap.get("identity").toString());
 			}
-			System.out.println(paramMap.get("classid"));			System.out.println(paramMap.containsKey("classid"));
+			System.out.println(paramMap.get("classid"));			
+			System.out.println(paramMap.containsKey("classid"));
 			if(paramMap.get("classid") != null && !paramMap.get("classid").equals("")){
 				whereSql.append(" and u.classid="+paramMap.get("classid").toString());
 			}

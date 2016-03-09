@@ -75,6 +75,29 @@ public class CourseServiceImpl implements CourseService{
 		return courseDaoImpl.selectAllCourse(pageNum,pageSize,whereSql.toString());
 	}
 	
+	
+	
+	
+	/**
+	 * 分页查询所有的课程
+	 * @return
+	 */
+	@Override
+	public Map<String, Object> selectAllCourseByTeacher(int pageNum,int pageSize,Map<String, Object> paramMap){
+		StringBuffer whereSql = new StringBuffer(" where 1=1 ");
+		if(paramMap != null && paramMap.size() > 0){
+			if(paramMap.get("search") != null && !paramMap.get("search").equals("")){
+				whereSql.append(" and (u.username like'%"+paramMap.get("search").toString()+"%' "
+						+ " or c.name like'%"+paramMap.get("search").toString()+"%' or c.courseNumber like'%"+paramMap.get("search").toString()+"%') ");
+			}
+			if(paramMap.get("teacherId") != null &&!paramMap.get("teacherId").equals("") &&  !paramMap.get("teacherId").equals("-1")){
+				whereSql.append(" and c.teacherId = " + paramMap.get("teacherId").toString());
+			}
+			System.out.println(whereSql);
+		}
+		return courseDaoImpl.selectAllCourseByTeacher(pageNum,pageSize,whereSql.toString());
+	}
+	
 	/**
 	 * 查询课程的数量
 	 * @return 

@@ -28,8 +28,8 @@ public  class StudentCourseServiceImpl implements StudentCourseService{
 	}
 	
 	@Override
-	public boolean selectOneByCourserId(long courseId){
-		Map<String, Object> resultMap =  studentCourseDao.selectOneByCourseId(courseId);
+	public boolean selectOneByCourserId(long studentId,long courseId){
+		Map<String, Object> resultMap =  studentCourseDao.selectOneByCourseId(studentId,courseId);
 		if(resultMap != null && resultMap.size() > 0){
 			return false;
 		}

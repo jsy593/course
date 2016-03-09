@@ -63,8 +63,8 @@
 										</c:if>	
 									<!-- 老师显示的下拉框开结束-->
 									
-									<!-- 老师或管理员显示的搜索栏开始 -->		
-										<c:if test="${sessionScope.user.identity != 2}">
+									<!-- 管理员显示的搜索栏开始 -->		
+										<c:if test="${sessionScope.user.identity == 0}">
 											<span class="input-icon">
 												<input type="text"  value="${search }" placeholder="请输入编号或者姓名 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
 												<button class="btn btn-info" type="button" onclick="selectUser(1)">
@@ -74,7 +74,21 @@
 											</span>
 											
 										</c:if>
-									<!-- 老师或管理员显示的搜索栏结束 -->
+									<!-- 管理员显示的搜索栏结束 -->
+									
+									<!-- 老师显示的搜索栏开始 -->
+									<c:if test="${sessionScope.user.identity == 1}">
+											<span class="input-icon">
+												<input type="text"  value="${search }" placeholder="课程名或编号或者姓名 ..." class="js_search nav-search-input" id="nav-search-input" autocomplete="off" />
+												<button class="btn btn-info" type="button" onclick="selectStudent(1)">
+														<i class="icon-search bigger-110"></i>
+															搜索
+												</button>
+											</span>
+						 					
+										</c:if>
+										
+									<!-- 老师显示的搜索栏结束 -->
 							</div>
 							<div class="row">
 									<div class="col-xs-12">
