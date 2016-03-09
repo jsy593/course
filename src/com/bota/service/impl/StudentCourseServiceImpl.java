@@ -27,6 +27,15 @@ public  class StudentCourseServiceImpl implements StudentCourseService{
 				
 	}
 	
+	@Override
+	public boolean selectOneByCourserId(long courseId){
+		Map<String, Object> resultMap =  studentCourseDao.selectOneByCourseId(courseId);
+		if(resultMap != null && resultMap.size() > 0){
+			return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * 查询所有的学生选课
 	 * @return

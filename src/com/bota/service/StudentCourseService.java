@@ -52,5 +52,12 @@ public interface StudentCourseService {
 	 * @return
 	 */
 	public boolean deleteByIds(String id);
+
+	/**
+	 * 根据课程id查询是否存在
+	 * @param courserId
+	 * @return
+	 */
+	boolean selectOneByCourserId(long courserId);
 	
 }

@@ -51,4 +51,5 @@ public interface StudentCourseDao {
 	 */
 	Map<String, Object> selectOneByCourseId(long id);
 
+
 }

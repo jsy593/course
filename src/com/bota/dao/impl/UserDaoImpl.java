@@ -119,7 +119,7 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 		sql.append("select  u.*,date_format(u.createTime,'%Y-%m-%d') time,c.name cname,m.name mname from user u left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql).append(" limit " +start + ","+ pageSize);
 		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
-		
+		System.out.println(sql);
 		//记录条数
 		StringBuffer countSql = new StringBuffer();
 		countSql.append("select count(*) from  user u left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql);

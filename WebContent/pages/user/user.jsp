@@ -29,8 +29,10 @@
 									<div class="form-group" style="float:right;padding:0px 20px 0px 0px">
 									<input type="hidden" value="${sessionScope.user.id}" class="js_userid"/>
 									<!-- 管理员显示的下拉框开始 -->
-									<c:if test="${sessionScope.user.identity == 0}">
-										<label class="control-label no-padding-right" for="form-field-1">请选择
+									<c:if test="${sessionScope.user.identity != 2 }">
+										<label class="control-label no-padding-right" for="form-field-1">请选择</label>
+										</c:if>
+									<c:if test="${sessionScope.user.identity == 0 }">
 										</label>
 											<select name="identity" class="js_select_role" id="form-field-1">
 												<option value="2" <c:if test="${identity == 2}">selected</c:if>>学生</option>
@@ -53,7 +55,7 @@
 										<c:if test="${sessionScope.user.identity == 1}">
 											<select name="courseid" value="${courseId }" class="js_select_course" id="form-field-1">
 												<option value="-1" selected>所有</option>
-												<c:forEach items="${courses }" var="clazz">
+												<c:forEach items="${courses }" var="course">
 													<option value="${course.id }" <c:if test="${course.id == courseId}">selected</c:if>>${course.name }</option>
 												</c:forEach>
 											</select>
@@ -265,6 +267,8 @@
 				    	layer.close(index);
 				    	if(data == "notExist"){
 				    		layer.msg("学号不存在!",{icon:5});
+				    	}else if(data == "exist"){
+				    		layer.msg("该学生已选过!",{icon:5});
 				    	}else if(data == "success"){	
 				    		layer.msg('添加成功!', {icon: 6,time:1000},function(){
 				    			history.go(0);
@@ -290,7 +294,7 @@
 			});
 			
 			$(".js_select_course").change(function(){
-				
+				selectStudent(1);
 			});
 			
 		});

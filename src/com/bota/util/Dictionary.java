@@ -22,4 +22,9 @@ public class Dictionary {
 	 * 不存在
 	 */
 	public static final String S_NOT_EXIST = "notExist";
+	
+	/**
+	 * 已存在
+	 */
+	public static final String S_EXIST = "exist";
 }
