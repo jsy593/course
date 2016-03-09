@@ -60,7 +60,7 @@ public class CourseDaoImpl extends CommonDaoImpl<Course> implements CourseDao{
 	}
 
 	@Override
-	public Map<String, Object> selectAllCourse(int pageNum, int pageSize,String whereSql){
+	public Map<String, Object> selectAllCourseByStudent(int pageNum, int pageSize,String whereSql){
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
 		sql.append("select  sc.id studentCourseId,c.*,date_format(c.createTime,'%Y-%m-%d') time,u.username  teachername,m.name mname,tc.isAgree from Course c "
@@ -82,7 +82,7 @@ public class CourseDaoImpl extends CommonDaoImpl<Course> implements CourseDao{
 	}
 	
 	@Override
-	public Map<String, Object> selectAllCourseByTeacher(int pageNum, int pageSize,String whereSql){
+	public Map<String, Object> selectAllCourse(int pageNum, int pageSize,String whereSql){
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
 		sql.append("select c.*,date_format(c.createTime,'%Y-%m-%d') time,u.username  teachername,m.name mname,tc.isAgree from Course c "
@@ -105,7 +105,6 @@ public class CourseDaoImpl extends CommonDaoImpl<Course> implements CourseDao{
 	
 	
 	
-	
 	@Override
 	public Map<String, Object> selectCourseNumber(){
 		String sql = "select count(*) count from course";
@@ -123,4 +122,5 @@ public class CourseDaoImpl extends CommonDaoImpl<Course> implements CourseDao{
 		String sql = "select id,name from course where teacherId="+teacherId;
 		return super.findManyBySql(sql);
 	}
+
 }

@@ -66,15 +66,30 @@ public class CourseServiceImpl implements CourseService{
 			if(paramMap.get("specialtyId") != null && !paramMap.get("specialtyId").equals("") && !paramMap.get("specialtyId").equals("-1")){
 				whereSql.append(" and c.specialtyId="+paramMap.get("specialtyId").toString());
 			}
-			
-			if(paramMap.get("isFinish") != null && !paramMap.get("isFinish").equals("") && !paramMap.get("isFinish").equals("-1")){
-				whereSql.append(" and c.isFinish="+paramMap.get("isFinish").toString());
-			}
-			System.out.println(whereSql);
 		}
 		return courseDaoImpl.selectAllCourse(pageNum,pageSize,whereSql.toString());
 	}
 	
+	
+	/**
+	 * 分页查询所有的课程
+	 * @return
+	 */
+	@Override
+	public Map<String, Object> selectAllCourseByStudent(int pageNum,int pageSize,Map<String, Object> paramMap){
+		StringBuffer whereSql = new StringBuffer(" where 1=1 ");
+		if(paramMap != null && paramMap.size() > 0){
+			
+			if(paramMap.get("isFinish") != null && !paramMap.get("isFinish").equals("") && !paramMap.get("isFinish").equals("-1")){
+				whereSql.append(" and c.isFinish="+paramMap.get("isFinish").toString());
+			}
+			if(paramMap.get("studentId") != null && !paramMap.get("studentId").equals("") && !paramMap.get("studentId").equals("-1")){
+				whereSql.append(" and sc.studentId="+paramMap.get("studentId").toString());
+			}
+			System.out.println(whereSql);
+		}
+		return courseDaoImpl.selectAllCourseByStudent(pageNum,pageSize,whereSql.toString());
+	}
 	
 	
 	
@@ -95,7 +110,7 @@ public class CourseServiceImpl implements CourseService{
 			}
 			System.out.println(whereSql);
 		}
-		return courseDaoImpl.selectAllCourseByTeacher(pageNum,pageSize,whereSql.toString());
+		return courseDaoImpl.selectAllCourse(pageNum,pageSize,whereSql.toString());
 	}
 	
 	/**

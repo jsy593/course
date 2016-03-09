@@ -86,4 +86,13 @@ public interface CourseService {
 	 * @return
 	 */
 	public Map<String, Object> selectAllCourseByTeacher(int pageNum, int pageSize, Map<String, Object> paramMap);
+
+	/**
+	 * 学生查询课程
+	 * @param pageNum
+	 * @param pageSize
+	 * @param paramMap
+	 * @return
+	 */
+	Map<String, Object> selectAllCourseByStudent(int pageNum, int pageSize, Map<String, Object> paramMap);
 }

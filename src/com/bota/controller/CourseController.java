@@ -96,11 +96,15 @@ public class CourseController {
 	 */
 	
 	@RequestMapping("courseListBySearch")
-	public ModelAndView selectAllCourses(int pageNum,int pageSize,String teacherId,String search, String specialtyId){
+	public ModelAndView selectAllCourses(int pageNum,int pageSize,long teacherId,String search, long specialtyId){
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("teacherId", teacherId);
+		if(teacherId != -1){
+			paramMap.put("teacherId", teacherId);
+		}
+		if(teacherId != -1){
+			paramMap.put("specialtyId", specialtyId);
+		}
 		paramMap.put("search", search);
-		paramMap.put("specialtyId", specialtyId);
 		ModelAndView model = new ModelAndView();
 		Map<String, Object> map = courseService.selectAllCourse(pageNum,pageSize,paramMap);
 		model.addObject("courses", map.get("listMap"));
@@ -181,14 +185,15 @@ public class CourseController {
 	 * @return
 	 */
 	@RequestMapping("courseListByStudent")
-	public String selectAllCourseByStudent(int pageNum,int pageSize,int isFinish,HttpServletRequest request){
+	public String selectAllCourseByStudent(int pageNum,int pageSize,int isFinish,int studentId, HttpServletRequest request){
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("isFinish",isFinish);
+		paramMap.put("studentId",studentId);
 		return commonExecute(pageNum,pageSize,paramMap,request);
 	}
 	
 	public  String commonExecute(int pageNum,int pageSize,Map<String, Object> paramMap,HttpServletRequest request){
-		Map<String, Object> map = courseService.selectAllCourse(pageNum,pageSize,paramMap);
+		Map<String, Object> map = courseService.selectAllCourseByStudent(pageNum,pageSize,paramMap);
 		List<Map<String, Object>> teacherMap = userService.selectAllUserByIdentity(1);//1代表老师的角色
 		List<Map<String, Object>> majorMap = majorService.selectAllMajor();
 		request.setAttribute("courses", map.get("listMap"));

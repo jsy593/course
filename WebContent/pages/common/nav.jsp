@@ -241,14 +241,14 @@
 					<li>
 						<a href="courseListByStudent.do?pageNum=1&pageSize=5&isFinish=1" class="dropdown-toggle">
 							<i class="icon-list"></i>
-							<span class="menu-text">选择课程 </span>
+							<span class="menu-text">课程管理 </span>
 
 							<b class="arrow icon-angle-down"></b>
 						</a>
 						<!-- 二级菜单开始 -->
 						<ul class="submenu">
 								<li>
-									<a href="courseListByStudent.do?pageNum=1&pageSize=5&isFinish=1">
+									<a href="courseListByStudent.do?pageNum=1&pageSize=5&isFinish=1&studentId=${sessionScope.user.id }">
 										<i class="icon-double-angle-right"></i>
 										选择课程
 									</a>
