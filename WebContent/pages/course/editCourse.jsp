@@ -225,16 +225,14 @@
 			var course = $(".js_form").serialize();//course为字符串
 			if($(".js_identity").val() == 1){//如果为老师，只能修改一次
 				layer.confirm('您只能修改一次，确定修改吗', {icon: 3, title:'提示'}, function(index){
-					course = course + "&ischange=2"//2代表已修改
 					 $.post($(".js_form").attr("action")+"?createTime="+$(".js_createTime").val(),course,function(data){
+							var teacherId = $(".js_userid").val();
 							if(data == true){
-								layer.alert('修改成功!', {icon: 6, time:2000},function(){
-									var teacherId = $(".js_userid").val();
-									window.location.href="courseListByTeacher.do?pageNum=1&pageSize=5&teacherId="+teacherId;
-								});
+								layer.alert('修改成功!', {icon: 6, time:2000});
 							}else{
 								layer.alert('修改失败!', {icon: 5});
 							}
+							window.location.href="courseListByTeacher.do?pageNum=1&pageSize=5&teacherId="+teacherId;
 						}); 
 				});
 			}else{

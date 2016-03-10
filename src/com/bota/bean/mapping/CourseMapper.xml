@@ -13,11 +13,10 @@
     <result column="numberLimit" property="numberlimit" jdbcType="INTEGER" />
     <result column="isFinish" property="isfinish" jdbcType="INTEGER" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
-    <result column="isChange" property="ischange" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, courseNumber, name, credit, teacherId, schooltime, address, specialtyId, numberLimit, 
-    isFinish, createTime, isChange
+    isFinish, createTime
   </sql>
   <select id="selectByPrimaryKey" resultType="com.bota.bean.Course" parameterType="java.lang.Long" >
     select 
@@ -33,13 +32,11 @@
     insert into course (id, courseNumber, name, 
       credit, teacherId, schooltime, 
       address, specialtyId, numberLimit, 
-      isFinish, createTime, isChange
-      )
+      isFinish, createTime)
     values (#{id,jdbcType=BIGINT}, #{coursenumber,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{credit,jdbcType=INTEGER}, #{teacherid,jdbcType=BIGINT}, #{schooltime,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{specialtyid,jdbcType=BIGINT}, #{numberlimit,jdbcType=INTEGER}, 
-      #{isfinish,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{ischange,jdbcType=INTEGER}
-      )
+      #{isfinish,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.bota.bean.Course" >
     insert into course
@@ -77,9 +74,6 @@
       <if test="createtime != null" >
         createTime,
       </if>
-      <if test="ischange != null" >
-        isChange,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -114,9 +108,6 @@
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="ischange != null" >
-        #{ischange,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -153,9 +144,6 @@
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="ischange != null" >
-        isChange = #{ischange,jdbcType=INTEGER},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -170,8 +158,7 @@
       specialtyId = #{specialtyid,jdbcType=BIGINT},
       numberLimit = #{numberlimit,jdbcType=INTEGER},
       isFinish = #{isfinish,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=TIMESTAMP},
-      isChange = #{ischange,jdbcType=INTEGER}
+      createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

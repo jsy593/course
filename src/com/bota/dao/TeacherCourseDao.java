@@ -3,6 +3,7 @@ package com.bota.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.bota.bean.Course;
 import com.bota.bean.TeacherCourse;
 
 public interface TeacherCourseDao {
@@ -49,4 +50,12 @@ public interface TeacherCourseDao {
 	 * @return
 	 */
 	Map<String, Object> selectOneByCourseId(long id);
+	
+	/**
+	 * 根据课程id,修改老师是否可修改课程的状态
+	 * @param courseId
+	 * @param isChange
+	 * @return
+	 */
+	boolean updateOneByCourseId(long courseId, long isChange);
 }

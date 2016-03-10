@@ -37,12 +37,6 @@ public class TeacherCourseController {
 		return "course/addTeacherCourse";
 	}
 	
-//	@RequestMapping("editTeacherCoursePage")
-//	public String editTeacherCoursePage(long id,HttpServletRequest request){
-//		TeacherCourse teacherCourse = teacherCourseService.selectOne(id);
-//		request.setAttribute("eacherCourse", teacherCourse);
-//		return "course/editTeacherCourse";
-//	}
 	
 	/**
 	 * 查询所有的课程
@@ -100,12 +94,13 @@ public class TeacherCourseController {
 	@ResponseBody
 	public boolean addTeacherCourse(TeacherCourse teacherCourse){
 		long courseId = teacherCourse.getCourseid();
-		Map<String, Object> resultMap = teacherCourseService.selectOneByCourseId(courseId);
+		Map<String, Object> resultMap = teacherCourseService.selectOneByCourseId(courseId);//如果以前有记录
 		if(resultMap != null && resultMap.size() > 0){
 			TeacherCourse tCourse = new TeacherCourse();
 			tCourse.setId(Long.parseLong(resultMap.get("id").toString()));
 			tCourse.setContent(teacherCourse.getContent());
 			tCourse.setIsagree(0);//待查看
+			tCourse.setIschange(0);//老师不能修改
 			return teacherCourseService.updateById(tCourse);
 		}else{
 			Date date = new Date();
@@ -123,31 +118,12 @@ public class TeacherCourseController {
 	@RequestMapping("updateTeacherCourse")
 	@ResponseBody
 	public boolean updateById(TeacherCourse teacherCourse){
-		if(teacherCourseService.updateById(teacherCourse)){
-			if(teacherCourse.getIsagree() == 1){//如果同意申请
-				Course course = new Course();
-				course.setId(teacherCourse.getCourseid());
-				course.setIschange(1);//1代表可修改
-				boolean flag = courseService.updateById(course);
-				System.out.println(flag);
-				return flag;
-			}else{
-				return true;
+			if(teacherCourse.getIsagree() != null && teacherCourse.getIsagree() == 1){//如果同意申请
+				teacherCourse.setIschange(1);//可修改该课程
 			}
-		}
-			return false;
+			return teacherCourseService.updateById(teacherCourse);
 	}
 	
-	/**
-	 * 审批申请
-	 * @param TeacherCourse
-	 * @return
-	 */
-	@RequestMapping("editTeacherCourse")
-	@ResponseBody
-	public boolean editById(TeacherCourse teacherCourse){
-		return teacherCourseService.updateById(teacherCourse);
-	}
 	
 	
 	/**

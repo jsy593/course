@@ -25,8 +25,6 @@ public class Course {
 
     private Date createtime;
 
-    private Integer ischange;
-
     public Long getId() {
         return id;
     }
@@ -114,21 +112,4 @@ public class Course {
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
-
-    public Integer getIschange() {
-        return ischange;
-    }
-
-    public void setIschange(Integer ischange) {
-        this.ischange = ischange;
-    }
-
-	@Override
-	public String toString() {
-		return "Course [id=" + id + ", coursenumber=" + coursenumber + ", name=" + name + ", credit=" + credit
-				+ ", teacherid=" + teacherid + ", schooltime=" + schooltime + ", address=" + address + ", specialtyid="
-				+ specialtyid + ", numberlimit=" + numberlimit + ", isfinish=" + isfinish + ", createtime=" + createtime
-				+ ", ischange=" + ischange + "]";
-	}
-    
 }

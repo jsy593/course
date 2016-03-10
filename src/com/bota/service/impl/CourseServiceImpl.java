@@ -6,9 +6,12 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bota.bean.Course;
+import com.bota.bean.TeacherCourse;
 import com.bota.dao.CourseDao;
+import com.bota.dao.TeacherCourseDao;
 import com.bota.service.CourseService;
 
 @Service("courseServiceImpl")
@@ -19,6 +22,9 @@ public class CourseServiceImpl implements CourseService{
 	
 	@Resource
 	private CourseDao courseDao;
+	
+	@Resource
+	private TeacherCourseDao teacherCourseDaoImpl;
 	
 
 	@Override
@@ -163,5 +169,15 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public List<Map<String, Object>> selectCourseByTeacherId(long teacherId) {
 		return courseDaoImpl.selectCourseByTeacherId(teacherId);
+	}
+
+
+	@Override
+	@Transactional
+	public boolean updateCourse(Course course) {
+		if(teacherCourseDaoImpl.updateOneByCourseId(course.getId(), 2)){
+			return courseDao.updateByPrimaryKeySelective(course) > 0;
+		}
+		return  false;
 	}
 }

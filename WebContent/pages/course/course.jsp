@@ -145,7 +145,7 @@
 														
 													<!------------------ 老师模块开始 ----------------------->	
 														<c:if test="${sessionScope.user.identity == 1 }">
-															<c:if test="${course.isAgree == 0  && course.isChange == 0}">
+															<c:if test="${course.isAgree == 0 }">
 																
 																<button class="btn  btn-sm btn-primary ">申请中</button>
 																
@@ -160,7 +160,7 @@
 																		
 																</div>
 															</c:if>
-															<c:if test="${course.isAgree == null && course.isChange == 0}">
+															<c:if test="${course.isAgree == null}">
 																
 																<div class="inline dropdown-hover">
 																<button class="btn  btn-sm btn-danger " onclick="applyEditCourse(${course.id })">申请修改</button>
@@ -178,8 +178,8 @@
 																
 															</c:if>
 															
-															<!-- null代表管理员同意后，删除了teacherCourse的记录 -->
-															<c:if test="${(course.isAgree == 1 || course.isAgree == null) && course.isChange == 1}"> 
+															<!--管理员同意 -->
+															<c:if test="${course.isAgree == 1  && course.isChange == 1}"> 
 
 															<div class="inline dropdown-hover">
 																<button class="btn  btn-sm btn-success " onclick="javascript:location='editCoursePage.do?id=${course.id }'">申请成功</button>
@@ -197,7 +197,7 @@
 															</c:if>
 															
 															
-															<c:if test="${(course.isAgree == 1 || course.isAgree == null) && course.isChange == 2}">
+															<c:if test="${course.isAgree == 1  && course.isChange == 2}">
 
 															<div class="inline dropdown-hover">
 																<button class="btn  btn-sm btn-success ">已修改</button>

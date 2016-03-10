@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,9 @@ public class CourseController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TeacherCourseService teacherCourseService;
 	
 	/**
 	 * 添加课程
@@ -101,7 +105,7 @@ public class CourseController {
 		if(teacherId != -1){
 			paramMap.put("teacherId", teacherId);
 		}
-		if(teacherId != -1){
+		if(specialtyId != -1){
 			paramMap.put("specialtyId", specialtyId);
 		}
 		paramMap.put("search", search);
@@ -233,9 +237,14 @@ public class CourseController {
 	 */
 	@RequestMapping("editCourse")
 	@ResponseBody
-	public boolean updateById(Course course, String createTime){
+	public boolean updateById(Course course, String createTime,HttpSession session){
 		Date date = DateStrConvert.strToDate(createTime, "yyyy-MM-dd");
 		course.setCreatetime(date);
+		@SuppressWarnings("unchecked")
+		Map<String, Object> userMap = (Map<String, Object>) session.getAttribute("user");
+		if(userMap.get("identity").equals(1)){
+			courseService.updateCourse(course);//需要修改teacherCourse表
+		}
 		return courseService.updateById(course);
 	}
 	

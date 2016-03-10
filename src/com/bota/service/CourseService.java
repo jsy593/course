@@ -95,4 +95,10 @@ public interface CourseService {
 	 * @return
 	 */
 	Map<String, Object> selectAllCourseByStudent(int pageNum, int pageSize, Map<String, Object> paramMap);
+
+	/**
+	 * 老师申请修改课程
+	 * @param course
+	 */
+	public boolean updateCourse(Course course);
 }

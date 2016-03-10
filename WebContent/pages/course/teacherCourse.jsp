@@ -209,8 +209,11 @@
 			laydate.skin('molv');
 			
 			function deleteteacherCourse(id){
+				var teacherCourse = {};
+				teacherCourse.id = id;
+				teacherCourse.isdelete = 1;//假删除
 				layer.confirm('确认要删除吗?', {icon: 3, title:'提示'}, function(){
-				    $.post("deleteTeacherCourse.do",{"id":id},function(data){
+				    $.post("updateTeacherCourse.do",teacherCourse,function(data){
 				    	if(data == true){
 				    		layer.msg('删除成功!', {icon: 6,time:2000},function(){
 				    			history.go(0);

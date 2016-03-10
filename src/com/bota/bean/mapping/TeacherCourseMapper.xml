@@ -6,10 +6,12 @@
     <result column="courseId" property="courseid" jdbcType="BIGINT" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="isAgree" property="isagree" jdbcType="INTEGER" />
+    <result column="isChange" property="ischange" jdbcType="INTEGER" />
+    <result column="isDelete" property="isdelete" jdbcType="INTEGER" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, courseId, content, isAgree, createTime
+    id, courseId, content, isAgree, isChange, isDelete, createTime
   </sql>
   <select id="selectByPrimaryKey" resultType="com.bota.bean.TeacherCourse" parameterType="java.lang.Long" >
     select 
@@ -23,9 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.bota.bean.TeacherCourse" >
     insert into teachercourse (id, courseId, content, 
-      isAgree, createTime)
+      isAgree, isChange, isDelete, 
+      createTime)
     values (#{id,jdbcType=BIGINT}, #{courseid,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, 
-      #{isagree,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
+      #{isagree,jdbcType=INTEGER}, #{ischange,jdbcType=INTEGER}, #{isdelete,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.bota.bean.TeacherCourse" >
     insert into teachercourse
@@ -41,6 +45,12 @@
       </if>
       <if test="isagree != null" >
         isAgree,
+      </if>
+      <if test="ischange != null" >
+        isChange,
+      </if>
+      <if test="isdelete != null" >
+        isDelete,
       </if>
       <if test="createtime != null" >
         createTime,
@@ -59,6 +69,12 @@
       <if test="isagree != null" >
         #{isagree,jdbcType=INTEGER},
       </if>
+      <if test="ischange != null" >
+        #{ischange,jdbcType=INTEGER},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=INTEGER},
+      </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -76,6 +92,12 @@
       <if test="isagree != null" >
         isAgree = #{isagree,jdbcType=INTEGER},
       </if>
+      <if test="ischange != null" >
+        isChange = #{ischange,jdbcType=INTEGER},
+      </if>
+      <if test="isdelete != null" >
+        isDelete = #{isdelete,jdbcType=INTEGER},
+      </if>
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -87,6 +109,8 @@
     set courseId = #{courseid,jdbcType=BIGINT},
       content = #{content,jdbcType=VARCHAR},
       isAgree = #{isagree,jdbcType=INTEGER},
+      isChange = #{ischange,jdbcType=INTEGER},
+      isDelete = #{isdelete,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>

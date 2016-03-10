@@ -85,7 +85,7 @@ public class CourseDaoImpl extends CommonDaoImpl<Course> implements CourseDao{
 	public Map<String, Object> selectAllCourse(int pageNum, int pageSize,String whereSql){
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
-		sql.append("select c.*,date_format(c.createTime,'%Y-%m-%d') time,u.username  teachername,m.name mname,tc.isAgree from Course c "
+		sql.append("select c.*,date_format(c.createTime,'%Y-%m-%d') time,u.username  teachername,m.name mname,tc.isAgree,tc.isChange from Course c "
 				+ "left join  user u on c.teacherId=u.id left join  major m on c.specialtyId=m.id "
 				+ "left join teacherCourse tc on c.id= tc.courseid ").append(whereSql).append(" limit " +start + ","+ pageSize);
 		System.out.println(sql);

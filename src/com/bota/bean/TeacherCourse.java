@@ -11,6 +11,10 @@ public class TeacherCourse {
 
     private Integer isagree;
 
+    private Integer ischange;
+
+    private Integer isdelete;
+
     private Date createtime;
 
     public Long getId() {
@@ -43,6 +47,22 @@ public class TeacherCourse {
 
     public void setIsagree(Integer isagree) {
         this.isagree = isagree;
+    }
+
+    public Integer getIschange() {
+        return ischange;
+    }
+
+    public void setIschange(Integer ischange) {
+        this.ischange = ischange;
+    }
+
+    public Integer getIsdelete() {
+        return isdelete;
+    }
+
+    public void setIsdelete(Integer isdelete) {
+        this.isdelete = isdelete;
     }
 
     public Date getCreatetime() {
