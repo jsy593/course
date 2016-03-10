@@ -110,6 +110,7 @@ public class UserServiceImpl implements UserService{
 		return userDaoImpl.selectAllUser(pageNum,pageSize,whereSql.toString());
 	}
 	
+	
 	/**
 	 * 查询用户的数量
 	 * @return 

@@ -8,9 +8,12 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bota.bean.Course;
 import com.bota.bean.StudentCourse;
+import com.bota.bean.User;
 import com.bota.dao.CourseDao;
 import com.bota.dao.StudentCourseDao;
+import com.bota.dao.UserDao;
 import com.bota.service.StudentCourseService;
 
 
@@ -24,6 +27,12 @@ public  class StudentCourseServiceImpl implements StudentCourseService{
 	private StudentCourseDao studentCourseDao;
 	@Resource
 	private CourseDao courseDaoImpl;
+	
+	@Resource
+	private CourseDao courseDao;
+	
+	@Resource
+	private UserDao userDaoImpl;
 	
 	@Override
 	public boolean addStudentCourse(StudentCourse studentCourse){
@@ -122,6 +131,34 @@ public  class StudentCourseServiceImpl implements StudentCourseService{
 	public boolean deleteByIds(String ids){
 		return studentCourseDao.deleteByPrimaryKeys(ids);
 	}
-
+	
+	@Override
+	@Transactional
+	public boolean addGrade(List<Map<String, Object>> listMap){
+		int grade;
+		long studentId;
+		long courseId;
+		Course course;
+		for(Map<String, Object> map: listMap){
+			grade = Integer.parseInt(map.get("grade").toString());
+			studentId = Long.parseLong(map.get("studentId").toString());
+			courseId = Long.parseLong(map.get("courseId").toString());
+			if(studentCourseDaoImpl.addGrade(grade, studentId, courseId)){//如果添加成绩成功
+				if(Integer.parseInt(map.get("grade").toString()) >= 60){//如果成绩及格，用户学分为当前学分加上该门课程的学分
+					course = courseDao.selectByPrimaryKey(courseId);
+					if(course != null){
+						userDaoImpl.updateCreditById(studentId, course.getCredit());
+					}else{
+						return false;
+					}
+				}
+				
+			}else{
+				return false;
+			}
+		}
+		
+		return true;
+	}
 	
 }

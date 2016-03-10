@@ -1,6 +1,5 @@
 package com.bota.dao.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.bota.bean.StudentCourse;
 import com.bota.dao.StudentCourseDao;
-import com.bota.util.Dictionary;
 
 @Repository("studentCourseDaoImpl")
 public class StudentCourseDaoImpl extends CommonDaoImpl<StudentCourse> implements StudentCourseDao{
@@ -91,5 +89,10 @@ public class StudentCourseDaoImpl extends CommonDaoImpl<StudentCourse> implement
 		return super.findBySql(sql);
 	}
 
-
+	
+	@Override
+	public boolean addGrade(int grade,long studentId,long courseid) {
+		String sql = "update studentCourse set grade="+grade+" where courseid=" + courseid +" and studentId="+studentId;
+		return super.updateClass(sql);
+	}
 }

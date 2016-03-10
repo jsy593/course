@@ -55,9 +55,16 @@ public interface StudentCourseService {
 
 	/**
 	 * 根据课程id查询是否存在
-	 * @param courserId
+	 * @param courserIds
 	 * @return
 	 */
 	boolean selectOneByCourserId(long studentId, long courseid);
+
+	/**
+	 * 批量添加成绩
+	 * @param listMap
+	 * @throws Exception 
+	 */
+	public boolean addGrade(List<Map<String, Object>> listMap);
 	
 }

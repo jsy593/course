@@ -1,29 +1,27 @@
 package com.bota.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bota.bean.StudentCourse;
-import com.bota.service.ClassService;
 import com.bota.service.CourseService;
 import com.bota.service.StudentCourseService;
 import com.bota.service.UserService;
 import com.bota.util.DateStrConvert;
 import com.bota.util.Dictionary;
-import com.bota.util.FileUtil;
-import com.bota.util.MapAction;
 
 /**
  * 
@@ -234,7 +232,29 @@ public class StudentCourseController {
 		return studentCourseService.deleteByIds(ids);
 	}
 	
-	
-	
-	
+	/**
+	 * 批量添加成绩
+	 * @param request
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping("addGrades")
+	@ResponseBody
+	public boolean addGrades(HttpServletRequest request){
+		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
+		
+		Object obj = request.getParameter("studentCourses");
+		JSONArray jsonArray = new JSONArray(obj.toString());
+		int iSize = jsonArray.length();
+		for (int i = 0; i < iSize; i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			JSONObject jsonObj = jsonArray.getJSONObject(i);
+			map.put("grade", jsonObj.get("grade"));
+			map.put("studentId", jsonObj.get("studentid"));
+			map.put("courseId", jsonObj.get("courseid"));
+			listMap.add(map);
+		}
+		boolean flag =  studentCourseService.addGrade(listMap);
+		return flag;
+	}
 }

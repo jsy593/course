@@ -296,7 +296,8 @@ public class UserController {
 	public String selectAllStudent(int pageNum,int pageSize,long teacherId, HttpServletRequest request){
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("teacherId", teacherId);
-		return commonExecute(pageNum,pageSize,paramMap,request);
+		commonExecute(pageNum,pageSize,paramMap,request);
+		return "user/user";
 	}
 	
 	/**
@@ -318,7 +319,8 @@ public class UserController {
 		paramMap.put("search", search);
 		request.setAttribute("search",search);
 		request.setAttribute("courseId",courseId);
-		return commonExecute(pageNum,pageSize,paramMap,request);
+		commonExecute(pageNum,pageSize,paramMap,request);
+		return "user/user";
 	}
 	
 	/**
@@ -329,7 +331,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	public String commonExecute(int pageNum,int pageSize,Map<String, Object> paramMap, HttpServletRequest request){
+	public void commonExecute(int pageNum,int pageSize,Map<String, Object> paramMap, HttpServletRequest request){
 		Map<String, Object> map = userService.selectAllUser(pageNum,pageSize,paramMap);
 		request.setAttribute("users", map.get("listMap"));
 		request.setAttribute("classes", classService.selectAllClasses());
@@ -350,7 +352,6 @@ public class UserController {
 		}
 		request.setAttribute("teacherId",teacherId);
 		request.setAttribute("pageNum",pageNum);
-		return "user/user";
 	}
 	
 	/**
@@ -401,6 +402,35 @@ public class UserController {
 	}
 	
 	
+	@RequestMapping("enterGradePage")
+	public String enterGradePage(int pageNum,int pageSize,int teacherId, HttpServletRequest request){
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("teacherId", teacherId);
+		commonExecute(pageNum,pageSize,paramMap,request);
+		return "user/enterGrade";
+	}
 	
 	
+	/**
+	 * 老师搜索的页面
+	 * @param pageNum 页码
+	 * @param pageSize  每页显示数量
+	 * @param teacherId 老师id
+	 * @param courseId  课程id
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("studentListBySearchGradePage")
+	public String selectAllStudentBySearchGradePage(int pageNum,int pageSize,long teacherId,long courseId,String search,HttpServletRequest request){
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("teacherId", teacherId);
+		if(courseId != -1){
+			paramMap.put("courseId", courseId);
+		}
+		paramMap.put("search", search);
+		request.setAttribute("search",search);
+		request.setAttribute("courseId",courseId);
+		commonExecute(pageNum,pageSize,paramMap,request);
+		return "user/enterGrade";
+	}
 }

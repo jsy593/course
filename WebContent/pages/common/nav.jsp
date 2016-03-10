@@ -224,7 +224,7 @@
 									</a>
 								</li>
 								<li>
-									<a href="courseListByPage.do?pageNum=1&pageSize=5">
+									<a href="enterGradePage.do?pageNum=1&pageSize=5&teacherId=${sessionScope.user.id }">
 										<i class="icon-double-angle-right"></i>
 										成绩录入
 									</a>

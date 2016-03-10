@@ -103,5 +103,13 @@ public interface UserDao {
 	 * @return
 	 */
 	Map<String, Object> selectOneByUserNumber(long userNumber);
+
+	/**
+	 * 根据id修改学分
+	 * @param id
+	 * @param credit
+	 * @return
+	 */
+	boolean updateCreditById(long id, int credit);
 	
 }

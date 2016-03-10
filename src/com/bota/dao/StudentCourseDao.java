@@ -51,5 +51,14 @@ public interface StudentCourseDao {
 	 */
 	Map<String, Object> selectOneByCourseId(long studentId, long courseid);
 
+	/**
+	 * 添加成绩
+	 * @param grade 成绩
+	 * @param studentId 学生id
+	 * @param courseid 课程id
+	 * @return
+	 */
+	boolean addGrade(int grade, long studentId, long courseid);
+
 
 }
