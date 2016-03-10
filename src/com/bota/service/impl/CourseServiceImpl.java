@@ -89,12 +89,9 @@ public class CourseServiceImpl implements CourseService{
 			if(paramMap.get("isFinish") != null && !paramMap.get("isFinish").equals("") && !paramMap.get("isFinish").equals("-1")){
 				whereSql.append(" and c.isFinish="+paramMap.get("isFinish").toString());
 			}
-			if(paramMap.get("studentId") != null && !paramMap.get("studentId").equals("") && !paramMap.get("studentId").equals("-1")){
-				whereSql.append(" and sc.studentId="+paramMap.get("studentId").toString());
-			}
 			System.out.println(whereSql);
 		}
-		return courseDaoImpl.selectAllCourseByStudent(pageNum,pageSize,whereSql.toString());
+		return courseDaoImpl.selectAllCourseByStudent(pageNum,pageSize,whereSql.toString(),paramMap.get("studentId").toString());
 	}
 	
 	

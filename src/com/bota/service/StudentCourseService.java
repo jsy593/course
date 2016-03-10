@@ -44,7 +44,7 @@ public interface StudentCourseService {
 	 * @param id
 	 * @return
 	 */
-	public boolean deleteById(long id);
+	public boolean deleteById(long id, long courseId);
 
 	/**
 	 * 根据id批量删除学生选课

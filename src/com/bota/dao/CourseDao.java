@@ -59,12 +59,19 @@ public interface CourseDao {
 	
 	/**
 	 * 学生选课
-	 * @param pageNum
-	 * @param pageSize
-	 * @param whereSql
+	 * @param pageNum 第几页
+	 * @param pageSize 每页显示数量
+	 * @param whereSql where语句
+	 * @param studentId 学生id
 	 * @return
 	 */
-	 
-	Map<String, Object> selectAllCourseByStudent(int pageNum, int pageSize, String whereSql);
+	Map<String, Object> selectAllCourseByStudent(int pageNum, int pageSize, String whereSql, String studentId);
 	
+	/**
+	 * 修改剩余可选人数
+	 * @param flag 
+	 * @param courseId 课程id
+	 * @return
+	 */
+	public boolean updateSpacePerson(int flag, long courseId);
 }

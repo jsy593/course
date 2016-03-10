@@ -51,7 +51,8 @@ public class ClassesDaoImpl extends CommonDaoImpl<Classes> implements ClassesDao
 	@Override
 	public List<Map<String, Object>> selectAllClass(int pageNum, int pageSize){
 		int start = (pageNum -1) * pageSize;
-		String sql = "select c.id,c.name,date_format(c.createTime,'%Y-%m-%d') createTime,m.name mname from classes c,major m where c.majorId=m.id limit " +start + ","+ pageSize;
+		String sql = "select c.id,c.name,date_format(c.createTime,'%Y-%m-%d') createTime,m.name mname "
+				+ "from classes c,major m where c.majorId=m.id order by c.createTime desc limit " +start + ","+ pageSize;
 //		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql);
 		return listMap;

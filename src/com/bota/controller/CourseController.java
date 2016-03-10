@@ -48,6 +48,7 @@ public class CourseController {
 	public boolean addCourse(Course course,String createTime){
 		Date date = DateStrConvert.strToDate(createTime, "yyyy-MM-dd");
 		course.setCreatetime(date);
+		course.setNumberspace(course.getNumberlimit());
 		System.out.println(course);
 		return courseService.addCourse(course);
 	}

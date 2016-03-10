@@ -46,10 +46,17 @@ public class StudentCourseController {
 	 */
 	@RequestMapping("addStudentCourse")
 	@ResponseBody
-	public boolean addStudentCourse(StudentCourse studentCourse){
+	public String addStudentCourse(StudentCourse studentCourse){
+		if(!studentCourseService.selectOneByCourserId(studentCourse.getStudentid(),studentCourse.getCourseid())){
+			return Dictionary.S_EXIST;
+		}
 		studentCourse.setCreatetime(new Date());
 		System.out.println(studentCourse);
-		return studentCourseService.addStudentCourse(studentCourse);
+		if(studentCourseService.addStudentCourse(studentCourse)){
+			return Dictionary.S_SUCCESS;
+		}else{
+			return Dictionary.S_FAIL;
+		}
 	}
 	
 	
@@ -157,7 +164,7 @@ public class StudentCourseController {
 	}
 	
 	
-	@RequestMapping("StudentCourseListByPage")
+	@RequestMapping("studentCourseListByPage")
 	public String selectAllStudentCourse(int pageNum,int pageSize, HttpServletRequest request){
 		
 		Map<String, Object> map = studentCourseService.selectAllStudentCourse(pageNum,pageSize,null);
@@ -212,8 +219,8 @@ public class StudentCourseController {
 	 */
 	@RequestMapping("deleteStudentCourse")
 	@ResponseBody
-	public boolean deleteById(long id){
-		return studentCourseService.deleteById(id);
+	public boolean deleteById(long id,long courseId){
+		return studentCourseService.deleteById(id,courseId);
 	}
 	
 	/**

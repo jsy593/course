@@ -54,8 +54,8 @@ public class CollegeDaoImpl extends CommonDaoImpl<College> implements CollegeDao
 	@Override
 	public List<Map<String, Object>> selectAllCollege(int pageNum, int pageSize){
 		int start = (pageNum -1) * pageSize;
-		String sql = "select id,name,date_format(createTime,'%Y-%m-%d') createTime from college limit " +start + ","+ pageSize;
-//		System.out.println(sql);
+		String sql = "select id,name,date_format(createTime,'%Y-%m-%d') createTime from college order by createTime desc limit " +start + ","+ pageSize;
+		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql);
 		return listMap;
 	}

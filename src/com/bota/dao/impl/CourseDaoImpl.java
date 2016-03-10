@@ -60,20 +60,24 @@ public class CourseDaoImpl extends CommonDaoImpl<Course> implements CourseDao{
 	}
 
 	@Override
-	public Map<String, Object> selectAllCourseByStudent(int pageNum, int pageSize,String whereSql){
+	public Map<String, Object> selectAllCourseByStudent(int pageNum, int pageSize,String whereSql,String studentId){
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
-		sql.append("select  sc.id studentCourseId,c.*,date_format(c.createTime,'%Y-%m-%d') time,u.username  teachername,m.name mname,tc.isAgree from Course c "
-				+ "left join  user u on c.teacherId=u.id left join  major m on c.specialtyId=m.id "
-				+ "left join teacherCourse tc on c.id= tc.courseid left join studentCourse sc on c.id=sc.courseid left join user us on us.id = sc.studentid ").append(whereSql).append(" limit " +start + ","+ pageSize);
+		
+		sql.append("select  s.studentCourseId ,c.*,date_format(c.createTime,'%Y-%m-%d') time,"
+				+ " u.username  teachername,m.name mname,tc.isAgree from Course c "
+				+ " left join  user u on c.teacherId=u.id left join  major m on c.specialtyId=m.id"
+				+ " left join teacherCourse tc on c.id= tc.courseid left join "
+				+ " (select sc.id studentCourseId,c.id courseId from course c, "
+				+ " studentCourse sc where sc.courseId=c.id and sc.studentId="+studentId+" ) s on c.id=s.courseId ").
+				append(whereSql).append(" order by c.createTime desc limit " +start + ","+ pageSize);
+		
 		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
 		
 		//记录条数
 		StringBuffer countSql = new StringBuffer();
-		countSql.append("select count(*) from Course c left join  user u on c.teacherId=u.id"
-				+ " left join  major m on c.specialtyId=m.id left join teacherCourse tc on c.id= tc.courseid "
-				+ "left join studentCourse sc on c.id=sc.courseid left join user us on us.id = sc.studentid").append(whereSql);
+		countSql.append("select count(*) from Course c ").append(whereSql);
 		long count = super.getCount(countSql.toString());
 		Map<String, Object> resultMap =  new HashMap<String, Object>();
 		resultMap.put("listMap", listMap);
@@ -87,7 +91,7 @@ public class CourseDaoImpl extends CommonDaoImpl<Course> implements CourseDao{
 		StringBuffer sql = new StringBuffer();
 		sql.append("select c.*,date_format(c.createTime,'%Y-%m-%d') time,u.username  teachername,m.name mname,tc.isAgree,tc.isChange from Course c "
 				+ "left join  user u on c.teacherId=u.id left join  major m on c.specialtyId=m.id "
-				+ "left join teacherCourse tc on c.id= tc.courseid ").append(whereSql).append(" limit " +start + ","+ pageSize);
+				+ "left join teacherCourse tc on c.id= tc.courseid ").append(whereSql).append(" order by c.createTime desc limit " +start + ","+ pageSize);
 		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
 		
@@ -121,6 +125,12 @@ public class CourseDaoImpl extends CommonDaoImpl<Course> implements CourseDao{
 	public List<Map<String, Object>> selectCourseByTeacherId(long teacherId) {
 		String sql = "select id,name from course where teacherId="+teacherId;
 		return super.findManyBySql(sql);
+	}
+
+	@Override
+	public boolean updateSpacePerson(int flag,long courseId) {
+		String sql = "update course set numberSpace = numberSpace + "+ flag + " where id="+courseId;
+		return super.updateClass(sql);
 	}
 
 }

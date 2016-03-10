@@ -21,6 +21,8 @@ public class Course {
 
     private Integer numberlimit;
 
+    private Integer numberspace;
+
     private Integer isfinish;
 
     private Date createtime;
@@ -95,6 +97,14 @@ public class Course {
 
     public void setNumberlimit(Integer numberlimit) {
         this.numberlimit = numberlimit;
+    }
+
+    public Integer getNumberspace() {
+        return numberspace;
+    }
+
+    public void setNumberspace(Integer numberspace) {
+        this.numberspace = numberspace;
     }
 
     public Integer getIsfinish() {

@@ -56,7 +56,9 @@ public class StudentCourseDaoImpl extends CommonDaoImpl<StudentCourse> implement
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
 		sql.append("select  u.id uid,u.usernumber,u,username,date_format(sc.createTime,'%Y-%m-%d') time,c.credit,c.name cname,cl.name classname "
-				+ "from studentCourse sc left join sc.courseid = c.id left join  user c on sc.studentId=u.id left join  classes cl on u.classid=cl.id ").append(whereSql).append(" limit " +start + ","+ pageSize);
+				+ "from studentCourse sc left join sc.courseid = c.id "
+				+ "left join  user c on sc.studentId=u.id left join  classes cl on u.classid=cl.id ").append(whereSql).
+				append("order by u.createTime limit " +start + ","+ pageSize);
 		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
 		

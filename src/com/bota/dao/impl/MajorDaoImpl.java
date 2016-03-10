@@ -50,7 +50,8 @@ public class MajorDaoImpl extends CommonDaoImpl<Major> implements MajorDao{
 	@Override
 	public List<Map<String, Object>> selectAllMajor(int pageNum, int pageSize){
 		int start = (pageNum -1) * pageSize;
-		String sql = "select m.id,m.name,date_format(m.createTime,'%Y-%m-%d') createTime,c.name cname from major m,college c where m.collegeId=c.id limit " +start + ","+ pageSize;
+		String sql = "select m.id,m.name,date_format(m.createTime,'%Y-%m-%d') createTime,c.name cname "
+				+ "from major m,college c where m.collegeId=c.id order by m.createTime desc limit " +start + ","+ pageSize;
 //		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql);
 		return listMap;

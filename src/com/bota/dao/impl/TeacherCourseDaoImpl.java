@@ -53,7 +53,7 @@ public class TeacherCourseDaoImpl extends CommonDaoImpl<TeacherCourse> implement
 	public List<Map<String, Object>> selectAllTeacherCourse(int pageNum, int pageSize){
 		int start = (pageNum -1) * pageSize;
 		String sql = "select tc.*,date_format(tc.createTime,'%Y-%m-%d') time,c.name cname from teacherCourse tc,course c "
-				+ " where tc.courseId=c.id and isDelete=0 limit " +start + ","+ pageSize;
+				+ " where tc.courseId=c.id and isDelete=0 order by tc.createTime limit " +start + ","+ pageSize;
 //		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql);
 		return listMap;

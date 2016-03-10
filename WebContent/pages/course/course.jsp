@@ -104,11 +104,11 @@
 														<th>${course.address }</th>
 														<th>${course.mname }</th>
 														<th>${course.numberLimit }</th>
-														<c:if test="${course.isFinish == 0}">
-															<th class="js_th${course.id }">不可选</th>
+														<c:if test="${course.numberSpace > 0}">
+															<th class="js_th${course.id }">可选|<font size="1" face="微软雅黑">剩余容量(${course.numberSpace})</font></th>
 														</c:if>
-														<c:if test="${course.isFinish == 1}">
-															<th class="js_th${course.id }">可选</th>
+														<c:if test="${course.numberSpace <= 0}">
+															<th class="js_th${course.id }">不可选|<font color="#FF0000" size="1" face="微软雅黑">人数已满</font></th>
 														</c:if>
 														<th>${course.time }</th>
 														<th>
@@ -231,11 +231,11 @@
 														<!------------------ 学生模块开始 ----------------------->
 														<c:if test="${sessionScope.user.identity == 2 }">
 															<c:if test="${course.studentCourseId != null && course.studentCourseId != ''}">
-																<button class="btn  btn-sm btn-danger " onclick="deleteStudentCourse(${course.studentCourseId})">退选</button>
+																<button class="btn  btn-sm btn-danger " onclick="deleteStudentCourse(${course.studentCourseId},${course.id })">退选</button>
 															</c:if>
 															
 															<c:if test="${course.studentCourseId == null || course.studentCourseId == ''}">
-																<button class="btn  btn-sm btn-purple " onclick="addStudentCourse(${course.id},${sessionScope.user.id })">选课</button>
+																<button class="btn  btn-sm btn-purple " <c:if test="${course.numberSpace <= 0}">disabled</c:if> onclick="addStudentCourse(${course.id},${sessionScope.user.id })">选课</button>
 															</c:if>
 														</c:if>
 														<!------------------ 学生模块结束 ----------------------->
@@ -431,9 +431,9 @@
 			
 			
 			/*---------------------------学生开始-----------------------------*/	
-			function deleteStudentCourse(id){
+			function deleteStudentCourse(id,courseId){
 				layer.confirm('确认要退选吗?', {icon: 3, title:'提示'}, function(){
-				    $.post("deleteStudentCourse.do",{"id":id},function(data){
+				    $.post("deleteStudentCourse.do",{"id":id,"courseId":courseId},function(data){
 				    	if(data == true){
 				    		layer.msg('退选成功!', {icon: 6,time:1000},function(){
 				    			history.go(0);
@@ -452,13 +452,16 @@
 				studentCourse.studentid = studentId;
 				layer.confirm('确认要选该门课程吗?', {icon: 3, title:'提示'}, function(){
 				    $.post("addStudentCourse.do",studentCourse,function(data){
-				    	if(data == true){
+				    	if(data == "exist"){
+				    		layer.msg('您已经选过该课程!', {icon: 5,time:1000});
+				    	}else if(data == "success"){
 				    		layer.msg('选课成功!', {icon: 6,time:1000},function(){
 				    			history.go(0);
 							});
 				    	}else{
 				    		layer.msg("选课失败!",{icon:5});
 				    	}
+				    	history.go(0);
 				    });
 				});
 			}

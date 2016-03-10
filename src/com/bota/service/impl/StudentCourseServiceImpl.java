@@ -6,8 +6,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bota.bean.StudentCourse;
+import com.bota.dao.CourseDao;
 import com.bota.dao.StudentCourseDao;
 import com.bota.service.StudentCourseService;
 
@@ -20,16 +22,22 @@ public  class StudentCourseServiceImpl implements StudentCourseService{
 	
 	@Resource
 	private StudentCourseDao studentCourseDao;
+	@Resource
+	private CourseDao courseDaoImpl;
 	
 	@Override
 	public boolean addStudentCourse(StudentCourse studentCourse){
-		return studentCourseDao.insertSelective(studentCourse) > 0;
+		if(studentCourseDao.insertSelective(studentCourse) > 0){
+			return courseDaoImpl.updateSpacePerson(-1, studentCourse.getCourseid());//修改最大容量人数
+		}
+		return false;
 				
 	}
 	
 	@Override
+	@Transactional
 	public boolean selectOneByCourserId(long studentId,long courseId){
-		Map<String, Object> resultMap =  studentCourseDao.selectOneByCourseId(studentId,courseId);
+		Map<String, Object> resultMap =  studentCourseDaoImpl.selectOneByCourseId(studentId,courseId);
 		if(resultMap != null && resultMap.size() > 0){
 			return false;
 		}
@@ -98,8 +106,11 @@ public  class StudentCourseServiceImpl implements StudentCourseService{
 	 * @return
 	 */
 	@Override
-	public boolean deleteById(long id){
-		return studentCourseDao.deleteByPrimaryKey(id) > 0;
+	public boolean deleteById(long id, long courseId){
+		if(studentCourseDao.deleteByPrimaryKey(id) > 0){
+			return courseDaoImpl.updateSpacePerson(1, courseId);//修改最大容量人数
+		}
+		return false;
 	}
 	
 	/**

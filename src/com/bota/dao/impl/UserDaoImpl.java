@@ -116,7 +116,9 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 	public Map<String, Object> selectAllUser(int pageNum, int pageSize,String whereSql){
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
-		sql.append("select  u.*,date_format(u.createTime,'%Y-%m-%d') time,c.name cname,m.name mname from user u left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql).append(" limit " +start + ","+ pageSize);
+		sql.append("select  u.*,date_format(u.createTime,'%Y-%m-%d') time,c.name cname,m.name mname from user u "
+				+ "left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql).
+		append(" order by u.createTime desc limit " +start + ","+ pageSize);
 		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
 		System.out.println(sql);
@@ -137,7 +139,7 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 		StringBuffer sql = new StringBuffer();
 		sql.append("select  sc.id studentCourseId,sc.courseId,u.*,date_format(u.createTime,'%Y-%m-%d') time,c.name cname,m.name mname from user u inner join studentCourse sc on u.id=sc.studentId "
 				+ "inner join course co on co.id=sc.courseId "
-				+ "left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql).append(" limit " +start + ","+ pageSize);
+				+ "left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql).append(" order by u.createTime desc limit " +start + ","+ pageSize);
 		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
 		

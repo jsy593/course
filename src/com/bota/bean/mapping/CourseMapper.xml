@@ -11,12 +11,13 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="specialtyId" property="specialtyid" jdbcType="BIGINT" />
     <result column="numberLimit" property="numberlimit" jdbcType="INTEGER" />
+    <result column="numberSpace" property="numberspace" jdbcType="INTEGER" />
     <result column="isFinish" property="isfinish" jdbcType="INTEGER" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, courseNumber, name, credit, teacherId, schooltime, address, specialtyId, numberLimit, 
-    isFinish, createTime
+    numberSpace, isFinish, createTime
   </sql>
   <select id="selectByPrimaryKey" resultType="com.bota.bean.Course" parameterType="java.lang.Long" >
     select 
@@ -32,11 +33,13 @@
     insert into course (id, courseNumber, name, 
       credit, teacherId, schooltime, 
       address, specialtyId, numberLimit, 
-      isFinish, createTime)
+      numberSpace, isFinish, createTime
+      )
     values (#{id,jdbcType=BIGINT}, #{coursenumber,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{credit,jdbcType=INTEGER}, #{teacherid,jdbcType=BIGINT}, #{schooltime,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{specialtyid,jdbcType=BIGINT}, #{numberlimit,jdbcType=INTEGER}, 
-      #{isfinish,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
+      #{numberspace,jdbcType=INTEGER}, #{isfinish,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.bota.bean.Course" >
     insert into course
@@ -67,6 +70,9 @@
       </if>
       <if test="numberlimit != null" >
         numberLimit,
+      </if>
+      <if test="numberspace != null" >
+        numberSpace,
       </if>
       <if test="isfinish != null" >
         isFinish,
@@ -103,6 +109,9 @@
       <if test="numberlimit != null" >
         #{numberlimit,jdbcType=INTEGER},
       </if>
+      <if test="numberspace != null" >
+        #{numberspace,jdbcType=INTEGER},
+      </if>
       <if test="isfinish != null" >
         #{isfinish,jdbcType=INTEGER},
       </if>
@@ -138,6 +147,9 @@
       <if test="numberlimit != null" >
         numberLimit = #{numberlimit,jdbcType=INTEGER},
       </if>
+      <if test="numberspace != null" >
+        numberSpace = #{numberspace,jdbcType=INTEGER},
+      </if>
       <if test="isfinish != null" >
         isFinish = #{isfinish,jdbcType=INTEGER},
       </if>
@@ -157,6 +169,7 @@
       address = #{address,jdbcType=VARCHAR},
       specialtyId = #{specialtyid,jdbcType=BIGINT},
       numberLimit = #{numberlimit,jdbcType=INTEGER},
+      numberSpace = #{numberspace,jdbcType=INTEGER},
       isFinish = #{isfinish,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
