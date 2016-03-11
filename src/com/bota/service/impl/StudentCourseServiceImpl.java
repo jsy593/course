@@ -171,5 +171,12 @@ public  class StudentCourseServiceImpl implements StudentCourseService{
 		
 		return true;
 	}
+
+	@Override
+	public Map<String, Object> studentSchedule(int pageNum, int pageSize, String start, String end,long studentId) {
+		String whereSql = "where sc.studentId="+ studentId+" and c.createTime between '"+start +"' and '"+end+"'";
+		return studentCourseDaoImpl.studentSchedule(pageNum, pageSize, whereSql);
+				
+	}
 	
 }

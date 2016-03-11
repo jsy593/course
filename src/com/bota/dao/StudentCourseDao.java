@@ -60,5 +60,14 @@ public interface StudentCourseDao {
 	 */
 	boolean addGrade(int grade, long studentId, long courseid);
 
+	/**
+	 * 学生查询课表
+	 * @param pageNum
+	 * @param pageSize
+	 * @param whereSql
+	 * @return
+	 */
+	Map<String, Object> studentSchedule(int pageNum, int pageSize, String whereSql);
+
 
 }

@@ -25,18 +25,15 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
-<!-- 							<div class="form-group" style="float:left;padding:0px 20px 0px 0px"> -->
-<!-- 								<button class="btn btn-info" type="button" onclick="selectStudentGrade(1,1)">通过</button> -->
-<!-- 								<button class="btn btn-info" type="button" onclick="selectStudentGrade(1,2)">未通过</button> -->
-<!-- 							</div> -->
-										<label class="control-label no-padding-right"  style="float:left">您的当前所修学分:${sessionScope.user.credit }</label>
 							<div class="form-group" style="float:right;padding:0px 20px 0px 0px">
-										<label class="control-label no-padding-right" for="form-field-1">请选择
+							<input type="hidden" value="${date }" class="js_hidden_date">
+										<label class="control-label no-padding-right" for="form-field-1">日期:
 										</label>
-											<select name="status" class="js_select_status" id="form-field-1">
-											<option value="-1">所有</option>
-												<option value="1" <c:if test="${status == 1}">selected</c:if>>通过</option>
-												<option value="2" <c:if test="${status == 2}">selected</c:if>>未通过</option>
+											<select name="date" class="js_select_date" id="form-field-1">
+											</select>
+											<select name="flag" class="js_select_flag" id="form-field-1">
+												<option value="1" <c:if test="${flag == 1}">selected</c:if>>上学期</option>
+												<option value="2" <c:if test="${flag == 2}">selected</c:if>>下学期</option>
 											</select>
 							</div>
 							
@@ -55,11 +52,9 @@
 														</th>
 														<th>课程编号</th>
 														<th>课程名称</th>
-														<th>所属班级</th>
-														<th>课程学分</th>
 														<th>任课老师</th>
-														<th>成绩</th>
-														<th>结果</th>
+														<th>上课地址</th>
+														<th>上课时间</th>
 													</tr>
 												</thead>
 
@@ -73,18 +68,10 @@
 															</label>
 														</th>
 														<th>${studentCourse.coursenumber }</th>
-														<th>${studentCourse.cname }</th>
-														<th>${studentCourse.classname }</th>
-														<th>${studentCourse.credit }</th>
+														<th>${studentCourse.name }</th>
 														<th>${studentCourse.teachername }</th>
-														<th>${studentCourse.grade }</th>
-														<th>
-															<c:choose>
-																<c:when test="${studentCourse.grade == null}">暂无</c:when>
-															   <c:when test="${studentCourse.grade < 60}">不合格</c:when>
-															   <c:otherwise>合格 </c:otherwise>  
-															</c:choose>
-														</th>
+														<th>${studentCourse.address }</th>
+														<th>${studentCourse.schooltime }</th>
 													</tr>
 													
 													</c:forEach>	
@@ -102,7 +89,7 @@
 												<ul class="pagination pull-right no-margin">
 													<li class="prev">
 													<c:if test='${pageNum > 1}'>
-														<a href="javascript:void(0);" onclick="selectStudentGrade(${pageNum - 1})" >
+														<a href="javascript:void(0);" onclick="selectStudentSchedule(${pageNum - 1})" >
 															<i class="icon-double-angle-left"></i>
 														</a>
 														</c:if>
@@ -113,7 +100,7 @@
 												<c:if test="${pageNum+4 <= totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${pageNum +4 }">
 															<li >
-																<a href="javascript:void(0);" onclick="selectStudentGrade(${page})" value="${page }">${page }</a>
+																<a href="javascript:void(0);" onclick="selectStudentSchedule(${page})" value="${page }">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -121,7 +108,7 @@
 												<c:if test="${pageNum+4> totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${totalPage }">
 															<li >
-																<a href="javascript:void(0);" onclick="selectStudentGrade(${page})">${page }</a>
+																<a href="javascript:void(0);" onclick="selectStudentSchedule(${page})">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -129,7 +116,7 @@
 													
 												<c:if test="${pageNum + 4 < totalPage}">
 													<li class="next">
-														<a href="javascript:void(0);" onclick="selectStudentGrade(${page + 1})">
+														<a href="javascript:void(0);" onclick="selectStudentSchedule(${page + 1})">
 															<i class="icon-double-angle-right"></i>
 														</a>
 													</li>
@@ -145,17 +132,35 @@
 		<script type="text/javascript">
 			
 			/*---------------------------学生开始-----------------------------*/	
+			
+			$(function(){
+				var data;
+				var date = $(".js_hidden_date").val();
+				for(var i = 2012;i < 2055;i++){
+					data=i+"-"+(i+1);
+					if(date == data) {
+						$(".js_select_date").append("<option value='"+data+"' selected>"+data+"</option>");
+					}else{
+						$(".js_select_date").append("<option value='"+data+"'>"+data+"</option>");
+					}
+
+				}
+			});		
+				
+			
 				$(function(){
-					$(".js_select_status").change(function(){
-						selectStudentGrade(1,$(".js_select_status").val());
+					$(".js_select_date").change(function(){
+						selectStudentSchedule(1);
+					});
+					$(".js_select_flag").change(function(){
+						selectStudentSchedule(1);
 					});
 				});
 			
-				function selectStudentGrade(pageNum,status){
-					if(status == undefined || status == null){
-						status = -1;
-					}
-					window.location.href="studentGrade.do?pageNum=1&pageSize=5&studentId="+$(".js_studentId").val()+"&status="+status;
+				function selectStudentSchedule(pageNum){
+					var flag = $(".js_select_flag").val();
+					var date = $(".js_select_date").val();
+					window.location.href="studentSchedule.do?pageNum="+pageNum+"&pageSize=5&studentId="+$(".js_studentId").val()+"&flag="+flag+"&date="+date;
 				}
 			
 			

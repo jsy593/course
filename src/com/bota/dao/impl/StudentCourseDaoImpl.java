@@ -97,5 +97,28 @@ public class StudentCourseDaoImpl extends CommonDaoImpl<StudentCourse> implement
 		return super.updateClass(sql);
 	}
 	
+	@Override
+	public Map<String, Object> studentSchedule(int pageNum, int pageSize,String whereSql){
+		int start = (pageNum -1) * pageSize;
+		StringBuffer sql = new StringBuffer();
+		sql.append("select  c.coursenumber,c.name,u.username teachername,c.address,c.schooltime"
+				+ " from studentcourse sc left join course c  on c.id=sc.courseId left join "
+				+ " user u on c.teacherId=u.id ").append(whereSql).
+				append(" order by sc.createTime limit " +start + ","+ pageSize);
+		System.out.println(sql);
+		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
+		
+		//记录条数
+		StringBuffer countSql = new StringBuffer();
+		countSql.append("select count(*) from studentcourse sc left join course c "
+				+ " on c.id=sc.courseId left join user u on c.teacherId=u.id ").append(whereSql);
+		System.out.println(countSql);
+		long count = super.getCount(countSql.toString());
+		Map<String, Object> resultMap =  new HashMap<String, Object>();
+		resultMap.put("listMap", listMap);
+		resultMap.put("count", count);
+		return resultMap;
+	}
+	
 	
 }

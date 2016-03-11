@@ -254,7 +254,7 @@
 									</a>
 								</li>
 								<li>
-									<a href="courseListByPage.do?pageNum=1&pageSize=5">
+									<a href="studentSchedule.do?pageNum=1&pageSize=5&studentId=${sessionScope.user.id }&flag=-1&date=-1">
 										<i class="icon-double-angle-right"></i>
 										查看课表
 									</a>

@@ -66,5 +66,15 @@ public interface StudentCourseService {
 	 * @throws Exception 
 	 */
 	public boolean addGrade(List<Map<String, Object>> listMap);
+
+	/**
+	 * 学生课表
+	 * @param pageNum
+	 * @param pageSize
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public Map<String, Object> studentSchedule(int pageNum, int pageSize, String start, String end, long studentId);
 	
 }
