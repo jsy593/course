@@ -104,16 +104,24 @@
 														<th>${course.address }</th>
 														<th>${course.mname }</th>
 														<th>${course.numberLimit }</th>
-														<c:if test="${course.numberSpace > 0}">
-															<th class="js_th${course.id }">可选|<font size="1" face="微软雅黑">剩余容量(${course.numberSpace})</font></th>
+														<c:if test="${sessionScope.user.identity == 0}">
+															<c:if test="${course.isFinish == 1}">
+																<th class="js_th${course.id }" >可选</th>
+															</c:if>
+															<c:if test="${course.isFinish == 0}">
+																<th class="js_th${course.id }" >不可选</th>
+															</c:if>
 														</c:if>
-														<c:if test="${course.numberSpace <= 0}">
-															<th class="js_th${course.id }">不可选|<font color="#FF0000" size="1" face="微软雅黑">人数已满</font></th>
+														<c:if test="${sessionScope.user.identity != 0}">	
+															<c:if test="${course.numberSpace > 0}">
+																<th class="js_th${course.id }">可选|<font size="1" face="微软雅黑">剩余容量(${course.numberSpace})</font></th>
+															</c:if>
+															<c:if test="${course.numberSpace <= 0}">
+																<th class="js_th${course.id }">不可选|<font color="#FF0000" size="1" face="微软雅黑">人数已满</font></th>
+															</c:if>
 														</c:if>
-														<th>${course.time }</th>
+															<th>${course.time }</th>
 														<th>
-														
-														
 											<!------------------ 管理员模块开始 ----------------------->
 														<c:if test="${sessionScope.user.identity == 0 }">
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
