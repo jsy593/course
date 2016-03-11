@@ -266,7 +266,7 @@
 					</li>
 					
 					<li>
-						<a href="typography.html">
+						<a href="studentGrade.do?pageNum=1&pageSize=5&status=-1&studentId=${sessionScope.user.id }">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">成绩查询</span>
 						</a>

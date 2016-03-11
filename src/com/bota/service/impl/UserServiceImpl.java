@@ -99,8 +99,6 @@ public class UserServiceImpl implements UserService{
 			if(paramMap.get("identity") != null && !paramMap.get("identity").equals("")){
 				whereSql.append(" and u.identity = " + paramMap.get("identity").toString());
 			}
-			System.out.println(paramMap.get("classid"));			
-			System.out.println(paramMap.containsKey("classid"));
 			if(paramMap.get("classid") != null && !paramMap.get("classid").equals("")){
 				whereSql.append(" and u.classid="+paramMap.get("classid").toString());
 			}

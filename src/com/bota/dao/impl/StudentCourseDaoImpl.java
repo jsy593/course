@@ -53,16 +53,17 @@ public class StudentCourseDaoImpl extends CommonDaoImpl<StudentCourse> implement
 	public Map<String, Object> selectAllStudentCourse(int pageNum, int pageSize,String whereSql){
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
-		sql.append("select  u.id uid,u.usernumber,u,username,date_format(sc.createTime,'%Y-%m-%d') time,c.credit,c.name cname,cl.name classname "
-				+ "from studentCourse sc left join sc.courseid = c.id "
-				+ "left join  user c on sc.studentId=u.id left join  classes cl on u.classid=cl.id ").append(whereSql).
-				append("order by u.createTime limit " +start + ","+ pageSize);
+		sql.append("select  sc.grade,u.id uid,u.usernumber,u.username,us.username teachername,date_format(sc.createTime,'%Y-%m-%d') time,c.coursenumber,c.credit,c.name cname,cl.name classname "
+				+ "from studentCourse sc left join course c on sc.courseid = c.id "
+				+ "left join  user u on sc.studentId=u.id left join  classes cl on u.classid=cl.id left join user us on c.teacherid=us.id ").append(whereSql).
+				append(" order by u.createTime limit " +start + ","+ pageSize);
 		System.out.println(sql);
 		List<Map<String, Object>> listMap = super.findManyBySql(sql.toString());
 		
 		//记录条数
 		StringBuffer countSql = new StringBuffer();
-		countSql.append("select count(*) from studentCourse sc left join sc.courseid = c.id left join  user c on sc.studentId=u.id left join  classes cl on u.classid=cl.id ").append(whereSql);
+		countSql.append("select count(*) from studentCourse sc left join course c on sc.courseid = c.id left join  user u on sc.studentId=u.id "
+				+" left join  classes cl on u.classid=cl.id left join user us on c.teacherid=us.id ").append(whereSql);
 		System.out.println(countSql);
 		long count = super.getCount(countSql.toString());
 		Map<String, Object> resultMap =  new HashMap<String, Object>();
@@ -95,4 +96,6 @@ public class StudentCourseDaoImpl extends CommonDaoImpl<StudentCourse> implement
 		String sql = "update studentCourse set grade="+grade+" where courseid=" + courseid +" and studentId="+studentId;
 		return super.updateClass(sql);
 	}
+	
+	
 }

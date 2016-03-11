@@ -72,7 +72,7 @@
 														<th>专业</th>
 														<th>班级</th>
 														<th>课程名</th>
-														<th>录入成绩</th>
+														<th>成绩</th>
 													</tr>
 												</thead>
 
@@ -90,11 +90,16 @@
 														<th>${user.mname }</th>
 														<th>${user.cname }</th>
 														<th>${user.courseName}</th>
-														<th onmouseover="showInput()">
+														<th >
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 																<div class="form-group">
 																		<div class="col-sm-9">
-																				<input   id="form-field-3" type="text" userId="${user.id }" courseId="${user.courseId}" class="js_input col-xs-10 col-sm-5"/>
+																		<c:if test="${user.grade != null }">
+																			<label><b>${user.grade}</b></label>
+																		</c:if>
+																		<c:if test="${user.grade == null }">
+																			<input  id="form-field-3" type="text" userId="${user.id }" courseId="${user.courseId}" class="js_input col-xs-10 col-sm-5"/>
+																		</c:if>
 																		</div>
 																</div>
 															</div>
@@ -165,7 +170,7 @@
 												
 													<li class="prev">
 													<c:if test='${pageNum > 1}'>
-														<a href="javascript:void(0);" onclick="selectUser(${pageNum - 1})" >
+														<a href="javascript:void(0);" onclick="selectStudent(${pageNum - 1})" >
 															<i class="icon-double-angle-left"></i>
 														</a>
 														</c:if>
@@ -176,7 +181,7 @@
 												<c:if test="${pageNum+4 <= totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${pageNum +4 }">
 															<li >
-																<a href="javascript:void(0);" onclick="selectUser(${page})" value="${page }">${page }</a>
+																<a href="javascript:void(0);" onclick="selectStudent(${page})" value="${page }">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -184,7 +189,7 @@
 												<c:if test="${pageNum+4> totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${totalPage }">
 															<li >
-																<a href="javascript:void(0);" onclick="selectUser(${page})">${page }</a>
+																<a href="javascript:void(0);" onclick="selectStudent(${page})">${page }</a>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -192,7 +197,7 @@
 													
 												<c:if test="${pageNum + 4 < totalPage}">
 													<li class="next">
-														<a href="javascript:void(0);" onclick="selectUser(${page + 1})">
+														<a href="javascript:void(0);" onclick="selectStudent(${page + 1})">
 															<i class="icon-double-angle-right"></i>
 														</a>
 													</li>
@@ -213,17 +218,28 @@
 		function addGrade(){
 			var studentCourses = [];
 			$(".js_input").each(function(){
-			    var grade = $(this).val();
+			    var grade = $.trim($(this).val());
 			    var studentId = $(this).attr("userId");
 			    var courseId = $(this).attr("courseId");
 			    var studentCourse = {};
-			    studentCourse.grade = grade;
-			    studentCourse.studentid = studentId;
-			    studentCourse.courseid = courseId;
-			    studentCourses.push(studentCourse);
+			    
+			    if(grade != null && grade != ""){
+				    studentCourse.grade = grade;
+				    studentCourse.studentid = studentId;
+				    studentCourse.courseid = courseId;
+				    studentCourses.push(studentCourse);
+			    }
 			});
-			$.post("addGrades.do",{"studentCourses":JSON.stringify(studentCourses)},function(){//批量添加成绩
-				
+			$.post("addGrades.do",{"studentCourses":JSON.stringify(studentCourses)},function(data){//批量添加成绩
+				if(data == true){
+					layer.msg('批量录入成绩成功!', {icon: 6,time:1000},function(){
+						history.go(0);
+					});
+				}else{
+					layer.msg('批量录入成绩失败!', {icon: 5,time:1000},function(){
+		    			history.go(0);
+					});
+				}
 			});
 		}
 		
@@ -274,17 +290,9 @@
 		* 改变显示的内容
 		*/
 		$(function(){
-			$(".js_select_role").change(function(){
-				selectUser(1);
-			});
-			$(".js_select_class").change(function(){
-				selectUser(1);
-			});
-			
 			$(".js_select_course").change(function(){
 				selectStudent(1);
 			});
-			
 		});
 		
 		function selectStudent(pageNum){
@@ -294,39 +302,11 @@
 			window.location.href="studentListBySearchGradePage.do?pageNum="+pageNum+"&pageSize=5&search="+search+"&courseId="+courseId+"&teacherId="+teacherId;
 		}
 		
-		function selectUser(pageNum){
-			var search = $(".js_search").val();
-			var identity = $(".js_select_role").val();
-			var classid = "-1";
-			if(identity == 2){
-				var clazzid = $(".js_select_class").val();
-				if(clazzid != undefined && clazzid != null){
-					classid = clazzid;
-				}
-			}
-			window.location.href="userListBySearch.do?pageNum="+pageNum+"&pageSize=5&search="+search+"&identity="+identity+"&classid="+classid;
-		}
-		
-		
-		
 		
 			/*设置日历颜色*/
 			laydate.skin('molv');
 			
-			function deleteUser(id){
-				layer.confirm('确认要删除吗?', {icon: 3, title:'提示'}, function(){
-				    $.post("deleteUser.do",{"id":id},function(data){
-				    	if(data == true){
-				    		layer.msg('删除成功!', {icon: 6,time:2000},function(){
-				    			history.go(0);
-							});
-				    	}else{
-				    		layer.msg("删除失败!",{icon:5});
-				    	}
-				    });
-				});
-				//e
-			}
+		
 		</script>
 </body>
 </html>

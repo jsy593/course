@@ -46,7 +46,7 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 	
 	@Override
 	public boolean updateCreditById(long id,int credit){
-		String sql = "update credit=credit+" +credit+ " where id="+ id;
+		String sql = "update user set credit=credit+" +credit+ " where id="+ id;
 		return super.updateClass(sql);
 	}
 	@Override
@@ -142,7 +142,7 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 	public Map<String, Object> selectAllStudent(int pageNum, int pageSize,String whereSql){
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
-		sql.append("select  sc.id studentCourseId,sc.courseId,u.*,date_format(u.createTime,'%Y-%m-%d') time,co.name courseName,"
+		sql.append("select  sc.id studentCourseId,sc.courseId,sc.grade,u.*,date_format(u.createTime,'%Y-%m-%d') time,co.name courseName,"
 				+ "co.id courseId,c.name cname,m.name mname from user u inner join studentCourse sc on u.id=sc.studentId "
 				+ "inner join course co on co.id=sc.courseId "
 				+ "left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql).append(" order by u.createTime desc limit " +start + ","+ pageSize);

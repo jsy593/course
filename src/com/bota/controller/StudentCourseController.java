@@ -162,6 +162,50 @@ public class StudentCourseController {
 	}
 	
 	
+	/**
+	 * 学生成绩查询
+	 * @param pageNum 第几页
+	 * @param pageSize 每页显示数量
+	 * @param studentid 学生id
+	 * @return
+	 */
+	 
+	
+	@RequestMapping("studentGrade")
+	public ModelAndView studentGrade(int pageNum,int pageSize,String studentId,int status){
+		ModelAndView model = new ModelAndView();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("studentid", studentId);
+		if(status != -1){
+			paramMap.put("status", status);
+		}
+		model.addObject("status", status);
+		Map<String, Object> map = studentCourseService.selectAllStudentCourse(pageNum,pageSize,paramMap);
+		model.addObject("studentCourses", map.get("listMap"));
+		model.addObject("courses", courseService.selectAllCourse());
+		
+		if(map.get("count") != null){
+			int count = Integer.parseInt(map.get("count").toString());
+			int totalPage  = 0;
+			if(count % 5 != 0 ){
+				totalPage =count/5 + 1; 
+			}else{
+				totalPage =count/5;
+			}
+			model.addObject("count", count);
+			model.addObject("totalPage", totalPage);
+		}
+		model.addObject("pageNum", pageNum);
+		if(paramMap != null){
+			model.addObject("search", paramMap.get("search"));
+			model.addObject("courseid", paramMap.get("courseid"));
+		}
+		model.setViewName("studentCourse/studentGrade");
+		return model;
+	}
+	
+	
+	
 	@RequestMapping("studentCourseListByPage")
 	public String selectAllStudentCourse(int pageNum,int pageSize, HttpServletRequest request){
 		

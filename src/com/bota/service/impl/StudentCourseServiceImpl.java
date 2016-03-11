@@ -78,6 +78,17 @@ public  class StudentCourseServiceImpl implements StudentCourseService{
 			if(paramMap.get("courseid") != null && !paramMap.get("courseid").equals("")){
 				whereSql.append(" and sc.courseid="+paramMap.get("courseid").toString());
 			}
+			
+			if(paramMap.get("studentid") != null && !paramMap.get("studentid").equals("")){
+				whereSql.append(" and sc.studentid="+paramMap.get("studentid").toString());
+			}
+			if(paramMap.get("status") != null && !paramMap.get("status").equals("-1")){//1代表及格，2代表不及格
+				if(paramMap.get("status").equals(1)){
+					whereSql.append(" and sc.grade >=60 ");
+				}else{
+					whereSql.append(" and sc.grade <60 ");
+				}
+			}
 			System.out.println(whereSql);
 		}
 		return studentCourseDaoImpl.selectAllStudentCourse(pageNum,pageSize,whereSql.toString());
