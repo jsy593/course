@@ -1,12 +1,10 @@
 package com.bota.dao.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.bota.bean.Course;
 import com.bota.bean.TeacherCourse;
 import com.bota.dao.TeacherCourseDao;
 

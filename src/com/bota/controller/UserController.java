@@ -26,7 +26,7 @@ import com.bota.util.MapAction;
 
 /**
  * 
- * @author bota
+ * @author 波塔
  */
 @Controller
 public class UserController {
@@ -41,6 +41,7 @@ public class UserController {
 	private CourseService courseService;
 	/**
 	 * 跳转到个人中心页面
+	 * @author bota
 	 * @return
 	 */
 	@RequestMapping("login")

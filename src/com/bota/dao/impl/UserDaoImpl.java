@@ -164,7 +164,7 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 	
 	@Override
 	public Map<String, Object> selectUserNumber(){
-		String sql = "select count(*) count from User";
+		String sql = "select count(*) count from user";
 		Map<String, Object> listMap = super.findBySql(sql);
 		return listMap;
 	}

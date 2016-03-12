@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : hostConnection
-Source Server Version : 50528
+Source Server         : one
+Source Server Version : 50536
 Source Host           : localhost:3306
 Source Database       : course
 
 Target Server Type    : MYSQL
-Target Server Version : 50528
+Target Server Version : 50536
 File Encoding         : 65001
 
-Date: 2016-03-10 18:38:09
+Date: 2016-03-12 14:09:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,7 +40,7 @@ CREATE TABLE `classes` (
   `majorId` bigint(12) NOT NULL COMMENT '专业id',
   `createTime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of classes
@@ -48,6 +48,9 @@ CREATE TABLE `classes` (
 INSERT INTO `classes` VALUES ('1', '软件1班', '1', '2016-03-08 00:00:00');
 INSERT INTO `classes` VALUES ('2', '声乐1班', '2', '2016-03-02 00:00:00');
 INSERT INTO `classes` VALUES ('4', '软件2班', '1', '2016-03-15 00:00:00');
+INSERT INTO `classes` VALUES ('5', '网络2班', '3', '2016-03-16 00:00:00');
+INSERT INTO `classes` VALUES ('6', '网络1班', '3', '2016-03-09 00:00:00');
+INSERT INTO `classes` VALUES ('7', '网络3班', '3', '2016-03-15 00:00:00');
 
 -- ----------------------------
 -- Table structure for `college`
@@ -66,11 +69,11 @@ CREATE TABLE `college` (
 INSERT INTO `college` VALUES ('1', '计算机学院', '2016-03-01 15:41:58');
 INSERT INTO `college` VALUES ('2', '音乐舞蹈学院', '2016-02-16 00:00:00');
 INSERT INTO `college` VALUES ('4', '设计学院', '2015-09-01 15:43:03');
-INSERT INTO `college` VALUES ('5', 'Callege', '2016-03-08 09:50:32');
+INSERT INTO `college` VALUES ('5', '体育学院', '2016-03-08 00:00:00');
 INSERT INTO `college` VALUES ('6', '材料学院', '2016-03-16 09:50:35');
-INSERT INTO `college` VALUES ('11', 'sada', '2016-03-04 00:00:00');
-INSERT INTO `college` VALUES ('12', 'sadsa', '2016-03-02 00:00:00');
-INSERT INTO `college` VALUES ('13', 'dsadsa', '2016-03-21 00:00:00');
+INSERT INTO `college` VALUES ('11', '文史学院', '2016-03-04 00:00:00');
+INSERT INTO `college` VALUES ('12', '经济学院', '2016-03-02 00:00:00');
+INSERT INTO `college` VALUES ('13', '外国语学院', '2016-03-21 00:00:00');
 
 -- ----------------------------
 -- Table structure for `course`
@@ -90,7 +93,7 @@ CREATE TABLE `course` (
   `isFinish` int(1) DEFAULT '0' COMMENT '是否可选（0：不可  1：可选）',
   `createTime` datetime DEFAULT NULL COMMENT '添加课程的时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of course
@@ -98,8 +101,9 @@ CREATE TABLE `course` (
 INSERT INTO `course` VALUES ('1', '1', '历史学', '2', '2', '周三5,6节；周五9,10节（16周）', '仁和楼304', '1', '212', '0', '1', '2016-03-07 00:00:00');
 INSERT INTO `course` VALUES ('3', '23', '政治学', '23', '3', '周二5,6节；周五9,10节（16周）', '德泽楼212', '2', '81', '0', '0', '2016-03-23 00:00:00');
 INSERT INTO `course` VALUES ('4', '223', 'try', '3', '3', 'today', '232', '1', '69', '67', '1', '2016-03-16 00:00:00');
-INSERT INTO `course` VALUES ('5', '12', '经济学位2', '2', '2', '周三5,6节；周四9,10节（16周）', '新福楼321', '1', '69', '68', '0', '2016-03-14 00:00:00');
-INSERT INTO `course` VALUES ('6', '123', '123', '123', '2', '12343', '312321', '1', '13', '10', '1', '2016-03-28 00:00:00');
+INSERT INTO `course` VALUES ('5', '12', '经济学位2', '2', '2', '周三5,6节；周四9,10节（16周）', '新福楼321', '1', '69', '67', '0', '2016-03-14 00:00:00');
+INSERT INTO `course` VALUES ('6', '123', '123', '123', '2', '周一1,2节；周五3,4节（16周）', '民心楼309', '1', '50', '9', '1', '2016-03-28 00:00:00');
+INSERT INTO `course` VALUES ('7', '21', 'Java程序设计', '3', '3', '周二3,4节；周四7,8节（12周）', '明实楼A403', '1', '70', '70', '0', '2016-03-12 00:00:00');
 
 -- ----------------------------
 -- Table structure for `major`
@@ -111,13 +115,15 @@ CREATE TABLE `major` (
   `collegeId` bigint(12) NOT NULL COMMENT '学院id',
   `createTime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of major
 -- ----------------------------
 INSERT INTO `major` VALUES ('1', '软件工程', '1', '2016-03-07 00:00:00');
 INSERT INTO `major` VALUES ('2', '声乐学', '2', '2016-03-09 00:00:00');
+INSERT INTO `major` VALUES ('3', '网络工程', '1', '2016-03-09 00:00:00');
+INSERT INTO `major` VALUES ('4', '信管专业', '1', '2016-03-08 00:00:00');
 
 -- ----------------------------
 -- Table structure for `studentcourse`
@@ -130,7 +136,7 @@ CREATE TABLE `studentcourse` (
   `grade` int(3) DEFAULT NULL COMMENT '成绩',
   `createTime` datetime NOT NULL COMMENT '选课时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of studentcourse
@@ -141,6 +147,8 @@ INSERT INTO `studentcourse` VALUES ('29', '10', '6', null, '2016-03-10 14:15:37'
 INSERT INTO `studentcourse` VALUES ('41', '4', '4', null, '2016-03-10 15:34:50');
 INSERT INTO `studentcourse` VALUES ('43', '8', '4', null, '2016-03-10 15:45:43');
 INSERT INTO `studentcourse` VALUES ('44', '8', '6', null, '2016-03-10 15:45:45');
+INSERT INTO `studentcourse` VALUES ('47', '13', '5', null, '2016-03-12 10:51:58');
+INSERT INTO `studentcourse` VALUES ('48', '13', '6', null, '2016-03-12 10:52:07');
 
 -- ----------------------------
 -- Table structure for `teachercourse`
@@ -183,7 +191,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `PK_USER_CLASS` (`classid`),
   CONSTRAINT `PK_USER_CLASS` FOREIGN KEY (`classid`) REFERENCES `classes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
@@ -198,3 +206,6 @@ INSERT INTO `user` VALUES ('8', '20122108', '贾贾', '123', '4', '0', '2', 'ass
 INSERT INTO `user` VALUES ('10', '20122071', '波塔', '123', '1', '0', '2', 'images/2.jpg', '0', '2016-03-07 00:00:00');
 INSERT INTO `user` VALUES ('11', '20122144', '晓歌', '123', '4', '0', '2', 'images/2.jpg', '0', '2016-03-10 15:43:54');
 INSERT INTO `user` VALUES ('12', '20120000', '关雪', '123', '2', '0', '2', 'images/2.jpg', '0', '2016-03-10 15:45:01');
+INSERT INTO `user` VALUES ('13', '1', '1', '123', '2', '0', '2', 'images/2.jpg', '0', null);
+INSERT INTO `user` VALUES ('14', '2', '2', '123', '2', '0', '2', 'images/2.jpg', '0', null);
+INSERT INTO `user` VALUES ('15', '3', '3', '123', '4', '0', '2', 'images/2.jpg', '0', null);
