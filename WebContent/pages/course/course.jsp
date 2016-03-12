@@ -126,7 +126,7 @@
 														<c:if test="${sessionScope.user.identity == 0 }">
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
-																<a class="blue" href="addcoursePage.do" >
+																<a class="blue" href="addCoursePage.do" >
 																	<i class="icon-plus-sign bigger-130"></i>
 																</a>
 																<!-- <a class="blue" href="#">

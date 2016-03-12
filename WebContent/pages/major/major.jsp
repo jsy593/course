@@ -68,7 +68,7 @@
 														<th>
 															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 															
-																<a class="blue" href="addmajorPage.do" >
+																<a class="blue" href="addMajorPage.do" >
 																	<i class="icon-plus-sign bigger-130"></i>
 																</a>
 																<!-- <a class="blue" href="#">

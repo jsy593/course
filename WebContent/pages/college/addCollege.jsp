@@ -50,7 +50,7 @@
 						
 						<!-- 管理员可修改 -->				
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 入职日期 </label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 添加日期 </label>
 											
 											<div class="col-sm-9">
 													<input   id="form-field-3" type="text"  onclick="laydate()" class="js_createTime col-xs-10 col-sm-5"/>

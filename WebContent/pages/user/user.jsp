@@ -109,6 +109,9 @@
 															<th class="js_th">班级</th>
 															<th>学分</th>
 														</c:if>
+														<c:if test="${sessionScope.user.identity ==1 }">
+														<th>课程名</th>
+														</c:if>
 														<th>创建时间</th>
 														<th>操作</th>
 													</tr>
@@ -129,6 +132,9 @@
 															<th class="js_th">${user.mname }</th>
 															<th class="js_th">${user.cname }</th>
 															<th class="js_th">${user.credit}</th>
+														</c:if>
+														<c:if test="${sessionScope.user.identity ==1 }">
+														<th>${user.coursename }</th>
 														</c:if>
 														<th>${user.time }</th>
 														<th>
@@ -154,7 +160,7 @@
 															
 															
 															<c:if test="${sessionScope.user.identity == 1}">
-																<button class="btn  btn-sm btn-danger " onclick="deleteStudent(${user.studentCourseId})">删除学生</button>
+																<button class="btn  btn-sm btn-danger " onclick="deleteStudent(${user.studentCourseId},${user.courseId})">删除学生</button>
 																<button class="btn  btn-sm btn-purple " onclick="addStudent(${user.courseId})">添加学生</button>
 															</c:if>
 															</div>
@@ -211,7 +217,12 @@
 												<ul class="pagination pull-right no-margin">
 													<li class="prev">
 													<c:if test='${pageNum > 1}'>
-														<a href="javascript:void(0);" onclick="selectUser(${pageNum - 1})" >
+														<c:if test="${sessionScope.user.identity == 0 }">
+															<a href="javascript:void(0);" onclick="selectUser(${pageNum - 1})" >
+														</c:if>
+														<c:if test="${sessionScope.user.identity == 1 }">
+															<a href="javascript:void(0);" onclick="selectStudent(${pageNum - 1})" >
+														</c:if>
 															<i class="icon-double-angle-left"></i>
 														</a>
 														</c:if>
@@ -222,7 +233,12 @@
 												<c:if test="${pageNum+4 <= totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${pageNum +4 }">
 															<li >
-																<a href="javascript:void(0);" onclick="selectUser(${page})" value="${page }">${page }</a>
+																<c:if test="${sessionScope.user.identity == 0 }">
+																	<a href="javascript:void(0);" onclick="selectUser(${page})" value="${page }">${page }</a>
+																</c:if>
+																<c:if test="${sessionScope.user.identity == 1 }">
+																	<a href="javascript:void(0);" onclick="selectStudent(${page})" value="${page }">${page }</a>
+																</c:if>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -230,7 +246,12 @@
 												<c:if test="${pageNum+4> totalPage}">
 													<c:forEach 	var="page" begin="${pageNum}" end="${totalPage }">
 															<li >
-																<a href="javascript:void(0);" onclick="selectUser(${page})">${page }</a>
+																<c:if test="${sessionScope.user.identity == 0 }">
+																	<a href="javascript:void(0);" onclick="selectUser(${page})" value="${page }">${page }</a>
+																</c:if>
+																<c:if test="${sessionScope.user.identity == 1 }">
+																	<a href="javascript:void(0);" onclick="selectStudent(${page})" value="${page }">${page }</a>
+																</c:if>
 															</li>
 														</c:forEach>
 												</c:if>
@@ -238,7 +259,12 @@
 													
 												<c:if test="${pageNum + 4 < totalPage}">
 													<li class="next">
-														<a href="javascript:void(0);" onclick="selectUser(${page + 1})">
+															<c:if test="${sessionScope.user.identity == 0 }">
+																<a href="javascript:void(0);" onclick="selectUser(${page+1})" >
+															</c:if>
+															<c:if test="${sessionScope.user.identity == 1 }">
+																<a href="javascript:void(0);" onclick="selectStudent(${page+1})">
+															</c:if>
 															<i class="icon-double-angle-right"></i>
 														</a>
 													</li>
@@ -254,9 +280,9 @@
 		<script type="text/javascript">
 		
 		/*------------老师模块开始---------------*/
-		function deleteStudent(id){
+		function deleteStudent(id,courseId){
 				layer.confirm('确认要删除该学生吗?', {icon: 3, title:'提示'}, function(){
-				    $.post("deleteStudentCourse.do",{"id":id},function(data){
+				    $.post("deleteStudentCourse.do",{"id":id,"courseId":courseId},function(data){
 				    	if(data == true){
 				    		layer.msg('删除成功!', {icon: 6,time:1000},function(){
 				    			history.go(0);

@@ -77,7 +77,7 @@
 										</label>
 
 										<div class="col-sm-9">
-											<select name="teacherid" class="js_select_role col-xs-10 col-sm-5" id="form-field-1">
+											<select <c:if test="${sessionScope.user.identity ==1}">disabled</c:if> name="teacherid" class="js_select_role col-xs-10 col-sm-5" id="form-field-1">
 												<c:forEach items="${teachers }" var="teacher">
 												<option value="${teacher.id }" <c:if test="${course.teacherid == teacher.id}">selected</c:if>>${teacher.username }</option>
 												</c:forEach>

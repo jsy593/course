@@ -143,7 +143,7 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao{
 		int start = (pageNum -1) * pageSize;
 		StringBuffer sql = new StringBuffer();
 		sql.append("select  sc.id studentCourseId,sc.courseId,sc.grade,u.*,date_format(u.createTime,'%Y-%m-%d') time,co.name courseName,"
-				+ "co.id courseId,c.name cname,m.name mname from user u inner join studentCourse sc on u.id=sc.studentId "
+				+ "co.id courseId, co.name coursename,c.name cname,m.name mname from user u inner join studentCourse sc on u.id=sc.studentId "
 				+ "inner join course co on co.id=sc.courseId "
 				+ "left join  classes c on u.classId=c.id left join  major m on c.majorid=m.id ").append(whereSql).append(" order by u.createTime desc limit " +start + ","+ pageSize);
 		System.out.println(sql);
