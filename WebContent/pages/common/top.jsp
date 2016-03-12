@@ -11,7 +11,12 @@
 					<a href="#" class="navbar-brand">
 						<small>
 							<i class="icon-leaf"></i>
-							后台管理系统
+							<c:if test="${sessionScope.user.identity == 0 }">
+								后台管理系统
+							</c:if>
+							<c:if test="${sessionScope.user.identity != 0 }">
+								学生选课系统
+							</c:if>
 						</small>
 					</a><!-- /.brand -->
 				</div><!-- /.navbar-header -->
@@ -31,7 +36,7 @@
 
 							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
-									<a href="#">
+									<a href="myselfPage.do">
 										<i class="icon-cog"></i>
 										个人中心
 									</a>

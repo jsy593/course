@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${sessionScope.user.identity ==0 }">
+	<body>
+</c:if>
+<c:if test="${sessionScope.user.identity ==1 }">
+	<body class="skin-2">
+</c:if>
+<c:if test="${sessionScope.user.identity ==2 }">
+	<body class="skin-3">
+</c:if>
+
+
 <div class="main-container" id="main-container">
 		<script type="text/javascript">
 			try{ace.settings.check('main-container' , 'fixed')}catch(e){}
@@ -341,6 +352,7 @@
 						<div>
 							<div class="pull-left">
 								<select id="skin-colorpicker" class="hide">
+								
 									<option data-skin="default" value="#438EB9">#438EB9</option>
 									<option data-skin="skin-1" value="#222A2D">#222A2D</option>
 									<option data-skin="skin-2" value="#C6487E">#C6487E</option>
