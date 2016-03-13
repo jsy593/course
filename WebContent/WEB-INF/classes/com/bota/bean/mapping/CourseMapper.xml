@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bota.dao.CourseDao" >
+  <resultMap id="BaseResultMap" type="com.bota.bean.Course" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="courseNumber" property="coursenumber" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="credit" property="credit" jdbcType="INTEGER" />
+    <result column="teacherId" property="teacherid" jdbcType="BIGINT" />
+    <result column="schooltime" property="schooltime" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="specialtyId" property="specialtyid" jdbcType="BIGINT" />
+    <result column="numberLimit" property="numberlimit" jdbcType="INTEGER" />
+    <result column="numberSpace" property="numberspace" jdbcType="INTEGER" />
+    <result column="isFinish" property="isfinish" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, courseNumber, name, credit, teacherId, schooltime, address, specialtyId, numberLimit, 
+    numberSpace, isFinish, createTime
+  </sql>
+  <select id="selectByPrimaryKey" resultType="com.bota.bean.Course" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from course
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bota.bean.Course" >
+    insert into course (id, courseNumber, name, 
+      credit, teacherId, schooltime, 
+      address, specialtyId, numberLimit, 
+      numberSpace, isFinish, createTime
+      )
+    values (#{id,jdbcType=BIGINT}, #{coursenumber,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{credit,jdbcType=INTEGER}, #{teacherid,jdbcType=BIGINT}, #{schooltime,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{specialtyid,jdbcType=BIGINT}, #{numberlimit,jdbcType=INTEGER}, 
+      #{numberspace,jdbcType=INTEGER}, #{isfinish,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bota.bean.Course" >
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="coursenumber != null" >
+        courseNumber,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="credit != null" >
+        credit,
+      </if>
+      <if test="teacherid != null" >
+        teacherId,
+      </if>
+      <if test="schooltime != null" >
+        schooltime,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="specialtyid != null" >
+        specialtyId,
+      </if>
+      <if test="numberlimit != null" >
+        numberLimit,
+      </if>
+      <if test="numberspace != null" >
+        numberSpace,
+      </if>
+      <if test="isfinish != null" >
+        isFinish,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="coursenumber != null" >
+        #{coursenumber,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="schooltime != null" >
+        #{schooltime,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="specialtyid != null" >
+        #{specialtyid,jdbcType=BIGINT},
+      </if>
+      <if test="numberlimit != null" >
+        #{numberlimit,jdbcType=INTEGER},
+      </if>
+      <if test="numberspace != null" >
+        #{numberspace,jdbcType=INTEGER},
+      </if>
+      <if test="isfinish != null" >
+        #{isfinish,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bota.bean.Course" >
+    update course
+    <set >
+      <if test="coursenumber != null" >
+        courseNumber = #{coursenumber,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        credit = #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="teacherid != null" >
+        teacherId = #{teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="schooltime != null" >
+        schooltime = #{schooltime,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="specialtyid != null" >
+        specialtyId = #{specialtyid,jdbcType=BIGINT},
+      </if>
+      <if test="numberlimit != null" >
+        numberLimit = #{numberlimit,jdbcType=INTEGER},
+      </if>
+      <if test="numberspace != null" >
+        numberSpace = #{numberspace,jdbcType=INTEGER},
+      </if>
+      <if test="isfinish != null" >
+        isFinish = #{isfinish,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bota.bean.Course" >
+    update course
+    set courseNumber = #{coursenumber,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      credit = #{credit,jdbcType=INTEGER},
+      teacherId = #{teacherid,jdbcType=BIGINT},
+      schooltime = #{schooltime,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      specialtyId = #{specialtyid,jdbcType=BIGINT},
+      numberLimit = #{numberlimit,jdbcType=INTEGER},
+      numberSpace = #{numberspace,jdbcType=INTEGER},
+      isFinish = #{isfinish,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
