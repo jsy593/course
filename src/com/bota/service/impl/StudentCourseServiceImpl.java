@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bota.bean.Course;
 import com.bota.bean.StudentCourse;
-import com.bota.bean.User;
 import com.bota.dao.CourseDao;
 import com.bota.dao.StudentCourseDao;
 import com.bota.dao.UserDao;

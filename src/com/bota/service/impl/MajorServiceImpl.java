@@ -42,6 +42,7 @@ public class MajorServiceImpl implements MajorService{
 	 * 查询学院的数量
 	 * @return 
 	 */
+	@Override
 	public Map<String, Object> selectMajorNumber(){
 		return majorDaoImpl.selectMajorNumber();
 	}

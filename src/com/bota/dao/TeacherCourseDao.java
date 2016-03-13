@@ -3,7 +3,6 @@ package com.bota.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.bota.bean.Course;
 import com.bota.bean.TeacherCourse;
 
 public interface TeacherCourseDao {

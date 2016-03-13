@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.bota.bean.User;
-import com.bota.bean.User;
 import com.bota.dao.UserDao;
 import com.bota.service.UserService;
 
@@ -113,6 +112,7 @@ public class UserServiceImpl implements UserService{
 	 * 查询用户的数量
 	 * @return 
 	 */
+	@Override
 	public Map<String, Object> selectUserNumber(){
 		return userDaoImpl.selectUserNumber();
 	}

@@ -1,7 +1,6 @@
 package com.bota.controller;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,15 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.bota.bean.Course;
 import com.bota.bean.TeacherCourse;
-import com.bota.service.CollegeService;
 import com.bota.service.CourseService;
 import com.bota.service.TeacherCourseService;
-import com.bota.util.DateStrConvert;
-import com.bota.util.MapAction;
 
 @Controller
 public class TeacherCourseController {

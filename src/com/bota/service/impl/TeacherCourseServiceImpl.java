@@ -42,6 +42,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService{
 	 * 查询课程的数量
 	 * @return 
 	 */
+	@Override
 	public Map<String, Object> selectTeacherCourseNumber(){
 		return teacherCourseDaoImpl.selectTeacherCourseNumber();
 	}

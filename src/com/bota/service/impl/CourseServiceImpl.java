@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bota.bean.Course;
-import com.bota.bean.TeacherCourse;
 import com.bota.dao.CourseDao;
 import com.bota.dao.TeacherCourseDao;
 import com.bota.service.CourseService;
@@ -120,6 +119,7 @@ public class CourseServiceImpl implements CourseService{
 	 * 查询课程的数量
 	 * @return 
 	 */
+	@Override
 	public Map<String, Object> selectCourseNumber(){
 		return courseDaoImpl.selectCourseNumber();
 	}

@@ -42,6 +42,7 @@ public class CollegeServiceImpl implements CollegeService{
 	 * 查询学院的数量
 	 * @return 
 	 */
+	@Override
 	public Map<String, Object> selectCollegeNumber(){
 		return collegeDaoImpl.selectCollegeNumber();
 	}
