@@ -1,5 +1,5 @@
 function login(){
-	var value = $('.inline input[name="identity"]:checked').val();
+	var value = $('.button-group input[name="identity"]:checked').val();
 	var userNumber = $("#userNumber").val();
 	
 	 var re = /^[0-9]+.?[0-9]*$/;   //判断字符串是否为数字,//若判断正整数，则后边是：/^[1-9]+[0-9]*]*$/

@@ -80,14 +80,13 @@
 						
 				<!---------------------------------提交按钮开始 ------------------------------->
 				
-						<div class="clearfix form-actions">
-										<div class="col-md-offset-3 col-md-9">
+						<div class="clearfix form-actions text-center">
+										<div class="col-md-12">
 											<button class="btn btn-info" type="button" onclick="addMajor()">
 												<i class="icon-ok bigger-110"></i>
 												提交
 											</button>
 											
-											&nbsp; &nbsp; &nbsp;
 											<button class="btn" type="reset" onclick="reset()">
 												<i class="icon-undo bigger-110"></i>
 												重置

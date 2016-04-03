@@ -4,7 +4,7 @@
 	<%@ include file="common/head.jsp" %>
 	<body>
 	<%@ include file="common/top.jsp" %>
-		<%@ include file="common/nav.jsp" %>
+	<%@ include file="common/nav.jsp" %>
 	
 	</body>
 </html>

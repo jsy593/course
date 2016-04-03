@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="ch">
 <script type="text/javascript">
-	alert("1232");
+	
+		console.log(11);
 </script>
 <%@ include file="common.jsp" %>
 </body>

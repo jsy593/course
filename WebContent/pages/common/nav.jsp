@@ -26,42 +26,13 @@
 					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 
 				</script>
-				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
-					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-						<button class="btn btn-success">
-							<i class="icon-signal"></i>
-						</button>
-
-						<button class="btn btn-info">
-							<i class="icon-pencil"></i>
-						</button>
-
-						<button class="btn btn-warning">
-							<i class="icon-group"></i>
-						</button>
-
-						<button class="btn btn-danger">
-							<i class="icon-cogs"></i>
-						</button>
-					</div>
-
-					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-						<span class="btn btn-success"></span>
-
-						<span class="btn btn-info"></span>
-
-						<span class="btn btn-warning"></span>
-
-						<span class="btn btn-danger"></span>
-					</div>
-				</div><!-- #sidebar-shortcuts -->
 
 
 <!--                             判断用户的角色，进入不同的页面                                                                             -->
 <c:if test="${sessionScope.user.identity  ==  0}">
-				<ul class="nav nav-list">
+				<ul class="nav nav-list" id="navs">
 				
-					<li>
+					<li id="nav-1">
 						<a href="teacherCourseListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">申请管理</span>
@@ -69,8 +40,8 @@
 					</li>
 				
 				
-					<li class="active">
-						<a href="javascript:void(0);" onclick="collegeListByPage()">
+					<li id="nav-2">
+						<a class="dropdown-toggle" href="javascript:void(0);" onclick="collegeListByPage()">
 							<i class="icon-dashboard"></i>
 							<span class="menu-text">学院管理 </span>
 							
@@ -79,7 +50,7 @@
 						
 						<!-- 二级菜单开始 -->
 						<ul class="submenu">
-								<li>
+								<li >
 									<a href="collegeListByPage.do?pageNum=1&pageSize=5" >
 										<i class="icon-double-angle-right"></i>
 										学院列表
@@ -98,10 +69,11 @@
 						
 					</li>
 
-					<li>
+					<li id="nav-3">
 						<a href="javascript:void(0);" class="dropdown-toggle" onclick="majorListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">专业管理</span>
+							<b class="arrow icon-angle-down"></b>
 						</a>
 						
 						<!-- 二级菜单开始 -->
@@ -124,10 +96,11 @@
 					</li>
 					
 					
-					<li >
+					<li id="nav-4">
 						<a href="javascript:void(0);" class="dropdown-toggle" onclick="classListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">班级管理</span>
+							<b class="arrow icon-angle-down"></b>
 						</a>
 						
 						<!-- 二级菜单开始 -->
@@ -152,10 +125,11 @@
 					
 					
 					
-					<li>
+					<li id="nav-5">
 						<a href="javascript:void(0);" class="dropdown-toggle" onclick="userListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">用户管理</span>
+							<b class="arrow icon-angle-down"></b>
 						</a>
 						
 						
@@ -181,10 +155,11 @@
 					
 					
 					
-					<li>
+					<li id="nav-6">
 						<a href="javascript:void(0);" class="dropdown-toggle" onclick="courseListByPage.do?pageNum=1&pageSize=5">
 							<i class="icon-text-width"></i>
 							<span class="menu-text">课程管理</span>
+							<b class="arrow icon-angle-down"></b>
 						</a>
 						
 						
@@ -289,7 +264,7 @@
 	</c:if>			
 	
 	
-					<li>
+					<li id="nav-7">
 						<a href="myselfPage.do" class="dropdown-toggle">
 							<i class="icon-desktop"></i>
 							<span class="menu-text">个人中心 </span>

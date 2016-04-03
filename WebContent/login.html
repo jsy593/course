@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1; user-scalable=no">
 <title>选课系统</title>
 
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
@@ -9,6 +10,31 @@
 <script src="js/jquery-1.9.1.min.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/course/login.js"></script>
+
+<style>
+	.login_m {
+		width: 100%;
+		height: initial;
+		margin-top: 30px;
+	}
+	.login_boder input.txt_input {
+		width: 84%;
+		max-width: 295px;
+	}
+	.login_boder {
+		text-align: center;
+		background-position: center;
+	}
+	.rem_sub input.sub_button {
+		float: none;
+	}
+	.login_padding {
+		padding-top: 64px;
+	}
+	.button-group {
+		margin: 12px auto;
+	}
+</style>
 </head>
 
 <body style="background-image:url('images/bj6.jpg')">
@@ -17,14 +43,13 @@
 	<div class="text"><p  class="login_logo">选课系统</p></div>
 	<div class="login_boder">
 		<div class="login_padding">
-			<h2>账号</h2>
-			<label>
-				<input type="text" id="userNumber" class="txt_input txt_input2" onfocus="if (value ==&#39;username&#39;){value =&#39;&#39;}" onblur="if (value ==&#39;&#39;){value=&#39;username&#39;}" value="username">
-			</label>
-			<h2>密码</h2>
-			<label>
-				<input type="password" name="textfield2" id="userpwd" class="txt_input" onfocus="if (value ==&#39;******&#39;){value =&#39;&#39;}" onblur="if (value ==&#39;&#39;){value=&#39;******&#39;}" value="******">
-			</label>
+			<label>账号</label>
+			<input type="text" id="userNumber" class="txt_input txt_input2" onfocus="if (value ==&#39;username&#39;){value =&#39;&#39;}" onblur="if (value ==&#39;&#39;){value=&#39;username&#39;}" placeholder="请输入账号">
+			<br>
+			<label>密码</label>
+			
+			<input type="password" name="textfield2" id="userpwd" class="txt_input" onfocus="if (value ==&#39;******&#39;){value =&#39;&#39;}" onblur="if (value ==&#39;&#39;){value=&#39;******&#39;}" placeholder="请输入密码">
+			
 			
 <!-- 			<label class="inline"> -->
 <!-- 				<input type="radio" checked name="identity" value="2"/> -->
@@ -34,14 +59,14 @@
 <!-- 				<input type="radio" name="identity"  value="0"/> -->
 <!-- 				<span>管理员</span> -->
 <!-- 			</label> -->
-				<label class="inline">
+			<div class="button-group">
 				<input type="radio" checked name="identity" id="input1" class="ace" value="2"/>
 				<label for="input1" class="lbl">学生</label>
 				<input type="radio" name="identity" id="input2" class="ace" value="1"/>
 				<label for="input2" class="lbl">老师</label>
 				<input type="radio" name="identity" id="input3" class="ace" value="0"/>
 				<label for="input3" class="lbl">管理员</label>
-			</label>
+			</div>
 			
 			<div class="rem_sub">
 				<label>
