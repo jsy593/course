@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>生日祝福 · 流式弹字</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<style>
+  :root{
+    --bg-1: #071021;
+    --bg-2: #0f1724;
+    --glass: rgba(255,255,255,0.03);
+    --accent1: #ff6b6b;
+    --accent2: #ffd166;
+    --muted: rgba(255,255,255,0.66);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei", -apple-system, Roboto, Arial; -webkit-font-smoothing:antialiased;}
+  body{
+    background:
+      radial-gradient(600px 300px at 10% 10%, rgba(255,107,107,0.06), transparent),
+      linear-gradient(180deg,var(--bg-1), var(--bg-2));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+  }
+
+  .card{
+    width:min(960px,96%);
+    border-radius:18px;
+    padding:26px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    box-shadow: 0 20px 50px rgba(2,6,23,0.6);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .float-blob{
+    position:absolute; right:-140px; top:-80px; width:420px; height:420px;
+    background: radial-gradient(circle at 20% 20%, rgba(255,107,107,0.12), transparent 10%),
+                radial-gradient(circle at 80% 80%, rgba(255,209,102,0.08), transparent 10%);
+    transform: rotate(20deg);
+    filter: blur(30px);
+    pointer-events:none;
+  }
+
+  header{display:flex;align-items:center;gap:16px;margin-bottom:10px}
+  .to-badge{background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#111;padding:8px 12px;border-radius:999px;font-weight:800;}
+  h1{font-size:26px;margin:0}
+  p.lead{margin:6px 0 16px;color:var(--muted);font-size:14px}
+
+  .display{
+    min-height:220px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));
+    border-radius:12px;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:12px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    font-weight:700;
+  }
+
+  .sentence{
+    font-size:36px;
+    line-height:1.1;
+    white-space:nowrap;
+    overflow:hidden;
+    display:block;
+  }
+  .sentence.small{ font-size:22px; }
+
+  .controls{
+    margin-top:16px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+
+  .btn{
+    padding:10px 14px; border-radius:12px; border:none; cursor:pointer; font-weight:700;
+    background:linear-gradient(90deg,#2ebf91,#1da3b0); color:#042b28;
+    box-shadow: 0 10px 24px rgba(29,163,176,0.12);
+  }
+  .btn.ghost{ background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.04); box-shadow:none }
+
+  .speed{ display:flex; align-items:center; gap:8px; color:var(--muted); font-size:14px }
+  .progress{ height:8px; background: rgba(255,255,255,0.03); border-radius:999px; overflow:hidden; flex:1 }
+  .progress > i{ display:block; height:100%; width:0%; background: linear-gradient(90deg,var(--accent1),var(--accent2)); transition:width .18s linear }
+
+  footer.note{ margin-top:12px; color:rgba(255,255,255,0.45); font-size:13px }
+
+  /* small screen */
+  @media (max-width:640px){
+    .sentence{ font-size:22px }
+    .display{ min-height:160px; padding:16px }
+  }
+</style>
+</head>
+<body>
+  <div class="card" role="main" aria-label="生日流式弹字祝福">
+    <div class="float-blob" aria-hidden="true"></div>
+    <header>
+      <div class="to-badge">To: 宝贝</div>
+      <div>
+        <h1>生日快乐 · 给你的一封悄悄话</h1>
+        <p class="lead">每个字像被轻轻念出 —— 流式逐字弹出，支持速度调节、暂停/继续与重播。</p>
+      </div>
+    </header>
+
+    <div id="display" class="display" aria-live="polite" aria-atomic="false"></div>
+
+    <div class="controls">
+      <button id="playPause" class="btn">播放</button>
+      <button id="replay" class="btn ghost">重播</button>
+
+      <div class="speed" title="调整速度">
+        <label for="speedRange">速度</label>
+        <input id="speedRange" type="range" min="8" max="80" value="28" step="1">
+        <span id="speedLabel">中</span>
+      </div>
+
+      <div style="flex:1"></div>
+
+      <div style="width:34%; min-width:160px">
+        <div class="progress" aria-hidden="true"><i id="progBar"></i></div>
+      </div>
+    </div>
+
+    <footer class="note">提示：要替换文案请修改脚本顶部 LINES 数组；要调样式请编辑 CSS 部分。</footer>
+  </div>
+
+<script>
+/*
+  使用方法：
+  - 将要显示的每行句子放进 LINES 数组（每一行会被视为一句话）
+  - 保存为 .html 并在浏览器打开
+*/
+
+const LINES = [
+  "谢谢你",
+  "靠近我",
+  "了解我",
+  "温暖我",
+  "陪伴我",
+  "谢谢你来爱我",
+  "我也爱你",
+  "生日快乐",
+  "宝贝～"
+];
+
+const display = document.getElementById('display');
+const playPauseBtn = document.getElementById('playPause');
+const replayBtn = document.getElementById('replay');
+const speedRange = document.getElementById('speedRange');
+const speedLabel = document.getElementById('speedLabel');
+const progBar = document.getElementById('progBar');
+
+let playing = false;
+let controller = { stop: false, paused: false };
+let globalSpeed = Number(speedRange.value); // 数值越大越慢 (mapped to ms)
+let currentLineIndex = 0;
+let totalChars = LINES.reduce((s,l) => s + Array.from(l).length, 0);
+let shownChars = 0;
+
+function speedName(v){
+  if(v < 18) return '快';
+  if(v < 36) return '中';
+  return '慢';
+}
+speedLabel.textContent = speedName(globalSpeed);
+
+// build empty rows in display
+function buildEmptyDisplay(){
+  display.innerHTML = '';
+  LINES.forEach((txt, idx) => {
+    const div = document.createElement('div');
+    div.className = 'sentence' + (txt.length>10 ? ' small' : '');
+    div.setAttribute('data-index', idx);
+    div.setAttribute('aria-hidden', 'true');
+    display.appendChild(div);
+  });
+}
+
+// tiny sleep helper
+function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+
+// map slider to ms per character (40..420)
+function msForSpeed(value){
+  return Math.round( (value - 8) / (80 - 8) * (420 - 40) + 40 );
+}
+
+// stream characters one by one
+async function streamFrom(startLine=0){
+  controller.stop = false;
+  controller.paused = false;
+  playing = true;
+  playPauseBtn.textContent = '暂停';
+  shownChars = 0;
+  progBar.style.width = '0%';
+
+  // count previously shown chars if starting mid
+  for(let i=0;i<startLine;i++){
+    shownChars += Array.from(LINES[i]).length;
+  }
+
+  for(let i=startLine;i<LINES.length;i++){
+    currentLineIndex = i;
+    const row = display.querySelector(`[data-index="${i}"]`);
+    row.setAttribute('aria-hidden','false');
+    row.innerHTML = '';
+    const chars = Array.from(LINES[i]);
+    for(let j=0;j<chars.length;j++){
+      if(controller.stop){ playing=false; playPauseBtn.textContent='播放'; return; }
+      while(controller.paused){
+        await sleep(80);
+        if(controller.stop){ playing=false; playPauseBtn.textContent='播放'; return; }
+      }
+      const span = document.createElement('span');
+      span.textContent = chars[j];
+      span.style.opacity = '0';
+      span.style.display = 'inline-block';
+      span.style.transform = 'translateY(8px)';
+      span.style.transition = 'transform 240ms cubic-bezier(.2,.9,.3,1), opacity 200ms linear';
+      row.appendChild(span);
+      // trigger animation
+      void span.offsetWidth;
+      span.style.opacity = '1';
+      span.style.transform = 'translateY(0)';
+      shownChars++;
+      // update progress
+      const pct = Math.round(shownChars / totalChars * 100);
+      progBar.style.width = pct + '%';
+      // wait according to speed
+      const ms = msForSpeed(globalSpeed);
+      await sleep(ms);
+    }
+    // short pause between lines
+    await sleep(220);
+    row.style.opacity = '0.98';
+  }
+  playing = false;
+  playPauseBtn.textContent = '播放';
+}
+
+// button handlers
+playPauseBtn.addEventListener('click', ()=>{
+  if(playing){
+    controller.paused = !controller.paused;
+    playPauseBtn.textContent = controller.paused ? '继续' : '暂停';
+  } else {
+    const start = currentLineIndex >= LINES.length ? 0 : currentLineIndex;
+    const rows = display.querySelectorAll('.sentence');
+    rows.forEach((r, idx)=>{ if(idx>start) r.innerHTML=''; });
+    streamFrom(start);
+  }
+});
+
+replayBtn.addEventListener('click', ()=>{
+  controller.stop = true;
+  controller.paused = false;
+  setTimeout(()=>{
+    buildEmptyDisplay();
+    currentLineIndex = 0;
+    streamFrom(0);
+  }, 120);
+});
+
+speedRange.addEventListener('input', ()=>{
+  globalSpeed = Number(speedRange.value);
+  speedLabel.textContent = speedName(globalSpeed);
+});
+
+// init
+buildEmptyDisplay();
+setTimeout(()=>{ streamFrom(0); }, 260);
+</script>
+</body>
+</html>
